@@ -8,13 +8,14 @@ This repository contains **Setlist Viewer**, a static HTML/CSS/JS song structure
 
 Before making changes, read these files in order:
 
-1. [README.md](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/README.md)
-2. [PROJECT_NOTES.md](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/PROJECT_NOTES.md)
-3. [SETLIST_VIEWER_HANDOFF.md](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/SETLIST_VIEWER_HANDOFF.md)
-4. [setlist-viewer-v1.html](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/setlist-viewer-v1.html)
-5. [index.html](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/index.html)
-6. [styles.css](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/styles.css)
-7. [script.js](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/script.js)
+1. [SESSION_CONTEXT.md](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/docs/SESSION_CONTEXT.md)
+2. [README.md](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/README.md)
+3. [PROJECT_NOTES.md](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/docs/PROJECT_NOTES.md)
+4. [SETLIST_VIEWER_HANDOFF.md](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/docs/SETLIST_VIEWER_HANDOFF.md)
+5. [setlist-viewer-v1.html](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/setlist-viewer-v1.html)
+6. [src/index.html](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/src/index.html)
+7. [src/styles.css](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/src/styles.css)
+8. [src/script.js](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/src/script.js)
 
 ## Project Goals
 
@@ -38,9 +39,9 @@ Maintain this visual direction unless explicitly told otherwise:
 
 - This is a static site.
 - Primary portable artifact: [setlist-viewer-v1.html](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/setlist-viewer-v1.html)
-- Main entry point: [index.html](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/index.html)
-- Styling: [styles.css](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/styles.css)
-- Interaction: [script.js](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/script.js)
+- Main split entry point: [src/index.html](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/src/index.html)
+- Styling: [src/styles.css](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/src/styles.css)
+- Interaction: [src/script.js](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/src/script.js)
 - No framework or package install should be required.
 - Keep edits compatible with direct browser use and GitHub Pages hosting.
 
@@ -49,10 +50,11 @@ Maintain this visual direction unless explicitly told otherwise:
 When working on this repo:
 
 1. Review the current project context files first.
-2. Prefer updating the portable single-file version when the user is prototyping or requesting a handoff-friendly artifact.
-3. Test by opening the static site in a browser.
-4. Update [PROJECT_NOTES.md](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/PROJECT_NOTES.md) if project direction changes.
-5. Commit with a clear message once the repo is under git.
+2. Update [SESSION_CONTEXT.md](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/docs/SESSION_CONTEXT.md) whenever session state, next steps, or active decisions materially change.
+3. Prefer updating the portable single-file version when the user is prototyping or requesting a handoff-friendly artifact.
+4. Test by opening the static site in a browser.
+5. Update [PROJECT_NOTES.md](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/docs/PROJECT_NOTES.md) if project direction changes.
+6. Commit with a clear message once the repo is under git.
 
 ## Editing Guidance
 
