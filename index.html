@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Setlist Viewer</title>
+  <meta
+    name="description"
+    content="A static setlist viewer for rehearsals and live services with song-by-song maps, quick navigation, and theme toggle."
+  >
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <p class="eyebrow">Static Project / Reusable Viewer</p>
+      <h1>Setlist Viewer</h1>
+      <p>
+        A browser-based setlist reference for rehearsals and live use. Each song shows the title,
+        BPM, key, lead vocalist, notes, and a fully expanded section map with consistent color coding.
+      </p>
+      <div class="nav-panel">
+        <div class="slide-controls">
+          <button class="nav-button" type="button" id="prev-song">Previous Song</button>
+          <div class="song-count" id="song-count">Song 1 of 1</div>
+          <button class="nav-button" type="button" id="next-song">Next Song</button>
+          <button class="nav-button theme-toggle" type="button" id="theme-toggle">Dark Mode</button>
+        </div>
+        <p class="directory-label">Quick Song Directory</p>
+        <div class="song-directory" id="song-directory"></div>
+      </div>
+    </section>
+
+    <section class="song-list">
+      <article class="song">
+        <div class="song-main">
+          <h2 class="song-title">Jesus</h2>
+          <div class="meta">
+            <span class="chip">113 BPM</span>
+            <span class="chip">Key: E</span>
+            <span class="chip">Lead Vocal: Paloma Ramos</span>
+          </div>
+          <div class="details-card">
+            <h2>Details</h2>
+            <p>Piano intro. Keyboard lines during the intro.</p>
+          </div>
+        </div>
+        <div class="map-card">
+          <h2>Map</h2>
+          <ol class="map-list">
+            <li class="section intro">Intro</li>
+            <li class="section intro">Intro</li>
+            <li class="section verse">Verse</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section turnaround">Turnaround</li>
+            <li class="section verse">Verse</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section turnaround">Turnaround</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section outro">Outro</li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="song">
+        <div class="song-main">
+          <h2 class="song-title">El Canto de Redencion</h2>
+          <div class="meta">
+            <span class="chip">128 BPM</span>
+            <span class="chip">Key: D</span>
+            <span class="chip">Lead Vocal: Jhonny Rez</span>
+          </div>
+          <div class="details-card">
+            <h2>Details</h2>
+            <p>Percussion intro. Electric guitar comes in right after.</p>
+          </div>
+        </div>
+        <div class="map-card">
+          <h2>Map</h2>
+          <ol class="map-list">
+            <li class="section intro">Intro</li>
+            <li class="section verse">Verse</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section turnaround">Turnaround</li>
+            <li class="section verse">Verse</li>
+            <li class="section verse">Verse</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section instrumental">Instrumental</li>
+            <li class="section instrumental">Instrumental</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section tag">Tag</li>
+            <li class="section tag">Tag</li>
+            <li class="section instrumental">Instrumental</li>
+            <li class="section outro">Outro</li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="song">
+        <div class="song-main">
+          <h2 class="song-title">From the Throne of God</h2>
+          <div class="meta">
+            <span class="chip">133 BPM</span>
+            <span class="chip">Key: D-flat</span>
+            <span class="chip">Lead Vocal: Marya Adedimeji</span>
+          </div>
+          <div class="details-card">
+            <h2>Details</h2>
+            <p>Brass intro. Bass solo before the bridge section.</p>
+          </div>
+        </div>
+        <div class="map-card">
+          <h2>Map</h2>
+          <ol class="map-list">
+            <li class="section intro">Intro</li>
+            <li class="section verse">Verse</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section verse">Verse</li>
+            <li class="section tag">Tag</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section postchorus">Post-Chorus</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section instrumental">Instrumental</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section bridge">Bridge 2</li>
+            <li class="section bridge">Bridge 2</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section postchorus">Post-Chorus</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section outro">Outro</li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="song">
+        <div class="song-main">
+          <h2 class="song-title">It Was Your Grace</h2>
+          <div class="meta">
+            <span class="chip">146 BPM</span>
+            <span class="chip">Key: A</span>
+            <span class="chip">Lead Vocal: Waleska Morales</span>
+          </div>
+          <div class="details-card">
+            <h2>Details</h2>
+            <p>Brass intro. Full-band hits on Verse 2.</p>
+          </div>
+        </div>
+        <div class="map-card">
+          <h2>Map</h2>
+          <ol class="map-list">
+            <li class="section intro">Intro</li>
+            <li class="section verse">Verse</li>
+            <li class="section verse">Verse</li>
+            <li class="section prechorus">Pre-Chorus</li>
+            <li class="section prechorus">Pre-Chorus</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section instrumental">Instrumental</li>
+            <li class="section verse">Verse 2</li>
+            <li class="section verse">Verse 2</li>
+            <li class="section prechorus">Pre-Chorus</li>
+            <li class="section prechorus">Pre-Chorus</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section instrumental">Instrumental</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section outro">Outro</li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="song">
+        <div class="song-main">
+          <h2 class="song-title">Holy Fragance</h2>
+          <div class="meta">
+            <span class="chip">114 BPM</span>
+            <span class="chip">Key: A</span>
+            <span class="chip">Lead Vocal: Matthew Morales</span>
+          </div>
+          <div class="details-card">
+            <h2>Details</h2>
+            <p>E note and keyboard intro.</p>
+          </div>
+        </div>
+        <div class="map-card">
+          <h2>Map</h2>
+          <ol class="map-list">
+            <li class="section intro">Intro</li>
+            <li class="section verse">Verse</li>
+            <li class="section prechorus">Pre-Chorus</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section turnaround">Turnaround</li>
+            <li class="section verse">Verse</li>
+            <li class="section prechorus">Pre-Chorus</li>
+            <li class="section prechorus">Pre-Chorus</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section instrumental">Instrumental</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section bridge">Bridge 2</li>
+            <li class="section bridge">Bridge 2</li>
+            <li class="section tag">Tag</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section tag">Tag</li>
+            <li class="section chorus">Chorus</li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="song">
+        <div class="song-main">
+          <h2 class="song-title">Boast in the Lord</h2>
+          <div class="meta">
+            <span class="chip">96 BPM</span>
+            <span class="chip">Key: A</span>
+            <span class="chip">Lead Vocal: Nick Torres</span>
+          </div>
+          <div class="details-card">
+            <h2>Details</h2>
+            <p>Drum intro.</p>
+          </div>
+        </div>
+        <div class="map-card">
+          <h2>Map</h2>
+          <ol class="map-list">
+            <li class="section intro">Intro</li>
+            <li class="section verse">Verse</li>
+            <li class="section verse">Verse</li>
+            <li class="section tag">Tag</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section instrumental">Instrumental</li>
+            <li class="section verse">Verse</li>
+            <li class="section tag">Tag</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section instrumental">Instrumental</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section tag">Tag</li>
+            <li class="section tag">Tag</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section chorus">Chorus</li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="song">
+        <div class="song-main">
+          <h2 class="song-title">Covers All the Earth</h2>
+          <div class="meta">
+            <span class="chip">150 BPM</span>
+            <span class="chip">Key: E</span>
+            <span class="chip">Lead Vocal: Genock</span>
+          </div>
+          <div class="details-card">
+            <h2>Details</h2>
+            <p class="empty-detail">No additional detail shown in the sheet.</p>
+          </div>
+        </div>
+        <div class="map-card">
+          <h2>Map</h2>
+          <ol class="map-list">
+            <li class="section intro">Intro</li>
+            <li class="section verse">Verse</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section turnaround">Turnaround</li>
+            <li class="section verse">Verse</li>
+            <li class="section tag">Tag</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section instrumental">Instrumental</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section tag">Tag</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section tag">Tag</li>
+            <li class="section outro">Outro</li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="song">
+        <div class="song-main">
+          <h2 class="song-title">When I Think About the Lord</h2>
+          <div class="meta">
+            <span class="chip">BPM: Not shown</span>
+            <span class="chip">Key: E / G-flat</span>
+            <span class="chip">Lead Vocal: Josh / Marya</span>
+          </div>
+          <div class="details-card">
+            <h2>Details</h2>
+            <p>Verse 1 is led by Josh. Verse 2 and onward are led by Marya.</p>
+          </div>
+        </div>
+        <div class="map-card">
+          <h2>Map</h2>
+          <ol class="map-list">
+            <li class="section flow">Flow</li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="song">
+        <div class="song-main">
+          <h2 class="song-title">Vuelve Mi Corazon</h2>
+          <div class="meta">
+            <span class="chip">103 BPM</span>
+            <span class="chip">Key: G</span>
+            <span class="chip">Lead Vocal: Genock</span>
+          </div>
+          <div class="details-card">
+            <h2>Details</h2>
+            <p class="empty-detail">No additional detail shown in the sheet.</p>
+          </div>
+        </div>
+        <div class="map-card">
+          <h2>Map</h2>
+          <ol class="map-list">
+            <li class="section intro">Intro</li>
+            <li class="section verse">Verse</li>
+            <li class="section verse">Verse 2</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section turnaround">Turnaround</li>
+            <li class="section verse">Verse</li>
+            <li class="section verse">Verse</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section postchorus">Post-Chorus</li>
+            <li class="section turnaround">Turnaround</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section tag">Tag</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section postchorus">Post-Chorus</li>
+            <li class="section outro">Outro</li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="song">
+        <div class="song-main">
+          <h2 class="song-title">Accion de Gracia</h2>
+          <div class="meta">
+            <span class="chip">110 BPM</span>
+            <span class="chip">Key: F</span>
+            <span class="chip">Lead Vocal: Miel San Marcos</span>
+          </div>
+          <div class="details-card">
+            <h2>Details</h2>
+            <p class="empty-detail">No additional detail shown in the sheet.</p>
+          </div>
+        </div>
+        <div class="map-card">
+          <h2>Map</h2>
+          <ol class="map-list">
+            <li class="section intro">Intro</li>
+            <li class="section verse">Verse</li>
+            <li class="section verse">Verse 2</li>
+            <li class="section prechorus">Pre-Chorus</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section turnaround">Turnaround</li>
+            <li class="section verse">Verse</li>
+            <li class="section prechorus">Pre-Chorus</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section turnaround">Turnaround</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section bridge">Bridge</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section chorus">Chorus</li>
+            <li class="section outro">Outro</li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="song">
+        <div class="song-main">
+          <h2 class="song-title">Avivanos - Regocijate - La Alegria</h2>
+          <div class="meta">
+            <span class="chip">BPM: Not shown</span>
+            <span class="chip">Key: Not shown</span>
+            <span class="chip">Lead Vocal: Miel San Marcos</span>
+          </div>
+          <div class="details-card">
+            <h2>Details</h2>
+            <p class="empty-detail">No additional detail shown in the sheet.</p>
+          </div>
+        </div>
+        <div class="map-card">
+          <h2>Map</h2>
+          <ol class="map-list">
+            <li class="section medley">Medley</li>
+          </ol>
+        </div>
+      </article>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
