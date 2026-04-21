@@ -34,6 +34,9 @@ Any future Codex session should read this file first to understand:
 - Maintain the split-file version in parallel for easier editing.
 - Preserve the grayscale UI direction, with color concentrated in the section blocks.
 - Keep the app static with no framework and no build step.
+- Treat the website as the source of truth for song map flow unless the user explicitly calls out a correction from a sheet.
+- Normalize repeated map sections by expanding them into repeated labels instead of compact notation like `2X` or `3X`.
+- Treat `CH` as `Chorus` and `BD` or `B` as `Bridge` when translating sheet shorthand into the website.
 
 ## Current Status
 
@@ -41,6 +44,8 @@ Any future Codex session should read this file first to understand:
 - GitHub Pages workflow exists in `.github/workflows/deploy-pages.yml`.
 - The current portable version is `setlist-viewer-v1.html`.
 - Split website source now lives under `src/`.
+- `Jesus` metadata has been updated to key `A` and lead vocal `Matthew Morales`.
+- `Holy Fragance` metadata has been updated to key `D`, lead vocal `Paloma Ramos`, and sheet-aligned detail text `Eg / keys intro`.
 
 ## Next Recommended Work
 
