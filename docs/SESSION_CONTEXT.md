@@ -46,6 +46,7 @@ Any future Codex session should read this file first to understand:
 - Split website source now lives under `src/`.
 - `Jesus` metadata has been updated to key `A` and lead vocal `Matthew Morales`.
 - `Holy Fragance` metadata has been updated to key `D`, lead vocal `Paloma Ramos`, and sheet-aligned detail text `Eg / keys intro`.
+- One-off standalone artifact `wait-on-you-short-map.html` was created for a shortened `Wait On You` song map screenshot. It is separate from the reusable Setlist Viewer app and was not committed.
 
 ## Next Recommended Work
 
