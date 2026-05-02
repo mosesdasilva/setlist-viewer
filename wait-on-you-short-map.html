@@ -71,6 +71,14 @@
       line-height: 1.45;
     }
 
+    .version {
+      margin: 0 0 8px;
+      color: var(--ink);
+      font-size: 1.02rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
     .chips {
       display: flex;
       flex-wrap: wrap;
@@ -133,14 +141,6 @@
       font-weight: 500;
     }
 
-    .note {
-      margin: 12px 0 0;
-      color: var(--muted);
-      font-size: 0.88rem;
-      line-height: 1.45;
-      text-align: center;
-    }
-
     .intro { background: var(--intro); }
     .verse-one { background: var(--verse-one); }
     .verse-two { background: var(--verse-two); }
@@ -180,10 +180,14 @@
     <section class="hero">
       <p class="eyebrow">Short Version / Song Map</p>
       <h1>Wait On You</h1>
+      <p class="version">New Beginnings Version</p>
       <p class="subtitle">
-        Follow this exact order. Verse 3, tags, and extra bridge sections are skipped.
+        Verse 3, tags, and extra bridge sections removed.
       </p>
       <div class="chips" aria-label="Song flow summary">
+        <span class="chip">Original Key: D</span>
+        <span class="chip">Original BPM: 104</span>
+        <span class="chip">Time Sig: 12/8</span>
         <span class="chip">Intro</span>
         <span class="chip">Verse 1</span>
         <span class="chip">Verse 2</span>
@@ -308,8 +312,6 @@
         </div>
       </li>
     </ol>
-
-    <p class="note">Use this for the shortened arrangement only.</p>
   </main>
 </body>
 </html>
