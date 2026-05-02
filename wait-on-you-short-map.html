@@ -79,7 +79,7 @@
       line-height: 1.2;
     }
 
-    .chips {
+    .meta-chips {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
@@ -96,6 +96,41 @@
       line-height: 1;
       font-weight: 700;
       white-space: nowrap;
+    }
+
+    .flow-dots {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+
+    .flow-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 2px solid currentColor;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--ink);
+      font-size: 0.78rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .flow-dot.intro-dot { color: var(--intro); }
+    .flow-dot.verse-one-dot { color: var(--verse-one); }
+    .flow-dot.verse-two-dot { color: var(--verse-two); }
+    .flow-dot.chorus-dot { color: var(--chorus); }
+    .flow-dot.bridge-dot { color: var(--bridge); }
+    .flow-dot.bridge-two-dot { color: var(--bridge-two); }
+    .flow-dot.bridge-three-dot { color: var(--bridge-three); }
+
+    .flow-dot span {
+      color: #ffffff;
     }
 
     .map {
@@ -184,22 +219,24 @@
       <p class="subtitle">
         Verse 3, tags, and extra bridge sections removed.
       </p>
-      <div class="chips" aria-label="Song flow summary">
+      <div class="meta-chips" aria-label="Original song metadata">
         <span class="chip">Original Key: D</span>
         <span class="chip">Original BPM: 104</span>
         <span class="chip">Time Sig: 12/8</span>
-        <span class="chip">Intro</span>
-        <span class="chip">Verse 1</span>
-        <span class="chip">Verse 2</span>
-        <span class="chip">Chorus</span>
-        <span class="chip">Chorus</span>
-        <span class="chip">Bridge 1</span>
-        <span class="chip">Bridge 1</span>
-        <span class="chip">Chorus</span>
-        <span class="chip">Bridge 2</span>
-        <span class="chip">Bridge 3</span>
-        <span class="chip">Chorus</span>
-        <span class="chip">Chorus</span>
+      </div>
+      <div class="flow-dots" aria-label="Short song flow">
+        <span class="flow-dot intro-dot" title="Intro"><span>I</span></span>
+        <span class="flow-dot verse-one-dot" title="Verse 1"><span>V1</span></span>
+        <span class="flow-dot verse-two-dot" title="Verse 2"><span>V2</span></span>
+        <span class="flow-dot chorus-dot" title="Chorus"><span>C</span></span>
+        <span class="flow-dot chorus-dot" title="Chorus"><span>C</span></span>
+        <span class="flow-dot bridge-dot" title="Bridge 1"><span>B1</span></span>
+        <span class="flow-dot bridge-dot" title="Bridge 1"><span>B1</span></span>
+        <span class="flow-dot chorus-dot" title="Chorus"><span>C</span></span>
+        <span class="flow-dot bridge-two-dot" title="Bridge 2"><span>B2</span></span>
+        <span class="flow-dot bridge-three-dot" title="Bridge 3"><span>B3</span></span>
+        <span class="flow-dot chorus-dot" title="Chorus"><span>C</span></span>
+        <span class="flow-dot chorus-dot" title="Chorus"><span>C</span></span>
       </div>
     </section>
 
