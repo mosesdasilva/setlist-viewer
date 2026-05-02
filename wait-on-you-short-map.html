@@ -135,7 +135,7 @@
 
     .map {
       list-style: none;
-      column-count: 2;
+      column-count: 1;
       column-gap: 9px;
       margin: 0;
       padding: 0;
@@ -183,6 +183,12 @@
     .bridge { background: var(--bridge); }
     .bridge-two { background: var(--bridge-two); }
     .bridge-three { background: var(--bridge-three); }
+
+    @media (min-width: 560px) {
+      .map {
+        column-count: 2;
+      }
+    }
 
     @media (min-width: 720px) {
       .section {
