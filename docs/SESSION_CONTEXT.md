@@ -56,11 +56,11 @@ Any future Codex session should read this file first to understand:
 - `Holy Fragance` metadata has been updated to key `D`, lead vocal `Paloma Ramos`, and sheet-aligned detail text `Eg / keys intro`.
 - Engineering-skill configuration lives under `docs/agents/`; domain language lives in root `CONTEXT.md`.
 - Wayfinder map: [Map a static Nashville chart system](https://github.com/mosesdasilva/setlist-viewer/issues/1).
+- The representative handwritten chart is `Más — Miel San Marcos`, key D, 140 BPM, 4/4; its source image and notation notes live under `docs/assets/` and `docs/research/`.
 
 ## Next Recommended Work
 
-- [Capture a representative handwritten Nashville chart](https://github.com/mosesdasilva/setlist-viewer/issues/3) is claimed and waiting for the user to attach one legible real chart plus explanations of ambiguous marks.
-- After that chart is available, continue with the first unblocked ticket under [Map a static Nashville chart system](https://github.com/mosesdasilva/setlist-viewer/issues/1).
+- Resolve [Define the v1 Nashville chart language](https://github.com/mosesdasilva/setlist-viewer/issues/4) using the representative handwritten chart and format research.
 - Continue through the unblocked frontier of the Wayfinder map; do not implement the destination during planning.
 
 ## Update Rule

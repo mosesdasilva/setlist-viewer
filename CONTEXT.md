@@ -27,3 +27,23 @@ _Avoid_: Block
 **Expanded Arrangement**:
 The complete performance order displayed Section by Section and Bar by Bar, including every repetition rather than repeat signs or interactive jumps.
 _Avoid_: Repeat navigation, collapsed arrangement
+
+**Section Code**:
+A compact, usually one-letter label for a Section: `I` Intro, `V` Verse, `T` Tag, `P` Pre-Chorus, `C` Chorus, `B` Bridge, and `E` Ending.
+_Avoid_: Section initial
+
+**Slash Chord**:
+A chord whose chord degree and bass degree differ, written as chord degree over bass degree, such as `1/3`.
+_Avoid_: Fraction chord
+
+**Diamond Chord**:
+A chord held as one sustained event rather than played with the regular rhythmic pattern, shown by enclosing its number in a diamond.
+_Avoid_: Diamond number
+
+**Performance Direction**:
+A short playing instruction associated with a Chart Row, such as `Rakes`.
+_Avoid_: Comment
+
+**Melody Passage**:
+A compact number-based melody reference associated with a Chart Row; the handwritten source distinguishes it in red and groups it in parentheses.
+_Avoid_: Red comment
