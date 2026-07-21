@@ -33,8 +33,8 @@ The complete performance order displayed Section by Section and Bar by Bar, incl
 _Avoid_: Repeat navigation, collapsed arrangement
 
 **Section Code**:
-A compact label derived from a Section's authored full name: `I` Intro, `V` Verse, `T` Tag, `P` Pre-Chorus, `C` Chorus, `B` Bridge, and `E` Ending.
-_Avoid_: Section initial
+A compact, all-uppercase label of at least two letters representing a Section type. Standard types have default codes; custom types require custom codes.
+_Avoid_: Section tag, section initial, one-letter code
 
 **Chord Symbol**:
 A scale-degree chord representation that may include an accidental, quality, extension, or Slash Chord bass degree.
