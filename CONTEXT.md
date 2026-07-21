@@ -28,13 +28,23 @@ _Avoid_: Per-bar annotation, line annotation
 A named part of a song, such as Intro, Verse, Chorus, or Bridge, containing an ordered set of Chart Rows.
 _Avoid_: Block
 
+**Section Name**:
+The full human-readable name of a Section, used as its primary display label in the chart.
+_Avoid_: Section Code
+
 **Expanded Arrangement**:
 The complete performance order displayed Section by Section and Bar by Bar, including every repetition rather than repeat signs or interactive jumps.
 _Avoid_: Repeat navigation, collapsed arrangement
 
 **Section Code**:
-A compact, all-uppercase label of at least two letters representing a Section type. Standard types have default codes; custom types require custom codes.
+A compact label of exactly two uppercase letters representing a Section type in chart data. Standard types have default codes; custom codes must be unique within their song.
 _Avoid_: Section tag, section initial, one-letter code
+
+Standard Section Codes are `IN` Intro, `IS` Instrumental, `VS` Verse, `TG` Tag, `PC` Pre-Chorus, `CH` Chorus, `BR` Bridge, `TR` Turnaround, `EN` Ending, and `OU` Outro.
+
+**Section Ordinal**:
+An optional number distinguishing Sections of the same type. It remains separate from the two-letter Section Code but may follow it in compact notation, such as `VS2`.
+_Avoid_: Numbered Section Code
 
 **Chord Symbol**:
 A scale-degree chord representation that may include an accidental, quality, extension, or Slash Chord bass degree.

@@ -45,7 +45,8 @@ Any future Codex session should read this file first to understand:
 - Preserve four Bars and a side-by-side Row Note per Chart Row at phone, iPad, and laptop widths.
 - Model each Row Note as either a Performance Direction or Melody Passage; a Melody Passage preserves four Bar-aligned Melody Fragments as opaque text in v1.
 - Require song title, Artist, key, tempo, and time signature metadata; keep lead vocal and details optional.
-- Author full Section names with optional ordinals. Use all-uppercase Section Codes of at least two letters; standard types have defaults and custom types require custom codes.
+- Display full Section Names in colored blocks. In chart data, use exactly two uppercase letters for each Section Code: `IN`, `IS`, `VS`, `TG`, `PC`, `CH`, `BR`, `TR`, `EN`, or `OU`; custom codes must be unique within the song.
+- Keep the optional Section Ordinal separate from the two-letter code, combining them only as compact notation such as `VS2`.
 - Keep exactly four Bar slots per Chart Row; unused trailing slots remain empty, while `X`, not `N.C.`, means an intentional No Chord Bar.
 - Allow multiple typed Row Notes on one Chart Row, including a Melody Passage and Performance Direction together.
 - Divide multiple Chord Events within a Bar equally by default; for unequal timing, display one Beat Dot above the Chord Symbol per assigned beat.
