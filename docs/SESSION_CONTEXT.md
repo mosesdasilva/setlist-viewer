@@ -39,7 +39,7 @@ Any future Codex session should read this file first to understand:
 - Treat `CH` as `Chorus` and `BD` or `B` as `Bridge` when translating sheet shorthand into the website.
 - Evolve the viewer toward manually authored Nashville Number Charts rather than lyrics.
 - Keep split source and chart data canonical; generate the portable single-file HTML from them.
-- Carry a constrained ChordPro grid profile into source-format prototyping as the leading candidate; ChordText informs notation vocabulary, but the representative chart must prove the final fit.
+- Use a project-owned, musician-readable `.chart` notation as canonical chart source; ChordPro and ChordText inform its vocabulary without becoming the storage format.
 - Essential chart data must load under `file://` without runtime `fetch()` or ES modules; generated classic JavaScript is the split-runtime candidate and inline data is the portable-artifact candidate.
 - Render an Expanded Arrangement: every repeated Section appears in full performance order.
 - Preserve four Bars and a side-by-side Row Note per Chart Row at phone, iPad, and laptop widths.
@@ -73,11 +73,11 @@ Any future Codex session should read this file first to understand:
 - Wayfinder map: [Map a static Nashville chart system](https://github.com/mosesdasilva/setlist-viewer/issues/1).
 - The representative handwritten chart is `Más — Miel San Marcos`, key D, 140 BPM, 4/4; its source image and notation notes live under `docs/assets/` and `docs/research/`.
 - [Define the v1 Nashville chart language](https://github.com/mosesdasilva/setlist-viewer/issues/4) is resolved; canonical terms live in `CONTEXT.md`, and its detailed resolution is recorded on the ticket.
-- [Prototype a human-editable chart source format](https://github.com/mosesdasilva/setlist-viewer/issues/5) is claimed and active on branch `prototype/chart-source-format`; four throwaway variants and a terminal comparison live under `prototypes/chart-source-format/`, pending human reaction before any format decision or ticket resolution.
+- [Prototype a human-editable chart source format](https://github.com/mosesdasilva/setlist-viewer/issues/5) selected the small `.chart` notation because musician readability outweighed JSON/JavaScript familiarity; ADR 0001 records the choice.
 
 ## Next Recommended Work
 
-- Run and review the four variants for [Prototype a human-editable chart source format](https://github.com/mosesdasilva/setlist-viewer/issues/5), then record the human-backed verdict, delete or absorb the throwaway prototype, and resolve only that ticket.
+- Specify the exact `.chart` grammar and line-aware validation diagnostics before implementation.
 - Continue through the unblocked frontier of the Wayfinder map; do not implement the destination during planning.
 
 ## Update Rule
