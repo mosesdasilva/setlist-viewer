@@ -39,6 +39,9 @@ Any future Codex session should read this file first to understand:
 - Treat `CH` as `Chorus` and `BD` or `B` as `Bridge` when translating sheet shorthand into the website.
 - Evolve the viewer toward manually authored Nashville Number Charts rather than lyrics.
 - Keep split source and chart data canonical; generate the portable single-file HTML from them.
+- Commit generated `src/chart-data.js` and `setlist-viewer-portable.html`; regenerate both explicitly with zero-dependency `python3 tools/build.py`.
+- Use `python3 tools/build.py --check` in CI before GitHub Pages deployment; fail on invalid charts or generated drift without auto-committing repairs.
+- Generate atomically, with source locations in diagnostics and generated-file headers warning against manual edits.
 - Use a project-owned, musician-readable `.chart` notation as canonical chart source; ChordPro and ChordText inform its vocabulary without becoming the storage format.
 - Essential chart data must load under `file://` without runtime `fetch()` or ES modules; generated classic JavaScript is the split-runtime candidate and inline data is the portable-artifact candidate.
 - Render an Expanded Arrangement: every repeated Section appears in full performance order.
@@ -74,6 +77,7 @@ Any future Codex session should read this file first to understand:
 - The representative handwritten chart is `Más — Miel San Marcos`, key D, 140 BPM, 4/4; its source image and notation notes live under `docs/assets/` and `docs/research/`.
 - [Define the v1 Nashville chart language](https://github.com/mosesdasilva/setlist-viewer/issues/4) is resolved; canonical terms live in `CONTEXT.md`, and its detailed resolution is recorded on the ticket.
 - [Prototype a human-editable chart source format](https://github.com/mosesdasilva/setlist-viewer/issues/5) is resolved: the small `.chart` notation won because musician readability outweighed JSON/JavaScript familiarity; ADR 0001 records the choice.
+- [Choose the canonical-source and portable-build workflow](https://github.com/mosesdasilva/setlist-viewer/issues/7) is resolved: committed runtime and portable outputs are produced by an explicit Python build and checked—not repaired—by CI.
 
 ## Next Recommended Work
 

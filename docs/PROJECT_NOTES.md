@@ -4,7 +4,7 @@
 
 - Product name is **Setlist Viewer**.
 - The source direction from handoff is a reusable viewer, not only one specific setlist.
-- The primary portable artifact is a versioned single-file HTML build.
+- The planned primary portable artifact is the stable `setlist-viewer-portable.html` single-file build; Git history provides versioning.
 - The app is also maintained in split source files: `index.html`, `styles.css`, and `script.js`.
 - Deployment target is a static GitHub Pages site.
 - The next product direction is a stage-ready Nashville Number Chart viewer backed by manually edited structured chart data.
@@ -16,7 +16,11 @@
 ## Naming
 
 - Working project name: **Setlist Viewer**
-- Versioned portable file name starts with `setlist-viewer-v1.html`
+- The current prototype remains `setlist-viewer-v1.html` until implementation migrates it to `setlist-viewer-portable.html`.
+- Commit generated `src/chart-data.js` and `setlist-viewer-portable.html` so split `file://` use and instant handoff require no build.
+- Use a zero-dependency `python3 tools/build.py` for explicit local generation and `python3 tools/build.py --check` for read-only validation.
+- CI must validate charts and generated drift before deploying committed `src/`; failures show the rebuild command and never auto-commit changes.
+- Build output is atomic and generated files identify their sources and warn against manual editing.
 
 ## Constraints
 
