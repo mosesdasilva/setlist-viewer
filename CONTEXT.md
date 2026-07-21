@@ -17,11 +17,11 @@ A measure of musical time represented as one cell in a Nashville Number Chart.
 _Avoid_: Box
 
 **Chart Row**:
-A horizontal group of exactly four consecutive Bar slots displayed together as one reading unit.
+A horizontal group of exactly four consecutive Bar slots displayed together as one reading unit. It may carry multiple Row Notes.
 _Avoid_: Line
 
 **Row Note**:
-Optional content attached to a Chart Row rather than an individual Bar. A Row Note is explicitly either a Performance Direction or a Melody Passage.
+A typed annotation attached to a Chart Row rather than an individual Bar. Each Row Note is explicitly either a Performance Direction or a Melody Passage.
 _Avoid_: Per-bar annotation, line annotation
 
 **Section**:
@@ -40,9 +40,21 @@ _Avoid_: Section initial
 A scale-degree chord representation that may include an accidental, quality, extension, or Slash Chord bass degree.
 _Avoid_: Chord text
 
+**Chord Event**:
+A Chord Symbol played for a duration within a Bar. Multiple Chord Events divide the Bar equally unless Beat Dots state unequal durations.
+_Avoid_: Chord token
+
+**Beat Dot**:
+A dot displayed above a Chord Symbol that assigns one beat of duration to its Chord Event. Multiple dots assign the corresponding number of beats.
+_Avoid_: Duration dot
+
 **No Chord**:
 An intentional absence of played harmony during a Bar, written as `X`.
 _Avoid_: `N.C.`, blank Bar
+
+**Empty Bar Slot**:
+An unused trailing position in an incomplete Chart Row. It renders empty and is distinct from a No Chord Bar.
+_Avoid_: `X`, No Chord
 
 **Slash Chord**:
 A chord whose chord degree and bass degree differ, written as chord degree over bass degree, such as `1/3`.
