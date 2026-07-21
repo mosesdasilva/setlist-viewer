@@ -13,11 +13,11 @@ The person or band credited for the song version represented by a Nashville Numb
 _Avoid_: Lead Vocal
 
 **Bar**:
-A measure of musical time represented as one cell in a Nashville Number Chart.
+A measure of musical time represented as one cell in a Nashville Number Chart. It contains one or more Chord Events or an intentional No Chord.
 _Avoid_: Box
 
 **Chart Row**:
-A horizontal group of exactly four consecutive Bar slots displayed together as one reading unit. It may carry multiple Row Notes.
+A horizontal group of exactly four consecutive Bar slots displayed together as one reading unit. At least one slot must contain a Bar; only unused trailing slots may remain empty. It may carry multiple Row Notes.
 _Avoid_: Line
 
 **Row Note**:
@@ -25,7 +25,7 @@ A typed annotation attached to a Chart Row rather than an individual Bar. Each R
 _Avoid_: Per-bar annotation, line annotation
 
 **Section**:
-A named part of a song, such as Intro, Verse, Chorus, or Bridge, containing an ordered set of Chart Rows.
+A named part of a song, such as Intro, Verse, Chorus, or Bridge, containing at least one Chart Row.
 _Avoid_: Block
 
 **Section Name**:
@@ -47,11 +47,11 @@ An optional number distinguishing Sections of the same type. It remains separate
 _Avoid_: Numbered Section Code
 
 **Chord Symbol**:
-A scale-degree chord representation whose bare number carries the key's diatonic quality. It may include an accidental, explicit quality or extension, or Slash Chord bass degree.
+A scale-degree chord representation whose bare number carries the key's diatonic quality. Accidentals precede the degree; Slash Chord bass degrees use the same grammar. V1 suffixes are `m`, `7`, `maj7`, `m7`, `sus2`, `sus4`, `dim`, `aug`, and `add9`.
 _Avoid_: Chord text
 
 **Chord Event**:
-A Chord Symbol played for a duration within a Bar. Multiple Chord Events divide the Bar equally unless Beat Dots state unequal durations.
+A Chord Symbol played for a duration within a Bar. Multiple Chord Events divide the Bar equally only when that yields whole time-signature denominator units; otherwise Beat Dots are required.
 _Avoid_: Chord token
 
 **Beat Dot**:
@@ -75,7 +75,7 @@ A chord that occupies and sustains through an entire Bar, shown by enclosing its
 _Avoid_: Diamond number
 
 **Performance Direction**:
-A short playing instruction carried by a Row Note, such as `Rakes`.
+A free-text playing instruction carried by a Row Note, such as `Rakes`.
 _Avoid_: Comment
 
 **Melody Passage**:

@@ -48,11 +48,13 @@ Any future Codex session should read this file first to understand:
 - Display full Section Names in colored blocks. In chart data, use exactly two uppercase letters for each Section Code: `IN`, `IS`, `VS`, `TG`, `PC`, `PS`, `CH`, `BR`, `TR`, `EN`, or `OU`; custom codes must be unique within the song.
 - Keep the optional Section Ordinal separate from the two-letter code, combining them only as compact notation such as `VS2`.
 - Keep exactly four Bar slots per Chart Row; unused trailing slots remain empty, while `X`, not `N.C.`, means an intentional No Chord Bar.
+- Require every Section to contain at least one Chart Row and every Chart Row to contain at least one Bar; a Bar contains Chord Events or full-Bar `X`.
 - Allow multiple typed Row Notes on one Chart Row, including a Melody Passage and Performance Direction together.
 - Divide multiple Chord Events within a Bar equally by default; for unequal timing, display one Beat Dot above the Chord Symbol per assigned beat.
+- Require Beat Dots when equal division would not yield whole time-signature denominator units.
 - Treat each Beat Dot as one time-signature denominator unit. A Diamond Chord fills its entire Bar and needs no Beat Dots.
 - Use MultiTracks ChartBuilder as UX inspiration for number notation, visible colored Section containers, Song Map navigation, and side-positioned performance notes without copying its subscription or playback scope.
-- Support scale degrees `1`–`7`, accidentals, qualities/extensions, Slash Chords, multiple ordered Chord Symbols per Bar, and Diamond marks; defer pushes, ties, repeats, and modulations until observed.
+- Support scale degrees `1`–`7`; `b`/`#` accidentals; `m`, `7`, `maj7`, `m7`, `sus2`, `sus4`, `dim`, `aug`, and `add9` suffixes; Slash Chords; multiple ordered Chord Symbols per Bar; free-text Performance Directions; and Diamond marks. Defer pushes, ties, repeats, and modulations until observed.
 - Keep browser editing, handwriting/OCR import, melody tracking, cloud services, and dedicated PDF generation outside v1.
 - Push every completed commit immediately; use focused feature branches for implementation and keep `main` stable.
 
