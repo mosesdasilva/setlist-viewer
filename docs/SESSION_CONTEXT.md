@@ -49,7 +49,7 @@ Any future Codex session should read this file first to understand:
 - Keep the optional Section Ordinal separate from the two-letter code, combining them only as compact notation such as `VS2`.
 - Keep exactly four Bar slots per Chart Row; unused trailing slots remain empty, while `X`, not `N.C.`, means an intentional timed No Chord event.
 - Require every Section to contain at least one Chart Row and every Chart Row to contain at least one Bar; a Bar contains one or more timed Bar Events.
-- Allow multiple typed Row Notes on one Chart Row, including a Melody Passage and Performance Direction together.
+- Allow multiple typed Row Notes on one Chart Row, including a Melody Passage and Performance Direction together; preserve their authored order.
 - Divide multiple Bar Events—Chord Events or `X`—within a Bar equally by default; for unequal timing, display one Beat Dot above the Chord Symbol or `X` per assigned beat.
 - Require Beat Dots when equal division would not yield whole time-signature denominator units.
 - Treat each Beat Dot as one time-signature denominator unit. A Diamond Chord fills its entire Bar and needs no Beat Dots.

@@ -21,7 +21,7 @@ A horizontal group of exactly four consecutive Bar slots displayed together as o
 _Avoid_: Line
 
 **Row Note**:
-A typed annotation attached to a Chart Row rather than an individual Bar. Each Row Note is explicitly either a Performance Direction or a Melody Passage.
+A typed annotation attached to a Chart Row rather than an individual Bar. Each Row Note is explicitly either a Performance Direction or a Melody Passage; multiple Row Notes preserve authored order.
 _Avoid_: Per-bar annotation, line annotation
 
 **Section**:
