@@ -42,6 +42,7 @@ Any future Codex session should read this file first to understand:
 - Render an Expanded Arrangement: every repeated Section appears in full performance order.
 - Preserve four Bars and a side-by-side Row Note per Chart Row at phone, iPad, and laptop widths.
 - Keep browser editing, handwriting/OCR import, melody tracking, cloud services, and dedicated PDF generation outside v1.
+- Push every completed commit immediately; use focused feature branches for implementation and keep `main` stable.
 
 ## Current Status
 
@@ -57,7 +58,7 @@ Any future Codex session should read this file first to understand:
 ## Next Recommended Work
 
 - Resolve [Compare static Nashville chart formats and storage approaches](https://github.com/mosesdasilva/setlist-viewer/issues/2).
-- Supply and resolve [Capture a representative handwritten Nashville chart](https://github.com/mosesdasilva/setlist-viewer/issues/3).
+- [Capture a representative handwritten Nashville chart](https://github.com/mosesdasilva/setlist-viewer/issues/3) is claimed and waiting for the user to attach one legible real chart plus explanations of ambiguous marks.
 - Continue through the unblocked frontier of the Wayfinder map; do not implement the destination during planning.
 
 ## Update Rule

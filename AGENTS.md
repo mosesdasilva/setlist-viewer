@@ -54,7 +54,17 @@ When working on this repo:
 3. Prefer updating the portable single-file version when the user is prototyping or requesting a handoff-friendly artifact.
 4. Test by opening the static site in a browser.
 5. Update [PROJECT_NOTES.md](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/docs/PROJECT_NOTES.md) if project direction changes.
-6. Commit with a clear message once the repo is under git.
+6. Commit each completed change with a clear message and push the current branch immediately.
+
+## Version Control
+
+- This is a solo-development repository; keep every completed commit backed up on GitHub.
+- Push immediately after every commit. Do not leave completed commits local-only.
+- Keep `main` stable.
+- Create a focused feature branch before implementation work that could destabilize `main`.
+- Merge into `main` only after the Done Criteria pass, then push `main`.
+- Documentation-only maintenance may be committed directly to `main` when low risk.
+- Never force-push or rewrite published history unless the user explicitly requests it.
 
 ## Editing Guidance
 

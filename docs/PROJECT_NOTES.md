@@ -23,6 +23,13 @@
 - Keep the single-file distribution path available
 - Keep iteration simple while content is still changing
 
+## Version Control
+
+- Commit each completed change and push it immediately so GitHub stays current.
+- Keep `main` stable; use focused feature branches for implementation work.
+- Low-risk documentation maintenance may go directly to `main`.
+- Merge only after the project Done Criteria pass.
+
 ## UX Direction
 
 - mostly black, white, and gray UI
