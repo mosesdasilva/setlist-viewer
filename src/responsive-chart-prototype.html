@@ -12,8 +12,9 @@
       --paper: #fff;
       --ink: #101214;
       --muted: #5d646b;
-      --line: rgba(16, 18, 20, .24);
-      --soft-line: rgba(16, 18, 20, .14);
+      --line: rgba(16, 18, 20, .18);
+      --grid-line: rgba(0, 0, 0, .2);
+      --note-divider: rgba(0, 0, 0, .42);
       --header: rgba(255, 255, 255, .96);
       --control: #111;
       --control-ink: #fff;
@@ -35,8 +36,9 @@
       --paper: #151a21;
       --ink: #f5f7fa;
       --muted: #aab2bd;
-      --line: rgba(255, 255, 255, .3);
-      --soft-line: rgba(255, 255, 255, .17);
+      --line: rgba(255, 255, 255, .14);
+      --grid-line: rgba(0, 0, 0, .25);
+      --note-divider: rgba(0, 0, 0, .48);
       --header: rgba(14, 18, 24, .96);
       --control: #f5f7fa;
       --control-ink: #101214;
@@ -92,7 +94,9 @@
     .header-tools { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
     .meta { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
     .meta span { padding: 6px 8px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper); font-size: 12px; font-weight: 800; }
-    .theme-toggle { padding: 7px 10px; border: 0; border-radius: 999px; background: var(--control); color: var(--control-ink); cursor: pointer; font-size: 12px; font-weight: 900; }
+    .theme-toggle,
+    .layout-toggle { padding: 7px 10px; border: 0; border-radius: 999px; background: var(--control); color: var(--control-ink); cursor: pointer; font-size: 12px; font-weight: 900; }
+    .layout-toggle { display: none; }
 
     #chart { width: min(1180px, calc(100% - 20px)); margin: 14px auto 48px; }
     .chart-intro { margin: 0 0 12px; color: var(--muted); font-size: 12px; line-height: 1.4; }
@@ -111,15 +115,15 @@
       margin: 0 0 12px;
       overflow: hidden;
       break-inside: avoid;
-      border: 1px solid var(--line);
+      border: 1px solid var(--grid-line);
       border-radius: 12px;
       background: var(--section-color);
       vertical-align: top;
     }
-    .section-heading { display: flex; align-items: center; justify-content: space-between; padding: 7px 10px; border-bottom: 1px solid var(--line); }
+    .section-heading { display: flex; align-items: center; justify-content: space-between; padding: 7px 10px; border-bottom: 1px solid var(--grid-line); }
     .section-heading h2 { margin: 0; font-size: 14px; }
-    .section-code { padding: 3px 6px; border: 1px solid currentColor; border-radius: 6px; font-size: 9px; font-weight: 900; opacity: .8; }
-    .chart-row + .chart-row { border-top: 1px solid var(--soft-line); }
+    .section-code { padding: 3px 6px; border: 1px solid var(--grid-line); border-radius: 6px; font-size: 9px; font-weight: 900; }
+    .chart-row + .chart-row { border-top: 1px solid var(--grid-line); }
 
     .bars-and-notes {
       display: grid;
@@ -134,9 +138,9 @@
       align-items: center;
       justify-items: center;
       padding: 6px 2px 5px;
-      border-right: 1px solid var(--line);
+      border-right: 1px solid var(--grid-line);
     }
-    .bar:first-child { border-left: 1px solid var(--line); }
+    .bar:first-child { border-left: 0; }
     .bar-chord { display: grid; min-width: 0; place-items: center; font-size: clamp(19px, 2.4vw, 28px); font-weight: 850; letter-spacing: -.04em; }
     .bar-melody { min-width: 0; max-width: 100%; min-height: 12px; color: var(--melody); font-size: clamp(7px, 1.05vw, 10px); font-weight: 850; line-height: 1.05; overflow-wrap: anywhere; text-align: center; }
     .event { position: relative; display: inline-grid; min-width: 0; place-items: center; }
@@ -150,17 +154,21 @@
       align-content: center;
       gap: 3px;
       padding: 6px 8px;
-      border-left: 1px solid var(--line);
-      background: rgba(255, 255, 255, .1);
+      border-left: 2px solid var(--note-divider);
+      background: transparent;
       overflow: hidden;
       font-size: clamp(8px, 1.15vw, 11px);
       line-height: 1.15;
     }
     .direction { font-weight: 900; letter-spacing: .05em; text-transform: uppercase; }
     .no-note { opacity: 0; }
+    .section[data-row-count="1"] .bar,
+    .section[data-row-count="1"] .row-notes { min-height: 128px; }
 
     @media (min-width: 700px) {
       #sections { column-count: 2; column-gap: 14px; }
+      body.single-column #sections { column-count: 1; }
+      .layout-toggle { display: inline-block; }
     }
 
     @media (max-width: 699px) {
@@ -176,6 +184,8 @@
       .section-heading { padding: 6px 8px; }
       .bars-and-notes { grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(76px, 1.05fr); }
       .bar { min-height: 60px; }
+      .section[data-row-count="1"] .bar,
+      .section[data-row-count="1"] .row-notes { min-height: 120px; }
       .bar-chord { font-size: 18px; }
       .bar-melody { font-size: 7px; }
       .row-notes { padding: 4px; font-size: 8px; }
@@ -191,11 +201,12 @@
     </div>
     <div class="header-tools">
       <div class="meta" aria-label="Song metadata"><span>Key D</span><span>140 BPM</span><span>4/4</span></div>
+      <button class="layout-toggle" type="button" id="layout-toggle" aria-pressed="false">2 columns</button>
       <button class="theme-toggle" type="button" id="theme-toggle">Light mode</button>
     </div>
   </header>
   <main id="chart">
-    <p class="chart-intro">Expanded Arrangement · read down the left column, then down the right · Melody Fragments sit inside their Bars · Row Notes remain available for Performance Directions.</p>
+    <p class="chart-intro">Expanded Arrangement · wide-screen columns are adjustable · Melody Fragments sit inside their Bars · Row Notes remain available for Performance Directions.</p>
     <div id="sections"></div>
   </main>
 
@@ -262,7 +273,7 @@
             return renderBar(bar, melody ? melody.fragments[barIndex] : '');
           }).join('') + '<aside class="row-notes" aria-label="Row notes">' + notes + '</aside></div></div>';
         }).join('');
-        return '<section class="section" data-code="' + section.code + '"><header class="section-heading"><h2>' + section.name + '</h2><span class="section-code">' + section.code + '</span></header>' + rows + '</section>';
+        return '<section class="section" data-code="' + section.code + '" data-row-count="' + section.rows.length + '"><header class="section-heading"><h2>' + section.name + '</h2><span class="section-code">' + section.code + '</span></header>' + rows + '</section>';
       }
 
       function applyTheme(theme) {
@@ -274,11 +285,27 @@
         history.replaceState({}, '', url);
       }
 
+      function applyColumns(columns) {
+        const single = columns === '1';
+        document.body.classList.toggle('single-column', single);
+        const button = document.getElementById('layout-toggle');
+        button.textContent = single ? '1 column' : '2 columns';
+        button.setAttribute('aria-pressed', String(single));
+        const url = new URL(location.href);
+        url.searchParams.set('columns', single ? '1' : '2');
+        history.replaceState({}, '', url);
+      }
+
       document.getElementById('sections').innerHTML = sections.map(renderSection).join('');
       document.getElementById('theme-toggle').addEventListener('click', function () {
         applyTheme(document.body.classList.contains('dark-theme') ? 'light' : 'dark');
       });
-      applyTheme(new URLSearchParams(location.search).get('theme') || 'dark');
+      document.getElementById('layout-toggle').addEventListener('click', function () {
+        applyColumns(document.body.classList.contains('single-column') ? '2' : '1');
+      });
+      const searchParams = new URLSearchParams(location.search);
+      applyTheme(searchParams.get('theme') || 'dark');
+      applyColumns(searchParams.get('columns') || '2');
     })();
   </script>
 </body>

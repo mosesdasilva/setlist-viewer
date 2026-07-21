@@ -73,7 +73,7 @@ Any future Codex session should read this file first to understand:
 - Wayfinder map: [Map a static Nashville chart system](https://github.com/mosesdasilva/setlist-viewer/issues/1).
 - The representative handwritten chart is `Más — Miel San Marcos`, key D, 140 BPM, 4/4; its source image and notation notes live under `docs/assets/` and `docs/research/`.
 - [Define the v1 Nashville chart language](https://github.com/mosesdasilva/setlist-viewer/issues/4) is resolved; canonical terms live in `CONTEXT.md`, and its detailed resolution is recorded on the ticket.
-- [Prototype the expanded responsive chart view](https://github.com/mosesdasilva/setlist-viewer/issues/6) is claimed and awaiting final human review. Section Bands won: the refinement uses two columns at 700px+, one column below, full-color Section bands, dark-default/light-toggle themes, Bar-aligned Melody Fragments inside Bars, and a Row Note column reserved for Performance Directions. It lives in `src/responsive-chart-prototype.html` on `prototype/responsive-chart-view`.
+- [Prototype the expanded responsive chart view](https://github.com/mosesdasilva/setlist-viewer/issues/6) is claimed and awaiting final human review. Section Bands won: the refinement uses adjustable one/two-column wide-screen layout, forced single-column narrow layout, equal visual height for one- and two-Chart-Row Sections, full-color bands with subtle dark grid lines, a stronger Bar/Row Note divider, dark-default/light-toggle themes, Bar-aligned Melody Fragments inside Bars, and a Row Note column reserved for Performance Directions. It lives in `src/responsive-chart-prototype.html` on `prototype/responsive-chart-view`.
 
 ## Next Recommended Work
 
