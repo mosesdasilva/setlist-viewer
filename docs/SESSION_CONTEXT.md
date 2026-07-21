@@ -73,10 +73,11 @@ Any future Codex session should read this file first to understand:
 - Wayfinder map: [Map a static Nashville chart system](https://github.com/mosesdasilva/setlist-viewer/issues/1).
 - The representative handwritten chart is `Más — Miel San Marcos`, key D, 140 BPM, 4/4; its source image and notation notes live under `docs/assets/` and `docs/research/`.
 - [Define the v1 Nashville chart language](https://github.com/mosesdasilva/setlist-viewer/issues/4) is resolved; canonical terms live in `CONTEXT.md`, and its detailed resolution is recorded on the ticket.
+- [Prototype a human-editable chart source format](https://github.com/mosesdasilva/setlist-viewer/issues/5) is claimed and active on branch `prototype/chart-source-format`; four throwaway variants and a terminal comparison live under `prototypes/chart-source-format/`, pending human reaction before any format decision or ticket resolution.
 
 ## Next Recommended Work
 
-- Resolve [Prototype a human-editable chart source format](https://github.com/mosesdasilva/setlist-viewer/issues/5) against the agreed v1 chart language and representative chart.
+- Run and review the four variants for [Prototype a human-editable chart source format](https://github.com/mosesdasilva/setlist-viewer/issues/5), then record the human-backed verdict, delete or absorb the throwaway prototype, and resolve only that ticket.
 - Continue through the unblocked frontier of the Wayfinder map; do not implement the destination during planning.
 
 ## Update Rule
