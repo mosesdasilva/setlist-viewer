@@ -72,10 +72,11 @@ Any future Codex session should read this file first to understand:
 - Engineering-skill configuration lives under `docs/agents/`; domain language lives in root `CONTEXT.md`.
 - Wayfinder map: [Map a static Nashville chart system](https://github.com/mosesdasilva/setlist-viewer/issues/1).
 - The representative handwritten chart is `Más — Miel San Marcos`, key D, 140 BPM, 4/4; its source image and notation notes live under `docs/assets/` and `docs/research/`.
+- [Define the v1 Nashville chart language](https://github.com/mosesdasilva/setlist-viewer/issues/4) is resolved; canonical terms live in `CONTEXT.md`, and its detailed resolution is recorded on the ticket.
 
 ## Next Recommended Work
 
-- Resolve [Define the v1 Nashville chart language](https://github.com/mosesdasilva/setlist-viewer/issues/4) using the representative handwritten chart and format research.
+- Resolve [Prototype a human-editable chart source format](https://github.com/mosesdasilva/setlist-viewer/issues/5) against the agreed v1 chart language and representative chart.
 - Continue through the unblocked frontier of the Wayfinder map; do not implement the destination during planning.
 
 ## Update Rule
