@@ -13,7 +13,7 @@ The person or band credited for the song version represented by a Nashville Numb
 _Avoid_: Lead Vocal
 
 **Bar**:
-A measure of musical time represented as one cell in a Nashville Number Chart. It contains one or more Chord Events or an intentional No Chord.
+A measure of musical time represented as one cell in a Nashville Number Chart. It contains one or more timed Bar Events.
 _Avoid_: Box
 
 **Chart Row**:
@@ -50,20 +50,24 @@ _Avoid_: Numbered Section Code
 A scale-degree chord representation whose bare number carries the key's diatonic quality. Accidentals precede the degree; Slash Chord bass degrees use the same grammar. V1 suffixes are `m`, `7`, `maj7`, `m7`, `sus2`, `sus4`, `dim`, `aug`, and `add9`.
 _Avoid_: Chord text
 
+**Bar Event**:
+Timed content within a Bar: either a Chord Event or No Chord. Multiple Bar Events divide the Bar equally only when that yields whole time-signature denominator units; otherwise Beat Dots are required.
+_Avoid_: Bar item
+
 **Chord Event**:
-A Chord Symbol played for a duration within a Bar. Multiple Chord Events divide the Bar equally only when that yields whole time-signature denominator units; otherwise Beat Dots are required.
+A Chord Symbol played for a duration within a Bar.
 _Avoid_: Chord token
 
 **Beat Dot**:
-A dot displayed above a Chord Symbol that assigns one time-signature denominator unit to its Chord Event. Multiple dots assign the corresponding number of units.
+A dot displayed above a Chord Symbol or `X` that assigns one time-signature denominator unit to its Bar Event. Multiple dots assign the corresponding number of units.
 _Avoid_: Duration dot
 
 **No Chord**:
-An intentional absence of played harmony during a Bar, written as `X`.
-_Avoid_: `N.C.`, blank Bar
+An intentional absence of played harmony for all or part of a Bar, written as `X`. It follows the same equal-division and Beat Dot timing rules as Chord Events.
+_Avoid_: `N.C.`, Empty Bar Slot
 
 **Empty Bar Slot**:
-An unused trailing position in an incomplete Chart Row. It renders empty and is distinct from a No Chord Bar.
+An unused trailing position in an incomplete Chart Row. It renders empty and is distinct from a timed No Chord event.
 _Avoid_: `X`, No Chord
 
 **Slash Chord**:
