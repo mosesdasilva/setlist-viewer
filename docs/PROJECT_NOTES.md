@@ -9,6 +9,8 @@
 - Deployment target is a static GitHub Pages site.
 - The next product direction is a stage-ready Nashville Number Chart viewer backed by manually edited structured chart data.
 - Split source and chart data will be canonical; the portable single-file HTML will be generated.
+- Carry a constrained ChordPro grid profile into source-format prototyping as the leading candidate; use ChordText as a notation-language reference, and require the representative chart to prove the fit before adoption.
+- Avoid runtime `fetch()` or ES-module loading for essential chart data while direct `file://` use remains required; generate file-safe classic JavaScript for split runtime use and inline data for the portable artifact.
 
 ## Naming
 

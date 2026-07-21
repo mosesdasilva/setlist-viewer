@@ -39,6 +39,8 @@ Any future Codex session should read this file first to understand:
 - Treat `CH` as `Chorus` and `BD` or `B` as `Bridge` when translating sheet shorthand into the website.
 - Evolve the viewer toward manually authored Nashville Number Charts rather than lyrics.
 - Keep split source and chart data canonical; generate the portable single-file HTML from them.
+- Carry a constrained ChordPro grid profile into source-format prototyping as the leading candidate; ChordText informs notation vocabulary, but the representative chart must prove the final fit.
+- Essential chart data must load under `file://` without runtime `fetch()` or ES modules; generated classic JavaScript is the split-runtime candidate and inline data is the portable-artifact candidate.
 - Render an Expanded Arrangement: every repeated Section appears in full performance order.
 - Preserve four Bars and a side-by-side Row Note per Chart Row at phone, iPad, and laptop widths.
 - Keep browser editing, handwriting/OCR import, melody tracking, cloud services, and dedicated PDF generation outside v1.
@@ -57,8 +59,8 @@ Any future Codex session should read this file first to understand:
 
 ## Next Recommended Work
 
-- Resolve [Compare static Nashville chart formats and storage approaches](https://github.com/mosesdasilva/setlist-viewer/issues/2).
 - [Capture a representative handwritten Nashville chart](https://github.com/mosesdasilva/setlist-viewer/issues/3) is claimed and waiting for the user to attach one legible real chart plus explanations of ambiguous marks.
+- After that chart is available, continue with the first unblocked ticket under [Map a static Nashville chart system](https://github.com/mosesdasilva/setlist-viewer/issues/1).
 - Continue through the unblocked frontier of the Wayfinder map; do not implement the destination during planning.
 
 ## Update Rule
