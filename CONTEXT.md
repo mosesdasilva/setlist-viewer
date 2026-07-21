@@ -89,3 +89,7 @@ _Avoid_: Red comment
 **Melody Fragment**:
 The opaque text for one Bar of a Melody Passage. V1 preserves the text without interpreting individual melody notes.
 _Avoid_: Melody Bar, parsed melody
+
+**Octave Cue**:
+A melody-scoped indication that a Melody Fragment or Melody Passage is performed in another octave, such as `Oct ↑`. It belongs with melody content rather than a Performance Direction.
+_Avoid_: Performance Direction, octave comment
