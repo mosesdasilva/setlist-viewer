@@ -8,16 +8,15 @@
   <style>
     :root {
       color-scheme: light;
-      --bg: #fff;
-      --paper: #fff;
+      --bg: #f3efe7;
+      --paper: #faf7f0;
       --ink: #101214;
       --muted: #5d646b;
       --line: rgba(16, 18, 20, .18);
       --section-edge: rgba(0, 0, 0, .32);
       --grid-line: rgba(0, 0, 0, .24);
-      --note-divider: rgba(0, 0, 0, .42);
-      --header: rgba(255, 255, 255, .96);
-      --control: #111;
+      --header: rgba(250, 247, 240, .96);
+      --control: #1f2937;
       --control-ink: #fff;
       --band-ink: #fff;
       --melody: #fff;
@@ -34,15 +33,26 @@
 
     body.dark-theme {
       color-scheme: dark;
-      --bg: #090c10;
-      --paper: #151a21;
+      --bg: #081321;
+      --paper: #112033;
       --ink: #f5f7fa;
       --muted: #aab2bd;
       --line: rgba(255, 255, 255, .14);
-      --note-divider: rgba(0, 0, 0, .48);
-      --header: rgba(14, 18, 24, .96);
+      --header: rgba(10, 24, 40, .96);
       --control: #f5f7fa;
       --control-ink: #101214;
+    }
+
+    body.pastel-palette {
+      --band-ink: #172033;
+      --intro: #b8c7d9;
+      --verse: #9dbbe7;
+      --tag: #efbf91;
+      --prechorus: #ead58b;
+      --chorus: #9fd3b1;
+      --instrumental: #baa8e4;
+      --bridge: #e2a6b2;
+      --ending: #c2cbd5;
     }
 
     * { box-sizing: border-box; }
@@ -88,11 +98,12 @@
     .meta span { padding: 6px 8px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper); font-size: 12px; font-weight: 800; }
     .theme-toggle,
     .layout-toggle,
-    .cell-style-toggle { width: 36px; height: 34px; display: inline-grid; padding: 0; border: 0; border-radius: 999px; background: var(--control); color: var(--control-ink); cursor: pointer; place-items: center; }
+    .melody-toggle,
+    .palette-toggle { width: 36px; height: 34px; display: inline-grid; padding: 0; border: 0; border-radius: 999px; background: var(--control); color: var(--control-ink); cursor: pointer; place-items: center; }
     .layout-toggle { display: none; }
     .control-icon { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2; }
-    .song-map { display: flex; flex: 1 0 100%; gap: 5px; padding-top: 6px; overflow-x: auto; scrollbar-width: thin; }
-    .map-chip { display: inline-grid; width: 27px; height: 27px; flex: 0 0 27px; border: 1px solid rgba(0, 0, 0, .3); border-radius: 999px; background: var(--ending); color: #fff; font-size: 8px; font-weight: 900; place-items: center; text-decoration: none; }
+    .song-map { display: flex; min-height: 39px; flex: 1 0 100%; align-items: center; gap: 5px; margin: 0 -3px; padding: 6px 3px 5px; overflow-x: auto; scrollbar-width: thin; }
+    .map-chip { display: inline-grid; width: 27px; height: 27px; flex: 0 0 27px; border: 1px solid rgba(0, 0, 0, .3); border-radius: 999px; background: var(--ending); color: var(--band-ink); font-size: 8px; font-weight: 900; line-height: 1; place-items: center; text-decoration: none; }
     .map-chip[data-code="IN"] { background: var(--intro); }
     .map-chip[data-code="VS"] { background: var(--verse); }
     .map-chip[data-code="TG"] { background: var(--tag); }
@@ -101,7 +112,8 @@
     .map-chip[data-code="IS"] { background: var(--instrumental); }
     .map-chip[data-code="BR"] { background: var(--bridge); }
     .map-chip:hover,
-    .map-chip:focus-visible { outline: 2px solid var(--ink); outline-offset: 1px; }
+    .map-chip:focus-visible,
+    .map-chip.is-active { outline: 0; box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .94), inset 0 0 0 4px rgba(0, 0, 0, .36); }
 
     #chart { width: min(1180px, calc(100% - 20px)); margin: 14px auto 48px; }
     .chart-intro { margin: 0 0 12px; color: var(--muted); font-size: 12px; line-height: 1.4; }
@@ -153,6 +165,8 @@
     .bar-chord { display: grid; min-width: 0; place-items: center; font-size: clamp(19px, 2.4vw, 28px); font-weight: 850; letter-spacing: -.04em; }
     .bar-melody { display: inline-flex; min-width: 0; max-width: calc(100% - 4px); min-height: 16px; align-items: center; justify-content: center; gap: 3px; color: var(--melody); font-size: clamp(7px, 1.05vw, 10px); font-weight: 900; line-height: 1.05; overflow-wrap: anywhere; text-align: center; }
     .bar-melody.has-melody { padding: 3px 6px; border-radius: 999px; background: var(--melody-bubble); box-shadow: 0 1px 2px rgba(0, 0, 0, .2); }
+    body.melody-hidden .bar { grid-template-rows: 1fr; }
+    body.melody-hidden .bar-melody { display: none; }
     .event { position: relative; display: inline-grid; min-width: 0; place-items: center; }
     .diamond { width: 29px; height: 29px; border: 2px solid currentColor; transform: rotate(45deg); }
     .diamond span { transform: rotate(-45deg); }
@@ -175,35 +189,28 @@
     .section[data-row-count="1"] .bar,
     .section[data-row-count="1"] .row-notes { min-height: 128px; }
 
-    body.cell-grid .section-heading { border-right: 1px solid var(--grid-line); }
-    body.cell-grid .chart-row + .chart-row { border-top: 1px solid var(--grid-line); }
-    body.cell-grid .bar { border-right: 1px solid var(--grid-line); }
-
-    body.cell-bubbles .section { padding: 6px; column-gap: 6px; }
-    body.cell-bubbles .section-heading { padding: 1px 0; }
-    body.cell-bubbles .chart-row + .chart-row { margin-top: 6px; }
-    body.cell-bubbles .bars-and-notes { gap: 6px; }
-    body.cell-bubbles .bar,
-    body.cell-bubbles .row-notes { border: 0; border-radius: 9px; background: rgba(0, 0, 0, .1); }
-    body.cell-bubbles .section[data-row-count="1"] .bar,
-    body.cell-bubbles .section[data-row-count="1"] .row-notes { min-height: 134px; }
+    .section-heading { border-right: 1px solid var(--grid-line); }
+    .chart-row + .chart-row { border-top: 1px solid var(--grid-line); }
+    .bar { border-right: 1px solid var(--grid-line); }
 
     @media (min-width: 700px) {
       #sections { column-count: 2; column-gap: 14px; }
       body.single-column #sections { column-count: 1; }
-      .layout-toggle { display: inline-block; }
+      .layout-toggle { display: inline-grid; }
     }
 
     @media (max-width: 699px) {
       .song-header { align-items: start; padding: 10px 12px; }
       .artist { font-size: 12px; }
       .header-tools { max-width: 190px; flex-wrap: wrap; }
-      .song-map { padding-top: 5px; }
+      .song-map { min-height: 37px; padding-block: 5px; }
       .map-chip { width: 25px; height: 25px; flex-basis: 25px; }
       .meta { gap: 4px; }
       .meta span { padding: 5px 7px; font-size: 10px; }
-      .theme-toggle { width: 32px; height: 30px; }
-      .cell-style-toggle { width: 32px; height: 30px; }
+      .theme-toggle,
+      .layout-toggle,
+      .melody-toggle,
+      .palette-toggle { width: 32px; height: 30px; }
       #chart { width: calc(100% - 12px); margin-top: 8px; }
       .chart-intro { padding-inline: 4px; font-size: 10px; }
       .section { margin-bottom: 8px; border-radius: 9px; }
@@ -211,13 +218,10 @@
       .section { grid-template-columns: 36px minmax(0, 1fr); }
       .section-heading { padding: 6px 4px; }
       .section-heading h2 { font-size: 12px; }
-      body.cell-bubbles .section-heading { padding: 1px 0; }
       .bars-and-notes { grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(76px, 1.05fr); }
       .bar { min-height: 60px; }
       .section[data-row-count="1"] .bar,
       .section[data-row-count="1"] .row-notes { min-height: 120px; }
-      body.cell-bubbles .section[data-row-count="1"] .bar,
-      body.cell-bubbles .section[data-row-count="1"] .row-notes { min-height: 126px; }
       .bar-chord { font-size: 18px; }
       .bar-melody { font-size: 7px; }
       .row-notes { padding: 4px; font-size: 8px; }
@@ -234,13 +238,14 @@
     <div class="header-tools">
       <div class="meta" aria-label="Song metadata"><span>Key D</span><span>140 BPM</span><span>4/4</span></div>
       <button class="layout-toggle" type="button" id="layout-toggle" aria-pressed="false" aria-label="Layout: two columns" title="Two-column layout"></button>
-      <button class="cell-style-toggle" type="button" id="cell-style-toggle" aria-label="Cell style: Grid" title="Grid cells"></button>
+      <button class="melody-toggle" type="button" id="melody-toggle" aria-pressed="true" aria-label="Hide melody" title="Hide melody"></button>
+      <button class="palette-toggle" type="button" id="palette-toggle" aria-pressed="false" aria-label="Use pastel Section colors" title="Use pastel Section colors"></button>
       <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Use light mode" title="Use light mode"></button>
     </div>
     <nav class="song-map" id="song-map" aria-label="Song map"></nav>
   </header>
   <main id="chart">
-    <p class="chart-intro">Expanded Arrangement · vertical Section headers preserve chart height · compare Grid and softly filled Bar Bubble cells · Melody Fragments use borderless red capsules.</p>
+    <p class="chart-intro">Expanded Arrangement · vertical Section headers · uniform Grid · Melody and Strong/Pastel color toggles · ordered Song Map navigation.</p>
     <div id="sections"></div>
   </main>
 
@@ -341,19 +346,51 @@
         history.replaceState({}, '', url);
       }
 
-      function applyCellStyle(style) {
-        const bubbles = style === 'bubbles';
-        document.body.classList.toggle('cell-grid', !bubbles);
-        document.body.classList.toggle('cell-bubbles', bubbles);
-        const button = document.getElementById('cell-style-toggle');
-        button.innerHTML = bubbles
-          ? '<svg class="control-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="4" height="10" rx="2"></rect><rect x="7.3" y="7" width="4" height="10" rx="2"></rect><rect x="12.7" y="7" width="4" height="10" rx="2"></rect><rect x="18" y="7" width="4" height="10" rx="2"></rect></svg>'
-          : '<svg class="control-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M7.5 5v14M12 5v14M16.5 5v14"></path></svg>';
-        const label = bubbles ? 'Cell style: Bar bubbles' : 'Cell style: Grid';
+      function applyMelody(visibility) {
+        const visible = visibility !== 'off';
+        document.body.classList.toggle('melody-hidden', !visible);
+        const button = document.getElementById('melody-toggle');
+        button.innerHTML = visible
+          ? '<svg class="control-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 17V5l9-2v12M9 8l9-2"></path><circle cx="6.5" cy="17.5" r="2.5"></circle><circle cx="15.5" cy="15.5" r="2.5"></circle></svg>'
+          : '<svg class="control-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 17V5l9-2v12M9 8l9-2"></path><circle cx="6.5" cy="17.5" r="2.5"></circle><circle cx="15.5" cy="15.5" r="2.5"></circle><path d="M3 3l18 18"></path></svg>';
+        button.setAttribute('aria-pressed', String(visible));
+        const label = visible ? 'Hide melody' : 'Show melody';
         button.setAttribute('aria-label', label);
         button.setAttribute('title', label);
         const url = new URL(location.href);
-        url.searchParams.set('cells', bubbles ? 'bubbles' : 'grid');
+        url.searchParams.set('melody', visible ? 'on' : 'off');
+        history.replaceState({}, '', url);
+      }
+
+      function applyPalette(palette) {
+        const pastel = palette === 'pastel';
+        document.body.classList.toggle('pastel-palette', pastel);
+        const button = document.getElementById('palette-toggle');
+        button.innerHTML = '<svg class="control-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="7" cy="8" r="3" fill="currentColor"></circle><circle cx="16.5" cy="7" r="2.5" fill="currentColor"></circle><circle cx="12" cy="16" r="3.5" fill="currentColor"></circle></svg>';
+        button.setAttribute('aria-pressed', String(pastel));
+        const label = pastel ? 'Use strong Section colors' : 'Use pastel Section colors';
+        button.setAttribute('aria-label', label);
+        button.setAttribute('title', label);
+        const url = new URL(location.href);
+        url.searchParams.set('palette', pastel ? 'pastel' : 'strong');
+        history.replaceState({}, '', url);
+      }
+
+      function activateMapChip(chip) {
+        document.querySelectorAll('.map-chip').forEach(function (candidate) { candidate.classList.toggle('is-active', candidate === chip); });
+      }
+
+      function navigateFromMap(event) {
+        event.preventDefault();
+        const chip = event.currentTarget;
+        const target = document.querySelector(chip.getAttribute('href'));
+        if (!target) return;
+        activateMapChip(chip);
+        const headerHeight = document.querySelector('.song-header').offsetHeight;
+        const targetTop = target.getBoundingClientRect().top + window.scrollY - headerHeight - 8;
+        window.scrollTo({ top: targetTop, behavior: 'smooth' });
+        const url = new URL(location.href);
+        url.hash = target.id;
         history.replaceState({}, '', url);
       }
 
@@ -361,19 +398,29 @@
       document.getElementById('song-map').innerHTML = sections.map(function (section, sectionIndex) {
         return '<a class="map-chip" data-code="' + section.code + '" href="#section-' + sectionIndex + '" aria-label="Go to ' + section.name + ', position ' + (sectionIndex + 1) + '">' + section.code + '</a>';
       }).join('');
+      document.querySelectorAll('.map-chip').forEach(function (chip) { chip.addEventListener('click', navigateFromMap); });
       document.getElementById('theme-toggle').addEventListener('click', function () {
         applyTheme(document.body.classList.contains('dark-theme') ? 'light' : 'dark');
       });
       document.getElementById('layout-toggle').addEventListener('click', function () {
         applyColumns(document.body.classList.contains('single-column') ? '2' : '1');
       });
-      document.getElementById('cell-style-toggle').addEventListener('click', function () {
-        applyCellStyle(document.body.classList.contains('cell-bubbles') ? 'grid' : 'bubbles');
+      document.getElementById('melody-toggle').addEventListener('click', function () {
+        applyMelody(document.body.classList.contains('melody-hidden') ? 'on' : 'off');
+      });
+      document.getElementById('palette-toggle').addEventListener('click', function () {
+        applyPalette(document.body.classList.contains('pastel-palette') ? 'strong' : 'pastel');
       });
       const searchParams = new URLSearchParams(location.search);
       applyTheme(searchParams.get('theme') || 'dark');
       applyColumns(searchParams.get('columns') || '2');
-      applyCellStyle(searchParams.get('cells') || 'grid');
+      applyMelody(searchParams.get('melody') || 'on');
+      applyPalette(searchParams.get('palette') || 'strong');
+      const canonicalUrl = new URL(location.href);
+      canonicalUrl.searchParams.delete('cells');
+      history.replaceState({}, '', canonicalUrl);
+      const initialChip = location.hash ? document.querySelector('.map-chip[href="' + location.hash + '"]') : null;
+      if (initialChip) activateMapChip(initialChip);
     })();
   </script>
 </body>
