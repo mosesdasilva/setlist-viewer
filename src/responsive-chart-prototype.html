@@ -103,7 +103,7 @@
     .section[data-code="BR"] { --section-color: var(--bridge); }
 
     .section {
-      display: inline-block;
+      display: inline-grid;
       width: 100%;
       margin: 0 0 12px;
       overflow: hidden;
@@ -111,11 +111,16 @@
       border: 1px solid var(--section-edge);
       border-radius: 12px;
       background: var(--section-color);
+      grid-template-columns: 42px minmax(0, 1fr);
       vertical-align: top;
     }
-    .section-heading { display: flex; align-items: center; justify-content: space-between; padding: 7px 10px; }
-    .section-heading h2 { margin: 0; font-size: 14px; }
+    .section-heading { display: flex; min-width: 0; align-items: center; flex-direction: column; gap: 6px; justify-content: flex-start; padding: 7px 5px; }
+    .section[data-row-count="1"] .section-heading { grid-row: 1; }
+    .section[data-row-count="2"] .section-heading { grid-row: 1 / span 2; }
+    .section-heading h2 { margin: auto 0; font-size: 13px; letter-spacing: .01em; line-height: 1; writing-mode: vertical-rl; transform: rotate(180deg); }
     .section-code { padding: 3px 6px; border: 1px solid rgba(0, 0, 0, .3); border-radius: 6px; font-size: 9px; font-weight: 900; }
+
+    .chart-row { grid-column: 2; }
 
     .bars-and-notes {
       display: grid;
@@ -157,16 +162,16 @@
     .section[data-row-count="1"] .bar,
     .section[data-row-count="1"] .row-notes { min-height: 128px; }
 
-    body.cell-grid .section-heading { border-bottom: 1px solid var(--grid-line); }
+    body.cell-grid .section-heading { border-right: 1px solid var(--grid-line); }
     body.cell-grid .chart-row + .chart-row { border-top: 1px solid var(--grid-line); }
     body.cell-grid .bar { border-right: 1px solid var(--grid-line); }
 
-    body.cell-bubbles .section { padding: 0 6px 6px; }
-    body.cell-bubbles .section-heading { padding-inline: 4px; }
-    body.cell-bubbles .chart-row { margin-top: 6px; }
+    body.cell-bubbles .section { padding: 6px; column-gap: 6px; }
+    body.cell-bubbles .section-heading { padding: 1px 0; }
+    body.cell-bubbles .chart-row + .chart-row { margin-top: 6px; }
     body.cell-bubbles .bars-and-notes { gap: 6px; }
     body.cell-bubbles .bar,
-    body.cell-bubbles .row-notes { border: 1px solid rgba(0, 0, 0, .3); border-radius: 9px; background: transparent; }
+    body.cell-bubbles .row-notes { border: 0; border-radius: 9px; background: rgba(0, 0, 0, .1); }
     body.cell-bubbles .section[data-row-count="1"] .bar,
     body.cell-bubbles .section[data-row-count="1"] .row-notes { min-height: 134px; }
 
@@ -187,7 +192,10 @@
       #chart { width: calc(100% - 12px); margin-top: 8px; }
       .chart-intro { padding-inline: 4px; font-size: 10px; }
       .section { margin-bottom: 8px; border-radius: 9px; }
-      .section-heading { padding: 6px 8px; }
+      .section { grid-template-columns: 36px minmax(0, 1fr); }
+      .section-heading { padding: 6px 4px; }
+      .section-heading h2 { font-size: 12px; }
+      body.cell-bubbles .section-heading { padding: 1px 0; }
       .bars-and-notes { grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(76px, 1.05fr); }
       .bar { min-height: 60px; }
       .section[data-row-count="1"] .bar,
@@ -215,7 +223,7 @@
     </div>
   </header>
   <main id="chart">
-    <p class="chart-intro">Expanded Arrangement · compare Grid and outlined Bar Bubble cells · Melody Fragments use borderless red capsules · Octave Cues remain simple Row Notes.</p>
+    <p class="chart-intro">Expanded Arrangement · vertical Section headers preserve chart height · compare Grid and softly filled Bar Bubble cells · Melody Fragments use borderless red capsules.</p>
     <div id="sections"></div>
   </main>
 
@@ -345,7 +353,7 @@
       const searchParams = new URLSearchParams(location.search);
       applyTheme(searchParams.get('theme') || 'dark');
       applyColumns(searchParams.get('columns') || '2');
-      applyCellStyle(searchParams.get('cells') || 'bubbles');
+      applyCellStyle(searchParams.get('cells') || 'grid');
     })();
   </script>
 </body>
