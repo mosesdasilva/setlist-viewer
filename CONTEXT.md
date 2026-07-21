@@ -17,7 +17,7 @@ A horizontal group of consecutive Bars, usually four, displayed together as one 
 _Avoid_: Line
 
 **Row Note**:
-An optional performance comment attached to a Chart Row rather than an individual Bar.
+Optional content attached to a Chart Row rather than an individual Bar. A Row Note is explicitly either a Performance Direction or a Melody Passage.
 _Avoid_: Per-bar annotation, line annotation
 
 **Section**:
@@ -41,9 +41,9 @@ A chord held as one sustained event rather than played with the regular rhythmic
 _Avoid_: Diamond number
 
 **Performance Direction**:
-A short playing instruction associated with a Chart Row, such as `Rakes`.
+A short playing instruction carried by a Row Note, such as `Rakes`.
 _Avoid_: Comment
 
 **Melody Passage**:
-A compact number-based melody reference associated with a Chart Row; the handwritten source distinguishes it in red and groups it in parentheses.
+A compact number-based melody reference carried by a Row Note. It is distinct from a Performance Direction even when v1 preserves it without melody-specific behavior.
 _Avoid_: Red comment
