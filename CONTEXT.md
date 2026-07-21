@@ -21,7 +21,7 @@ A horizontal group of exactly four consecutive Bar slots displayed together as o
 _Avoid_: Line
 
 **Row Note**:
-A typed annotation attached to a Chart Row rather than an individual Bar. Each Row Note is explicitly either a Performance Direction or a Melody Passage; multiple Row Notes preserve authored order.
+A typed annotation attached to a Chart Row rather than an individual Bar. A Row Note may be a Performance Direction, Melody Passage, or Octave Cue; multiple Row Notes preserve authored order.
 _Avoid_: Per-bar annotation, line annotation
 
 **Section**:
@@ -35,6 +35,10 @@ _Avoid_: Section Code
 **Expanded Arrangement**:
 The complete performance order displayed Section by Section and Bar by Bar, including every repetition rather than repeat signs or interactive jumps.
 _Avoid_: Repeat navigation, collapsed arrangement
+
+**Song Map**:
+A compact left-to-right index of every Section occurrence in performance order. It summarizes and navigates the Expanded Arrangement without collapsing repetitions.
+_Avoid_: Setlist, collapsed arrangement
 
 **Section Code**:
 A compact label of exactly two uppercase letters representing a Section type in chart data. Standard types have default codes; custom codes must be unique within their song.

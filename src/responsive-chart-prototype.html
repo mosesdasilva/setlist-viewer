@@ -72,6 +72,7 @@
       z-index: 5;
       top: 0;
       display: flex;
+      flex-wrap: wrap;
       align-items: end;
       justify-content: space-between;
       gap: 16px;
@@ -90,6 +91,17 @@
     .cell-style-toggle { width: 36px; height: 34px; display: inline-grid; padding: 0; border: 0; border-radius: 999px; background: var(--control); color: var(--control-ink); cursor: pointer; place-items: center; }
     .layout-toggle { display: none; }
     .control-icon { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2; }
+    .song-map { display: flex; flex: 1 0 100%; gap: 5px; padding-top: 6px; overflow-x: auto; scrollbar-width: thin; }
+    .map-chip { display: inline-grid; width: 27px; height: 27px; flex: 0 0 27px; border: 1px solid rgba(0, 0, 0, .3); border-radius: 999px; background: var(--ending); color: #fff; font-size: 8px; font-weight: 900; place-items: center; text-decoration: none; }
+    .map-chip[data-code="IN"] { background: var(--intro); }
+    .map-chip[data-code="VS"] { background: var(--verse); }
+    .map-chip[data-code="TG"] { background: var(--tag); }
+    .map-chip[data-code="PC"] { background: var(--prechorus); }
+    .map-chip[data-code="CH"] { background: var(--chorus); }
+    .map-chip[data-code="IS"] { background: var(--instrumental); }
+    .map-chip[data-code="BR"] { background: var(--bridge); }
+    .map-chip:hover,
+    .map-chip:focus-visible { outline: 2px solid var(--ink); outline-offset: 1px; }
 
     #chart { width: min(1180px, calc(100% - 20px)); margin: 14px auto 48px; }
     .chart-intro { margin: 0 0 12px; color: var(--muted); font-size: 12px; line-height: 1.4; }
@@ -113,6 +125,7 @@
       background: var(--section-color);
       grid-template-columns: 42px minmax(0, 1fr);
       vertical-align: top;
+      scroll-margin-top: 116px;
     }
     .section-heading { display: flex; min-width: 0; align-items: center; flex-direction: column; gap: 6px; justify-content: flex-start; padding: 7px 5px; }
     .section[data-row-count="1"] .section-heading { grid-row: 1; }
@@ -151,7 +164,7 @@
       align-content: center;
       gap: 3px;
       padding: 6px 8px;
-      border-left: 2px solid var(--note-divider);
+      border-left: 0;
       background: transparent;
       overflow: hidden;
       font-size: clamp(8px, 1.15vw, 11px);
@@ -185,6 +198,8 @@
       .song-header { align-items: start; padding: 10px 12px; }
       .artist { font-size: 12px; }
       .header-tools { max-width: 190px; flex-wrap: wrap; }
+      .song-map { padding-top: 5px; }
+      .map-chip { width: 25px; height: 25px; flex-basis: 25px; }
       .meta { gap: 4px; }
       .meta span { padding: 5px 7px; font-size: 10px; }
       .theme-toggle { width: 32px; height: 30px; }
@@ -192,6 +207,7 @@
       #chart { width: calc(100% - 12px); margin-top: 8px; }
       .chart-intro { padding-inline: 4px; font-size: 10px; }
       .section { margin-bottom: 8px; border-radius: 9px; }
+      .section { scroll-margin-top: 148px; }
       .section { grid-template-columns: 36px minmax(0, 1fr); }
       .section-heading { padding: 6px 4px; }
       .section-heading h2 { font-size: 12px; }
@@ -221,6 +237,7 @@
       <button class="cell-style-toggle" type="button" id="cell-style-toggle" aria-label="Cell style: Grid" title="Grid cells"></button>
       <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Use light mode" title="Use light mode"></button>
     </div>
+    <nav class="song-map" id="song-map" aria-label="Song map"></nav>
   </header>
   <main id="chart">
     <p class="chart-intro">Expanded Arrangement · vertical Section headers preserve chart height · compare Grid and softly filled Bar Bubble cells · Melody Fragments use borderless red capsules.</p>
@@ -281,7 +298,7 @@
         return '<div class="bar"><div class="bar-chord">' + chord(value) + '</div><div class="bar-melody ' + (melody ? 'has-melody' : '') + '">' + (melody || '&nbsp;') + '</div></div>';
       }
 
-      function renderSection(section) {
+      function renderSection(section, sectionIndex) {
         const rows = section.rows.map(function (bars, rowIndex) {
           const melody = melodyFor(section, rowIndex);
           const directions = rowNotes(section, rowIndex);
@@ -290,7 +307,7 @@
             return renderBar(bar, melody ? melody.fragments[barIndex] : '');
           }).join('') + '<aside class="row-notes" aria-label="Row notes">' + notes + '</aside></div></div>';
         }).join('');
-        return '<section class="section" data-code="' + section.code + '" data-row-count="' + section.rows.length + '"><header class="section-heading"><h2>' + section.name + '</h2><span class="section-code">' + section.code + '</span></header>' + rows + '</section>';
+        return '<section class="section" id="section-' + sectionIndex + '" data-code="' + section.code + '" data-row-count="' + section.rows.length + '"><header class="section-heading"><h2>' + section.name + '</h2><span class="section-code">' + section.code + '</span></header>' + rows + '</section>';
       }
 
       function applyTheme(theme) {
@@ -341,6 +358,9 @@
       }
 
       document.getElementById('sections').innerHTML = sections.map(renderSection).join('');
+      document.getElementById('song-map').innerHTML = sections.map(function (section, sectionIndex) {
+        return '<a class="map-chip" data-code="' + section.code + '" href="#section-' + sectionIndex + '" aria-label="Go to ' + section.name + ', position ' + (sectionIndex + 1) + '">' + section.code + '</a>';
+      }).join('');
       document.getElementById('theme-toggle').addEventListener('click', function () {
         applyTheme(document.body.classList.contains('dark-theme') ? 'light' : 'dark');
       });
