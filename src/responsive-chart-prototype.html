@@ -8,26 +8,26 @@
   <style>
     :root {
       color-scheme: light;
-      --bg: #edf0f2;
+      --bg: #fff;
       --paper: #fff;
       --ink: #101214;
       --muted: #5d646b;
       --line: rgba(16, 18, 20, .18);
-      --grid-line: rgba(0, 0, 0, .2);
+      --section-edge: rgba(0, 0, 0, .32);
       --note-divider: rgba(0, 0, 0, .42);
       --header: rgba(255, 255, 255, .96);
       --control: #111;
       --control-ink: #fff;
-      --band-ink: #101214;
-      --melody: #9f1239;
-      --intro: #cbd5e1;
-      --verse: #93c5fd;
-      --tag: #fdba74;
-      --prechorus: #fde68a;
-      --chorus: #86efac;
-      --instrumental: #c4b5fd;
-      --bridge: #fca5a5;
-      --ending: #d1d5db;
+      --band-ink: #fff;
+      --melody: #ff304f;
+      --intro: #334155;
+      --verse: #1e4f91;
+      --tag: #9a4d0d;
+      --prechorus: #82650b;
+      --chorus: #176b3a;
+      --instrumental: #553c9a;
+      --bridge: #8c3030;
+      --ending: #3f4752;
     }
 
     body.dark-theme {
@@ -37,21 +37,10 @@
       --ink: #f5f7fa;
       --muted: #aab2bd;
       --line: rgba(255, 255, 255, .14);
-      --grid-line: rgba(0, 0, 0, .25);
       --note-divider: rgba(0, 0, 0, .48);
       --header: rgba(14, 18, 24, .96);
       --control: #f5f7fa;
       --control-ink: #101214;
-      --band-ink: #fff;
-      --melody: #ffe4e6;
-      --intro: #334155;
-      --verse: #1e4f91;
-      --tag: #9a4d0d;
-      --prechorus: #82650b;
-      --chorus: #176b3a;
-      --instrumental: #553c9a;
-      --bridge: #8c3030;
-      --ending: #3f4752;
     }
 
     * { box-sizing: border-box; }
@@ -95,8 +84,9 @@
     .meta { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
     .meta span { padding: 6px 8px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper); font-size: 12px; font-weight: 800; }
     .theme-toggle,
-    .layout-toggle { padding: 7px 10px; border: 0; border-radius: 999px; background: var(--control); color: var(--control-ink); cursor: pointer; font-size: 12px; font-weight: 900; }
+    .layout-toggle { width: 36px; height: 34px; display: inline-grid; padding: 0; border: 0; border-radius: 999px; background: var(--control); color: var(--control-ink); cursor: pointer; place-items: center; }
     .layout-toggle { display: none; }
+    .control-icon { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2; }
 
     #chart { width: min(1180px, calc(100% - 20px)); margin: 14px auto 48px; }
     .chart-intro { margin: 0 0 12px; color: var(--muted); font-size: 12px; line-height: 1.4; }
@@ -115,15 +105,14 @@
       margin: 0 0 12px;
       overflow: hidden;
       break-inside: avoid;
-      border: 1px solid var(--grid-line);
+      border: 1px solid var(--section-edge);
       border-radius: 12px;
       background: var(--section-color);
       vertical-align: top;
     }
-    .section-heading { display: flex; align-items: center; justify-content: space-between; padding: 7px 10px; border-bottom: 1px solid var(--grid-line); }
+    .section-heading { display: flex; align-items: center; justify-content: space-between; padding: 7px 10px; }
     .section-heading h2 { margin: 0; font-size: 14px; }
-    .section-code { padding: 3px 6px; border: 1px solid var(--grid-line); border-radius: 6px; font-size: 9px; font-weight: 900; }
-    .chart-row + .chart-row { border-top: 1px solid var(--grid-line); }
+    .section-code { padding: 3px 6px; border: 1px solid rgba(0, 0, 0, .3); border-radius: 6px; font-size: 9px; font-weight: 900; }
 
     .bars-and-notes {
       display: grid;
@@ -138,11 +127,10 @@
       align-items: center;
       justify-items: center;
       padding: 6px 2px 5px;
-      border-right: 1px solid var(--grid-line);
     }
     .bar:first-child { border-left: 0; }
     .bar-chord { display: grid; min-width: 0; place-items: center; font-size: clamp(19px, 2.4vw, 28px); font-weight: 850; letter-spacing: -.04em; }
-    .bar-melody { min-width: 0; max-width: 100%; min-height: 12px; color: var(--melody); font-size: clamp(7px, 1.05vw, 10px); font-weight: 850; line-height: 1.05; overflow-wrap: anywhere; text-align: center; }
+    .bar-melody { min-width: 0; max-width: 100%; min-height: 12px; color: var(--melody); font-size: clamp(7px, 1.05vw, 10px); font-weight: 900; line-height: 1.05; overflow-wrap: anywhere; text-align: center; text-shadow: 0 1px 1px rgba(0, 0, 0, .7); }
     .event { position: relative; display: inline-grid; min-width: 0; place-items: center; }
     .diamond { width: 29px; height: 29px; border: 2px solid currentColor; transform: rotate(45deg); }
     .diamond span { transform: rotate(-45deg); }
@@ -177,7 +165,7 @@
       .header-tools { max-width: 190px; flex-wrap: wrap; }
       .meta { gap: 4px; }
       .meta span { padding: 5px 7px; font-size: 10px; }
-      .theme-toggle { padding: 6px 9px; font-size: 10px; }
+      .theme-toggle { width: 32px; height: 30px; }
       #chart { width: calc(100% - 12px); margin-top: 8px; }
       .chart-intro { padding-inline: 4px; font-size: 10px; }
       .section { margin-bottom: 8px; border-radius: 9px; }
@@ -201,8 +189,8 @@
     </div>
     <div class="header-tools">
       <div class="meta" aria-label="Song metadata"><span>Key D</span><span>140 BPM</span><span>4/4</span></div>
-      <button class="layout-toggle" type="button" id="layout-toggle" aria-pressed="false">2 columns</button>
-      <button class="theme-toggle" type="button" id="theme-toggle">Light mode</button>
+      <button class="layout-toggle" type="button" id="layout-toggle" aria-pressed="false" aria-label="Layout: two columns" title="Two-column layout"></button>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Use light mode" title="Use light mode"></button>
     </div>
   </header>
   <main id="chart">
@@ -279,7 +267,13 @@
       function applyTheme(theme) {
         const dark = theme !== 'light';
         document.body.classList.toggle('dark-theme', dark);
-        document.getElementById('theme-toggle').textContent = dark ? 'Light mode' : 'Dark mode';
+        const button = document.getElementById('theme-toggle');
+        button.innerHTML = dark
+          ? '<svg class="control-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>'
+          : '<svg class="control-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.2A8 8 0 0 1 8.8 4 8.1 8.1 0 1 0 20 15.2Z"></path></svg>';
+        const label = dark ? 'Use light mode' : 'Use dark mode';
+        button.setAttribute('aria-label', label);
+        button.setAttribute('title', label);
         const url = new URL(location.href);
         url.searchParams.set('theme', dark ? 'dark' : 'light');
         history.replaceState({}, '', url);
@@ -289,8 +283,13 @@
         const single = columns === '1';
         document.body.classList.toggle('single-column', single);
         const button = document.getElementById('layout-toggle');
-        button.textContent = single ? '1 column' : '2 columns';
+        button.innerHTML = single
+          ? '<svg class="control-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"></rect></svg>'
+          : '<svg class="control-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M12 4v16"></path></svg>';
         button.setAttribute('aria-pressed', String(single));
+        const label = single ? 'Layout: one column' : 'Layout: two columns';
+        button.setAttribute('aria-label', label);
+        button.setAttribute('title', label);
         const url = new URL(location.href);
         url.searchParams.set('columns', single ? '1' : '2');
         history.replaceState({}, '', url);
