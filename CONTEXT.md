@@ -40,14 +40,14 @@ _Avoid_: Repeat navigation, collapsed arrangement
 A compact label of exactly two uppercase letters representing a Section type in chart data. Standard types have default codes; custom codes must be unique within their song.
 _Avoid_: Section tag, section initial, one-letter code
 
-Standard Section Codes are `IN` Intro, `IS` Instrumental, `VS` Verse, `TG` Tag, `PC` Pre-Chorus, `CH` Chorus, `BR` Bridge, `TR` Turnaround, `EN` Ending, and `OU` Outro.
+Standard Section Codes are `IN` Intro, `IS` Instrumental, `VS` Verse, `TG` Tag, `PC` Pre-Chorus, `PS` Post-Chorus, `CH` Chorus, `BR` Bridge, `TR` Turnaround, `EN` Ending, and `OU` Outro.
 
 **Section Ordinal**:
 An optional number distinguishing Sections of the same type. It remains separate from the two-letter Section Code but may follow it in compact notation, such as `VS2`.
 _Avoid_: Numbered Section Code
 
 **Chord Symbol**:
-A scale-degree chord representation that may include an accidental, quality, extension, or Slash Chord bass degree.
+A scale-degree chord representation whose bare number carries the key's diatonic quality. It may include an accidental, explicit quality or extension, or Slash Chord bass degree.
 _Avoid_: Chord text
 
 **Chord Event**:
@@ -55,7 +55,7 @@ A Chord Symbol played for a duration within a Bar. Multiple Chord Events divide 
 _Avoid_: Chord token
 
 **Beat Dot**:
-A dot displayed above a Chord Symbol that assigns one beat of duration to its Chord Event. Multiple dots assign the corresponding number of beats.
+A dot displayed above a Chord Symbol that assigns one time-signature denominator unit to its Chord Event. Multiple dots assign the corresponding number of units.
 _Avoid_: Duration dot
 
 **No Chord**:
@@ -71,7 +71,7 @@ A chord whose chord degree and bass degree differ, written as chord degree over 
 _Avoid_: Fraction chord
 
 **Diamond Chord**:
-A chord held as one sustained event rather than played with the regular rhythmic pattern, shown by enclosing its number in a diamond.
+A chord that occupies and sustains through an entire Bar, shown by enclosing its number in a diamond. It requires no Beat Dots.
 _Avoid_: Diamond number
 
 **Performance Direction**:

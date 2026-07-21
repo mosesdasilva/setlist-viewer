@@ -41,6 +41,7 @@
 - stack Sections vertically in a fully Expanded Arrangement
 - preserve four Bars plus a side-by-side Row Note per Chart Row at every supported width
 - prioritize phone, iPad, and laptop; rely only on normal browser printing for v1
+- use [MultiTracks ChartBuilder](https://www.multitracks.com/products/chartbuilder/) as UX inspiration for number notation, visible colored Section containers, Song Map navigation, and side-positioned MD-style notes; retain Setlist Viewer's static Expanded Arrangement and scope
 
 ## Notes For Future Iteration
 
