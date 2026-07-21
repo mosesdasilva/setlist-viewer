@@ -91,5 +91,5 @@ The opaque text for one Bar of a Melody Passage. V1 preserves the text without i
 _Avoid_: Melody Bar, parsed melody
 
 **Octave Cue**:
-A melody-scoped indication that a Melody Fragment or Melody Passage is performed in another octave, such as `Oct ↑`. It belongs with melody content rather than a Performance Direction.
-_Avoid_: Performance Direction, octave comment
+A melody-scoped Row Note indicating that a Melody Passage is performed in another octave, such as `Oct ↑`. It remains separate from the Bar-aligned Melody Fragments.
+_Avoid_: Performance Direction, Melody Fragment

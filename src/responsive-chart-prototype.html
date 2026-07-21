@@ -20,8 +20,8 @@
       --control: #111;
       --control-ink: #fff;
       --band-ink: #fff;
-      --melody: #d4002a;
-      --melody-bubble: #fff;
+      --melody: #fff;
+      --melody-bubble: rgba(0, 0, 0, .42);
       --intro: #334155;
       --verse: #1e4f91;
       --tag: #9a4d0d;
@@ -134,8 +134,7 @@
     .bar:first-child { border-left: 0; }
     .bar-chord { display: grid; min-width: 0; place-items: center; font-size: clamp(19px, 2.4vw, 28px); font-weight: 850; letter-spacing: -.04em; }
     .bar-melody { display: inline-flex; min-width: 0; max-width: calc(100% - 4px); min-height: 16px; align-items: center; justify-content: center; gap: 3px; color: var(--melody); font-size: clamp(7px, 1.05vw, 10px); font-weight: 900; line-height: 1.05; overflow-wrap: anywhere; text-align: center; }
-    .bar-melody.has-melody { padding: 3px 6px; border-radius: 999px; background: var(--melody-bubble); box-shadow: 0 1px 2px rgba(0, 0, 0, .25); }
-    .octave-cue { padding-left: 3px; border-left: 1px solid rgba(212, 0, 42, .28); font-size: .82em; white-space: nowrap; }
+    .bar-melody.has-melody { padding: 3px 6px; border: 1px solid rgba(255, 255, 255, .16); border-radius: 999px; background: var(--melody-bubble); box-shadow: 0 1px 2px rgba(0, 0, 0, .2); }
     .event { position: relative; display: inline-grid; min-width: 0; place-items: center; }
     .diamond { width: 29px; height: 29px; border: 2px solid currentColor; transform: rotate(45deg); }
     .diamond span { transform: rotate(-45deg); }
@@ -154,6 +153,8 @@
       line-height: 1.15;
     }
     .direction { font-weight: 900; letter-spacing: .05em; text-transform: uppercase; }
+    .octave-note { display: inline-grid; width: fit-content; justify-items: center; gap: 1px; padding: 4px 7px; border: 1px solid rgba(255, 255, 255, .28); border-radius: 999px; background: rgba(0, 0, 0, .22); font-size: .9em; line-height: 1; text-align: center; }
+    .note-kind { font-size: .72em; opacity: .72; }
     .no-note { opacity: 0; }
     .section[data-row-count="1"] .bar,
     .section[data-row-count="1"] .row-notes { min-height: 128px; }
@@ -168,6 +169,8 @@
     body.cell-bubbles .bars-and-notes { gap: 6px; }
     body.cell-bubbles .bar,
     body.cell-bubbles .row-notes { border: 0; border-radius: 9px; background: rgba(0, 0, 0, .18); }
+    body.cell-bubbles .section[data-row-count="1"] .bar,
+    body.cell-bubbles .section[data-row-count="1"] .row-notes { min-height: 134px; }
 
     @media (min-width: 700px) {
       #sections { column-count: 2; column-gap: 14px; }
@@ -191,6 +194,8 @@
       .bar { min-height: 60px; }
       .section[data-row-count="1"] .bar,
       .section[data-row-count="1"] .row-notes { min-height: 120px; }
+      body.cell-bubbles .section[data-row-count="1"] .bar,
+      body.cell-bubbles .section[data-row-count="1"] .row-notes { min-height: 126px; }
       .bar-chord { font-size: 18px; }
       .bar-melody { font-size: 7px; }
       .row-notes { padding: 4px; font-size: 8px; }
@@ -212,7 +217,7 @@
     </div>
   </header>
   <main id="chart">
-    <p class="chart-intro">Expanded Arrangement · compare Grid and Bar Bubble cells with the style icon · Melody Fragments and Octave Cues sit in white capsules · Row Notes remain available for Performance Directions.</p>
+    <p class="chart-intro">Expanded Arrangement · Bar Bubbles are the lead treatment · Melody Fragments use dark capsules · melody-related Octave Cues return to Row Notes.</p>
     <div id="sections"></div>
   </main>
 
@@ -225,14 +230,14 @@
       const common = [["4", "2", "6", "3"], ["4", "2", "6", "3"]];
       const bridge = [["4", "5", "6", "1/3"], ["4", "5", "6", "1/3"]];
       const sections = [
-        ["IN", "Intro", common, [{ type: "melody", fragments: melodyA }, { type: "melody", fragments: melodyA, octaveCue: "Oct ↑" }]],
+        ["IN", "Intro", common, [{ type: "melody", fragments: melodyA }, { type: "melody", fragments: melodyA }, { type: "octave", text: "Oct ↑", row: 1 }]],
         ["VS", "Verse", common, [{ type: "direction", text: "Rakes", row: 0 }]],
         ["TG", "Tag", [["3", "", "", ""]], []],
         ["PC", "Pre-Chorus", common, [{ type: "melody", fragments: melodyA }, { type: "melody", fragments: melodyA }]],
         ["TG", "Tag", [["3", "", "", ""]], []],
         ["CH", "Chorus", common, [{ type: "melody", fragments: melodyB }, { type: "melody", fragments: melodyB }]],
         ["CH", "Chorus", common, [{ type: "melody", fragments: melodyC }, { type: "melody", fragments: melodyC }]],
-        ["IN", "Intro", common, [{ type: "melody", fragments: melodyA }, { type: "melody", fragments: melodyA, octaveCue: "Oct ↑" }]],
+        ["IN", "Intro", common, [{ type: "melody", fragments: melodyA }, { type: "melody", fragments: melodyA }, { type: "octave", text: "Oct ↑", row: 1 }]],
         ["VS", "Verse", common, []], ["TG", "Tag", [["3", "", "", ""]], []],
         ["PC", "Pre-Chorus", common, [{ type: "melody", fragments: melodyA }, { type: "melody", fragments: melodyA }]],
         ["CH", "Chorus", common, [{ type: "melody", fragments: melodyB }, { type: "melody", fragments: melodyB }]],
@@ -240,7 +245,7 @@
         ["IS", "Instrumental", [["6", "6", "6", "6"], ["6", "6", "6", "6"]], [{ type: "melody", fragments: melodyD }, { type: "melody", fragments: melodyD }]],
         ["BR", "Bridge", bridge, []], ["BR", "Bridge", bridge, []], ["BR", "Bridge", bridge, []],
         ["TG", "Tag", bridge, []],
-        ["CH", "Chorus", common, [{ type: "melody", fragments: melodyA }, { type: "melody", fragments: melodyA, octaveCue: "Oct ↑" }]],
+        ["CH", "Chorus", common, [{ type: "melody", fragments: melodyA }, { type: "melody", fragments: melodyA }, { type: "octave", text: "Oct ↑", row: 1 }]],
         ["BR", "Bridge", bridge, []], ["BR", "Bridge", bridge, []],
         ["EN", "Ending", [["234", "671", { text: "3", diamond: true }, ""]], []]
       ].map(function (section) { return { code: section[0], name: section[1], rows: section[2], notes: section[3] }; });
@@ -248,7 +253,7 @@
       function rowNotes(section, rowIndex) {
         return section.notes.filter(function (note, noteIndex) {
           const targetRow = note.row === undefined ? noteIndex : note.row;
-          return note.type === "direction" && targetRow === rowIndex;
+          return (note.type === "direction" || note.type === "octave") && targetRow === rowIndex;
         });
       }
 
@@ -266,19 +271,20 @@
         return '<span class="event">' + event.text + '</span>';
       }
 
-      function renderBar(value, melody, octaveCue) {
-        const hasMelody = Boolean(melody || octaveCue);
-        const melodyContent = (melody || '') + (octaveCue ? '<span class="octave-cue">' + octaveCue + '</span>' : '');
-        return '<div class="bar"><div class="bar-chord">' + chord(value) + '</div><div class="bar-melody ' + (hasMelody ? 'has-melody' : '') + '">' + (melodyContent || '&nbsp;') + '</div></div>';
+      function renderBar(value, melody) {
+        return '<div class="bar"><div class="bar-chord">' + chord(value) + '</div><div class="bar-melody ' + (melody ? 'has-melody' : '') + '">' + (melody || '&nbsp;') + '</div></div>';
       }
 
       function renderSection(section) {
         const rows = section.rows.map(function (bars, rowIndex) {
           const melody = melodyFor(section, rowIndex);
           const directions = rowNotes(section, rowIndex);
-          const notes = directions.length ? directions.map(function (note) { return '<span class="direction">' + note.text + '</span>'; }).join('') : '<span class="no-note">None</span>';
+          const notes = directions.length ? directions.map(function (note) {
+            const content = note.type === 'octave' ? '<span class="note-kind">Melody</span><span>' + note.text + '</span>' : note.text;
+            return '<span class="direction ' + (note.type === 'octave' ? 'octave-note' : '') + '">' + content + '</span>';
+          }).join('') : '<span class="no-note">None</span>';
           return '<div class="chart-row"><div class="bars-and-notes">' + bars.map(function (bar, barIndex) {
-            return renderBar(bar, melody ? melody.fragments[barIndex] : '', melody && melody.octaveCue && barIndex === 3 ? melody.octaveCue : '');
+            return renderBar(bar, melody ? melody.fragments[barIndex] : '');
           }).join('') + '<aside class="row-notes" aria-label="Row notes">' + notes + '</aside></div></div>';
         }).join('');
         return '<section class="section" data-code="' + section.code + '" data-row-count="' + section.rows.length + '"><header class="section-heading"><h2>' + section.name + '</h2><span class="section-code">' + section.code + '</span></header>' + rows + '</section>';
@@ -344,7 +350,7 @@
       const searchParams = new URLSearchParams(location.search);
       applyTheme(searchParams.get('theme') || 'dark');
       applyColumns(searchParams.get('columns') || '2');
-      applyCellStyle(searchParams.get('cells') || 'grid');
+      applyCellStyle(searchParams.get('cells') || 'bubbles');
     })();
   </script>
 </body>

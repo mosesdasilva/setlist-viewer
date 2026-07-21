@@ -43,13 +43,13 @@ Any future Codex session should read this file first to understand:
 - Essential chart data must load under `file://` without runtime `fetch()` or ES modules; generated classic JavaScript is the split-runtime candidate and inline data is the portable-artifact candidate.
 - Render an Expanded Arrangement: every repeated Section appears in full performance order.
 - Preserve four Bars and a side-by-side Row Note per Chart Row at phone, iPad, and laptop widths.
-- Model each Row Note as either a Performance Direction or Melody Passage; a Melody Passage preserves four Bar-aligned Melody Fragments as opaque text in v1.
+- Model each Row Note as a Performance Direction, Melody Passage, or melody-scoped Octave Cue; a Melody Passage preserves four Bar-aligned Melody Fragments as opaque text in v1.
 - Require song title, Artist, key, tempo, and time signature metadata; keep lead vocal and details optional.
 - Display full Section Names in colored blocks. In chart data, use exactly two uppercase letters for each Section Code: `IN`, `IS`, `VS`, `TG`, `PC`, `PS`, `CH`, `BR`, `TR`, `EN`, or `OU`; custom codes must be unique within the song.
 - Keep the optional Section Ordinal separate from the two-letter code, combining them only as compact notation such as `VS2`.
 - Keep exactly four Bar slots per Chart Row; unused trailing slots remain empty, while `X`, not `N.C.`, means an intentional timed No Chord event.
 - Require every Section to contain at least one Chart Row and every Chart Row to contain at least one Bar; a Bar contains one or more timed Bar Events.
-- Allow multiple typed Row Notes on one Chart Row, including a Melody Passage and Performance Direction together; preserve their authored order.
+- Allow multiple typed Row Notes on one Chart Row, including Melody Passages, Performance Directions, and Octave Cues together; preserve their authored order.
 - Divide multiple Bar Events—Chord Events or `X`—within a Bar equally by default; for unequal timing, display one Beat Dot above the Chord Symbol or `X` per assigned beat.
 - Require Beat Dots when equal division would not yield whole time-signature denominator units.
 - Treat each Beat Dot as one time-signature denominator unit. A Diamond Chord fills its entire Bar and needs no Beat Dots.
@@ -73,7 +73,7 @@ Any future Codex session should read this file first to understand:
 - Wayfinder map: [Map a static Nashville chart system](https://github.com/mosesdasilva/setlist-viewer/issues/1).
 - The representative handwritten chart is `Más — Miel San Marcos`, key D, 140 BPM, 4/4; its source image and notation notes live under `docs/assets/` and `docs/research/`.
 - [Define the v1 Nashville chart language](https://github.com/mosesdasilva/setlist-viewer/issues/4) is resolved; canonical terms live in `CONTEXT.md`, and its detailed resolution is recorded on the ticket.
-- [Prototype the expanded responsive chart view](https://github.com/mosesdasilva/setlist-viewer/issues/6) is claimed and awaiting final human review. Section Bands won: the refinement uses adjustable one/two-column wide-screen layout, forced single-column narrow layout, equal visual height for one- and two-Chart-Row Sections, identical saturated band colors and white lettering across themes, and a dark-default/pure-white-background light theme. An icon switches between restored subtle Grid cells and darker rounded Bar Bubble cells. Bar-aligned Melody Fragments use white capsules with vivid red text; melody-scoped Octave Cues live in those capsules, while the Row Note column remains reserved for Performance Directions. It lives in `src/responsive-chart-prototype.html` on `prototype/responsive-chart-view`.
+- [Prototype the expanded responsive chart view](https://github.com/mosesdasilva/setlist-viewer/issues/6) is claimed and awaiting final human review. Section Bands won: darker rounded Bar Bubble cells are now the lead treatment, with subtle Grid cells retained for comparison. Wide screens support adjustable one/two-column layout; narrow screens force one column. One-row Tags are height-aligned with two-Chart-Row Sections. Melody Fragments use dark capsules with white text. Melody-scoped Octave Cues appear as distinct Row Notes instead of inside Bar melody capsules. Themes retain identical saturated bands and white lettering over dark-default or pure-white backgrounds. It lives in `src/responsive-chart-prototype.html` on `prototype/responsive-chart-view`.
 
 ## Next Recommended Work
 
