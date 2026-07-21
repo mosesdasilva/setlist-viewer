@@ -37,6 +37,11 @@ Any future Codex session should read this file first to understand:
 - Treat the website as the source of truth for song map flow unless the user explicitly calls out a correction from a sheet.
 - Normalize repeated map sections by expanding them into repeated labels instead of compact notation like `2X` or `3X`.
 - Treat `CH` as `Chorus` and `BD` or `B` as `Bridge` when translating sheet shorthand into the website.
+- Evolve the viewer toward manually authored Nashville Number Charts rather than lyrics.
+- Keep split source and chart data canonical; generate the portable single-file HTML from them.
+- Render an Expanded Arrangement: every repeated Section appears in full performance order.
+- Preserve four Bars and a side-by-side Row Note per Chart Row at phone, iPad, and laptop widths.
+- Keep browser editing, handwriting/OCR import, melody tracking, cloud services, and dedicated PDF generation outside v1.
 
 ## Current Status
 
@@ -46,13 +51,14 @@ Any future Codex session should read this file first to understand:
 - Split website source now lives under `src/`.
 - `Jesus` metadata has been updated to key `A` and lead vocal `Matthew Morales`.
 - `Holy Fragance` metadata has been updated to key `D`, lead vocal `Paloma Ramos`, and sheet-aligned detail text `Eg / keys intro`.
+- Engineering-skill configuration lives under `docs/agents/`; domain language lives in root `CONTEXT.md`.
+- Wayfinder map: [Map a static Nashville chart system](https://github.com/mosesdasilva/setlist-viewer/issues/1).
 
 ## Next Recommended Work
 
-- confirm GitHub Pages is enabled and publishing correctly
-- decide whether future changes should treat the single-file or split-file version as the edit-first source
-- define a simple versioning workflow for future portable releases
-- decide whether song data should remain embedded or move into a reusable data format later
+- Resolve [Compare static Nashville chart formats and storage approaches](https://github.com/mosesdasilva/setlist-viewer/issues/2).
+- Supply and resolve [Capture a representative handwritten Nashville chart](https://github.com/mosesdasilva/setlist-viewer/issues/3).
+- Continue through the unblocked frontier of the Wayfinder map; do not implement the destination during planning.
 
 ## Update Rule
 

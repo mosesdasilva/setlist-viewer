@@ -7,6 +7,8 @@
 - The primary portable artifact is a versioned single-file HTML build.
 - The app is also maintained in split source files: `index.html`, `styles.css`, and `script.js`.
 - Deployment target is a static GitHub Pages site.
+- The next product direction is a stage-ready Nashville Number Chart viewer backed by manually edited structured chart data.
+- Split source and chart data will be canonical; the portable single-file HTML will be generated.
 
 ## Naming
 
@@ -27,6 +29,9 @@
 - section boxes carry the main color
 - preserve mobile-friendly one-song-at-a-time navigation
 - keep terminology normalized as `Bridge` and `Chorus`
+- stack Sections vertically in a fully Expanded Arrangement
+- preserve four Bars plus a side-by-side Row Note per Chart Row at every supported width
+- prioritize phone, iPad, and laptop; rely only on normal browser printing for v1
 
 ## Notes For Future Iteration
 

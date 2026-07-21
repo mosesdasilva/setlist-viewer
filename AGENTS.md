@@ -75,3 +75,17 @@ A change is complete when:
 - the theme toggle still works
 - the layout remains readable on desktop and mobile
 - project notes are updated if decisions changed
+
+## Agent skills
+
+### Issue tracker
+
+GitHub Issues; external pull requests are not a triage surface. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Use the default five-label triage vocabulary. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Use a single-context layout. See `docs/agents/domain.md`.
