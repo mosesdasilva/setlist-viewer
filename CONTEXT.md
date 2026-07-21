@@ -8,12 +8,16 @@ Setlist Viewer presents performance-ready song charts and navigation for rehears
 A song chart that represents harmony using scale-degree numbers so it can be used in different keys.
 _Avoid_: Natural number chart, lyrics chart
 
+**Artist**:
+The person or band credited for the song version represented by a Nashville Number Chart.
+_Avoid_: Lead Vocal
+
 **Bar**:
 A measure of musical time represented as one cell in a Nashville Number Chart.
 _Avoid_: Box
 
 **Chart Row**:
-A horizontal group of consecutive Bars, usually four, displayed together as one reading unit.
+A horizontal group of exactly four consecutive Bar slots displayed together as one reading unit.
 _Avoid_: Line
 
 **Row Note**:
@@ -29,8 +33,16 @@ The complete performance order displayed Section by Section and Bar by Bar, incl
 _Avoid_: Repeat navigation, collapsed arrangement
 
 **Section Code**:
-A compact, usually one-letter label for a Section: `I` Intro, `V` Verse, `T` Tag, `P` Pre-Chorus, `C` Chorus, `B` Bridge, and `E` Ending.
+A compact label derived from a Section's authored full name: `I` Intro, `V` Verse, `T` Tag, `P` Pre-Chorus, `C` Chorus, `B` Bridge, and `E` Ending.
 _Avoid_: Section initial
+
+**Chord Symbol**:
+A scale-degree chord representation that may include an accidental, quality, extension, or Slash Chord bass degree.
+_Avoid_: Chord text
+
+**No Chord**:
+An intentional absence of played harmony during a Bar, written as `X`.
+_Avoid_: `N.C.`, blank Bar
 
 **Slash Chord**:
 A chord whose chord degree and bass degree differ, written as chord degree over bass degree, such as `1/3`.

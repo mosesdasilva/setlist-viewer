@@ -44,6 +44,10 @@ Any future Codex session should read this file first to understand:
 - Render an Expanded Arrangement: every repeated Section appears in full performance order.
 - Preserve four Bars and a side-by-side Row Note per Chart Row at phone, iPad, and laptop widths.
 - Model each Row Note as either a Performance Direction or Melody Passage; a Melody Passage preserves four Bar-aligned Melody Fragments as opaque text in v1.
+- Require song title, Artist, key, tempo, and time signature metadata; keep lead vocal and details optional.
+- Author full Section names with optional ordinals and derive Section Codes from them.
+- Keep exactly four Bar slots per Chart Row; use `X`, not `N.C.`, for an intentional No Chord Bar.
+- Support scale degrees `1`–`7`, accidentals, qualities/extensions, Slash Chords, multiple ordered Chord Symbols per Bar, and Diamond marks; defer pushes, ties, repeats, and modulations until observed.
 - Keep browser editing, handwriting/OCR import, melody tracking, cloud services, and dedicated PDF generation outside v1.
 - Push every completed commit immediately; use focused feature branches for implementation and keep `main` stable.
 
