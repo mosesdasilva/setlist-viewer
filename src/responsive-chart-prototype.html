@@ -21,7 +21,7 @@
       --control-ink: #fff;
       --band-ink: #fff;
       --melody: #fff;
-      --melody-bubble: rgba(0, 0, 0, .42);
+      --melody-bubble: #c8102e;
       --intro: #334155;
       --verse: #1e4f91;
       --tag: #9a4d0d;
@@ -134,7 +134,7 @@
     .bar:first-child { border-left: 0; }
     .bar-chord { display: grid; min-width: 0; place-items: center; font-size: clamp(19px, 2.4vw, 28px); font-weight: 850; letter-spacing: -.04em; }
     .bar-melody { display: inline-flex; min-width: 0; max-width: calc(100% - 4px); min-height: 16px; align-items: center; justify-content: center; gap: 3px; color: var(--melody); font-size: clamp(7px, 1.05vw, 10px); font-weight: 900; line-height: 1.05; overflow-wrap: anywhere; text-align: center; }
-    .bar-melody.has-melody { padding: 3px 6px; border: 1px solid rgba(255, 255, 255, .16); border-radius: 999px; background: var(--melody-bubble); box-shadow: 0 1px 2px rgba(0, 0, 0, .2); }
+    .bar-melody.has-melody { padding: 3px 6px; border-radius: 999px; background: var(--melody-bubble); box-shadow: 0 1px 2px rgba(0, 0, 0, .2); }
     .event { position: relative; display: inline-grid; min-width: 0; place-items: center; }
     .diamond { width: 29px; height: 29px; border: 2px solid currentColor; transform: rotate(45deg); }
     .diamond span { transform: rotate(-45deg); }
@@ -153,8 +153,6 @@
       line-height: 1.15;
     }
     .direction { font-weight: 900; letter-spacing: .05em; text-transform: uppercase; }
-    .octave-note { display: inline-grid; width: fit-content; justify-items: center; gap: 1px; padding: 4px 7px; border: 1px solid rgba(255, 255, 255, .28); border-radius: 999px; background: rgba(0, 0, 0, .22); font-size: .9em; line-height: 1; text-align: center; }
-    .note-kind { font-size: .72em; opacity: .72; }
     .no-note { opacity: 0; }
     .section[data-row-count="1"] .bar,
     .section[data-row-count="1"] .row-notes { min-height: 128px; }
@@ -168,7 +166,7 @@
     body.cell-bubbles .chart-row { margin-top: 6px; }
     body.cell-bubbles .bars-and-notes { gap: 6px; }
     body.cell-bubbles .bar,
-    body.cell-bubbles .row-notes { border: 0; border-radius: 9px; background: rgba(0, 0, 0, .18); }
+    body.cell-bubbles .row-notes { border: 1px solid rgba(0, 0, 0, .3); border-radius: 9px; background: transparent; }
     body.cell-bubbles .section[data-row-count="1"] .bar,
     body.cell-bubbles .section[data-row-count="1"] .row-notes { min-height: 134px; }
 
@@ -217,7 +215,7 @@
     </div>
   </header>
   <main id="chart">
-    <p class="chart-intro">Expanded Arrangement · Bar Bubbles are the lead treatment · Melody Fragments use dark capsules · melody-related Octave Cues return to Row Notes.</p>
+    <p class="chart-intro">Expanded Arrangement · compare Grid and outlined Bar Bubble cells · Melody Fragments use borderless red capsules · Octave Cues remain simple Row Notes.</p>
     <div id="sections"></div>
   </main>
 
@@ -279,10 +277,7 @@
         const rows = section.rows.map(function (bars, rowIndex) {
           const melody = melodyFor(section, rowIndex);
           const directions = rowNotes(section, rowIndex);
-          const notes = directions.length ? directions.map(function (note) {
-            const content = note.type === 'octave' ? '<span class="note-kind">Melody</span><span>' + note.text + '</span>' : note.text;
-            return '<span class="direction ' + (note.type === 'octave' ? 'octave-note' : '') + '">' + content + '</span>';
-          }).join('') : '<span class="no-note">None</span>';
+          const notes = directions.length ? directions.map(function (note) { return '<span class="direction">' + note.text + '</span>'; }).join('') : '<span class="no-note">None</span>';
           return '<div class="chart-row"><div class="bars-and-notes">' + bars.map(function (bar, barIndex) {
             return renderBar(bar, melody ? melody.fragments[barIndex] : '');
           }).join('') + '<aside class="row-notes" aria-label="Row notes">' + notes + '</aside></div></div>';
