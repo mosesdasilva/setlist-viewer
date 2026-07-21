@@ -73,11 +73,11 @@ Any future Codex session should read this file first to understand:
 - Wayfinder map: [Map a static Nashville chart system](https://github.com/mosesdasilva/setlist-viewer/issues/1).
 - The representative handwritten chart is `Más — Miel San Marcos`, key D, 140 BPM, 4/4; its source image and notation notes live under `docs/assets/` and `docs/research/`.
 - [Define the v1 Nashville chart language](https://github.com/mosesdasilva/setlist-viewer/issues/4) is resolved; canonical terms live in `CONTEXT.md`, and its detailed resolution is recorded on the ticket.
-- [Prototype a human-editable chart source format](https://github.com/mosesdasilva/setlist-viewer/issues/5) selected the small `.chart` notation because musician readability outweighed JSON/JavaScript familiarity; ADR 0001 records the choice.
+- [Prototype a human-editable chart source format](https://github.com/mosesdasilva/setlist-viewer/issues/5) is resolved: the small `.chart` notation won because musician readability outweighed JSON/JavaScript familiarity; ADR 0001 records the choice.
 
 ## Next Recommended Work
 
-- Specify the exact `.chart` grammar and line-aware validation diagnostics before implementation.
+- Resolve [Specify the musician-readable .chart grammar and validation contract](https://github.com/mosesdasilva/setlist-viewer/issues/9) before implementation; it blocks migration and acceptance planning.
 - Continue through the unblocked frontier of the Wayfinder map; do not implement the destination during planning.
 
 ## Update Rule
