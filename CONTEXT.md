@@ -45,5 +45,9 @@ A short playing instruction carried by a Row Note, such as `Rakes`.
 _Avoid_: Comment
 
 **Melody Passage**:
-A compact number-based melody reference carried by a Row Note. It is distinct from a Performance Direction even when v1 preserves it without melody-specific behavior.
+A compact number-based melody reference carried by a Row Note. It contains four Bar-aligned Melody Fragments and remains distinct from a Performance Direction.
 _Avoid_: Red comment
+
+**Melody Fragment**:
+The opaque text for one Bar of a Melody Passage. V1 preserves the text without interpreting individual melody notes.
+_Avoid_: Melody Bar, parsed melody

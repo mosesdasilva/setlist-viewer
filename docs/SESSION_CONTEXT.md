@@ -43,6 +43,7 @@ Any future Codex session should read this file first to understand:
 - Essential chart data must load under `file://` without runtime `fetch()` or ES modules; generated classic JavaScript is the split-runtime candidate and inline data is the portable-artifact candidate.
 - Render an Expanded Arrangement: every repeated Section appears in full performance order.
 - Preserve four Bars and a side-by-side Row Note per Chart Row at phone, iPad, and laptop widths.
+- Model each Row Note as either a Performance Direction or Melody Passage; a Melody Passage preserves four Bar-aligned Melody Fragments as opaque text in v1.
 - Keep browser editing, handwriting/OCR import, melody tracking, cloud services, and dedicated PDF generation outside v1.
 - Push every completed commit immediately; use focused feature branches for implementation and keep `main` stable.
 
