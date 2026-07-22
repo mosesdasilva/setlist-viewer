@@ -6,7 +6,7 @@ Setlist Viewer is a static web app for browsing song maps during rehearsal or li
 
 - reusable static site with no build step
 - song-by-song navigation
-- quick directory buttons
+- hidden searchable Song Picker for the ordered catalog
 - light and dark theme toggle
 - versioned single-file prototype artifact
 - GitHub Pages ready deployment
@@ -51,5 +51,4 @@ After the repo is pushed to GitHub:
 
 - define a standard song data format
 - add support for multiple setlists
-- add filtering or search when the setlist grows
 - add print or stage-view layouts if needed

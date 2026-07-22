@@ -65,7 +65,8 @@ class LegacySongRegressionTests(unittest.TestCase):
         html = (ROOT / "setlist-viewer-portable.html").read_text(encoding="utf-8")
         self.assertIn('id="legacy-badge" hidden>Legacy</span>', html)
         self.assertIn('legacyBadge.hidden = song.type !== "legacy"', html)
-        self.assertIn('song.title + (song.type === "legacy" ? " — Legacy" : "")', html)
+        self.assertIn('if (song.type === "legacy")', html)
+        self.assertIn('appendTextElement(badges, "span", "legacy-badge", "Legacy")', html)
 
     def test_section_band_heading_is_the_single_legacy_summary_label(self):
         script = (ROOT / "src" / "script.js").read_text(encoding="utf-8")

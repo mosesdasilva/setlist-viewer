@@ -25,6 +25,7 @@
         <button class="control-button nav-button" type="button" id="prev-song" aria-label="Previous Song" title="Previous Song">←</button>
         <span class="song-count" id="song-count">Song 0 of 0</span>
         <button class="control-button nav-button" type="button" id="next-song" aria-label="Next Song" title="Next Song">→</button>
+        <button class="control-button picker-trigger" type="button" id="song-picker-trigger" aria-controls="song-picker" aria-haspopup="dialog">Choose Song</button>
         <button class="control-button layout-toggle" type="button" id="layout-toggle" aria-pressed="false" aria-label="Layout: two columns" title="Layout: two columns">▥</button>
         <button class="control-button melody-toggle" type="button" id="melody-toggle" aria-pressed="true" aria-label="Hide melody" title="Hide melody">♫</button>
         <button class="control-button palette-toggle" type="button" id="palette-toggle" aria-pressed="false" aria-label="Use pastel Section colors" title="Use pastel Section colors">●</button>
@@ -32,11 +33,23 @@
       </div>
     </div>
     <nav class="song-map" id="song-map" aria-label="Song map"></nav>
-    <div class="directory-strip" aria-label="Quick Song Directory">
-      <span class="directory-label">Songs</span>
-      <div class="song-directory" id="song-directory"></div>
-    </div>
   </header>
+
+  <dialog class="song-picker" id="song-picker" aria-labelledby="song-picker-title">
+    <div class="picker-panel">
+      <header class="picker-header">
+        <div>
+          <h2 id="song-picker-title">Choose Song</h2>
+          <p>Search the ordered catalog by title or Artist.</p>
+        </div>
+        <button class="picker-close" type="button" id="song-picker-close" aria-label="Close Song Picker">×</button>
+      </header>
+      <label class="search-label" for="song-search">Search Songs</label>
+      <input class="song-search" id="song-search" type="search" autocomplete="off" placeholder="Title or Artist">
+      <p class="picker-status" id="song-picker-status" aria-live="polite"></p>
+      <div class="picker-results" id="song-picker-results" aria-label="Songs"></div>
+    </div>
+  </dialog>
 
   <main id="chart">
     <section class="song-list" id="song-list"></section>
