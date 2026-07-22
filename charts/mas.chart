@@ -1,0 +1,43 @@
+# Transcribed from docs/assets/representative-handwritten-nashville-chart.png
+@title Más
+@artist Miel San Marcos
+@key D
+@tempo 140
+@time 4/4
+
+@arrangement intro verse tag pre-chorus tag chorus-1 chorus-2 intro verse tag pre-chorus
+@arrangement chorus-1 chorus-2 instrumental bridge bridge bridge tag chorus-1 bridge bridge ending
+
+[intro | IN | Intro]
+| 4 | 2 | 6 | 3 | melody: 17 65 ; 32 12 ; 17 65 ; 5156 5
+| 4 | 2 | 6 | 3 | melody: 17 65 ; 32 12 ; 17 65 ; 5156 5 || direction: oct ↑
+
+[verse | VS | Verse]
+| 4 | 2 | 6 | 3 | direction: Rakes
+| 4 | 2 | 6 | 3 |
+
+[tag | TG | Tag]
+| 3 | _ | _ | _ |
+
+[pre-chorus | PC | Pre-Chorus]
+| 4 | 2 | 6 | 3 | melody: 17 65 ; 32 12 ; 17 65 ; 5156 5
+| 4 | 2 | 6 | 3 | melody: 17 65 ; 32 12 ; 17 65 ; 5156 5 || direction: oct ↑
+
+[chorus-1 | CH | Chorus | 1]
+| 4 | 2 | 6 | 3 | melody: 6 3 ; 6 - ; 6 3 ; 7 -
+| 4 | 2 | 6 | 3 | melody: 6 3 ; 6 - ; 6 3 ; 7 -
+
+[chorus-2 | CH | Chorus | 2]
+| 4 | 2 | 6 | 3 | melody: 656 3 ; 656 3 ; 656 3 ; 7
+| 4 | 2 | 6 | 3 | melody: 656 3 ; 656 3 ; 656 3 ; 7
+
+[instrumental | IS | Instrumental]
+| 6 | 6 | 6 | 6 | melody: 265 61 ; 3322 1265 ; 265 61 ; 3322 3511
+| 6 | 6 | 6 | 6 | melody: 265 61 ; 3322 1265 ; 265 61 ; 3322 3511
+
+[bridge | BR | Bridge]
+| 4 | 5 | 6 | 1/3 |
+| 4 | 5 | 6 | 1/3 |
+
+[ending | EN | Ending]
+| 2 | 3 | 4 | <3> |

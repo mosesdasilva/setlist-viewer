@@ -15,6 +15,9 @@ Setlist Viewer is a static web app for browsing song maps during rehearsal or li
 
 Open [setlist-viewer-v1.html](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/setlist-viewer-v1.html) for the portable single-file version, or [src/index.html](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/src/index.html) for the split source version.
 
+Canonical chart sources and catalog order live under `charts/`. Regenerate browser data with
+`python3 tools/build.py`; verify committed data without writing via `python3 tools/build.py --check`.
+
 ## Project Structure
 
 - [setlist-viewer-v1.html](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/setlist-viewer-v1.html): portable single-file prototype and current handoff-friendly artifact
@@ -22,6 +25,10 @@ Open [setlist-viewer-v1.html](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer
 - [src/index.html](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/src/index.html): split markup source
 - [src/styles.css](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/src/styles.css): split visual styling source
 - [src/script.js](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/src/script.js): split behavior source
+- `charts/catalog.json`: hand-authored catalog order
+- `charts/*.chart`: musician-authored Nashville Number Charts
+- `src/chart-data.js`: generated classic JavaScript browser data
+- `tools/build.py`: zero-dependency data generation and drift check
 - [docs/](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/docs): project notes, session continuity, and handoff history
 - [PROJECT_NOTES.md](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/docs/PROJECT_NOTES.md): current decisions and next steps
 - [SESSION_CONTEXT.md](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/docs/SESSION_CONTEXT.md): persistent cross-session starting point
