@@ -38,6 +38,7 @@ body.dark-theme {
 body.pastel-palette {
   --band-ink: #172033;
   --melody-bubble: #d86f82;
+  --melody-ink: #2b1015;
   --intro: #b8c7d9;
   --verse: #9dbbe7;
   --tag: #efbf91;
@@ -180,7 +181,21 @@ button {
   outline-offset: 2px;
 }
 
-.layout-toggle {
+.layout-controls {
+  display: none;
+  align-items: center;
+  gap: 3px;
+  padding: 2px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+
+.layout-button[aria-pressed="false"] {
+  background: transparent;
+  color: var(--ink);
+}
+
+.layout-four {
   display: none;
 }
 
@@ -210,6 +225,10 @@ button {
 .song-map {
   min-height: 29px;
   gap: 5px;
+}
+
+.song-map[hidden] {
+  display: none;
 }
 
 .map-chip {
@@ -656,21 +675,79 @@ body.melody-hidden .ordered-melody-passage {
 }
 
 .legacy-section-band {
-  min-height: 64px;
+  min-height: 42px;
+  grid-template-columns: 1fr;
+}
+
+.legacy-section-band .section-heading {
+  flex-direction: row;
+  justify-content: space-between;
+  border-right: 0;
+}
+
+.legacy-section-band .section-name {
+  margin: 0;
+  transform: none;
+  writing-mode: horizontal-tb;
+}
+
+body.layout-columns-1 .sections {
+  column-count: 1;
+}
+
+@media (min-width: 700px) and (max-width: 1199px) {
+  body.layout-columns-2 .sections,
+  body.layout-columns-4 .sections {
+    column-count: 2;
+  }
 }
 
 @media (min-width: 700px) {
   .sections {
-    column-count: 2;
     column-gap: 14px;
   }
 
-  body.single-column .sections {
-    column-count: 1;
+  .layout-controls {
+    display: flex;
+  }
+}
+
+@media (min-width: 1200px) {
+  body.layout-columns-2 .sections {
+    column-count: 2;
   }
 
-  .layout-toggle {
+  body.layout-columns-4 .sections {
+    column-count: 4;
+  }
+
+  .layout-four {
     display: inline-grid;
+  }
+
+  body.layout-columns-4 .section-band {
+    grid-template-columns: 34px minmax(0, 1fr);
+  }
+
+  body.layout-columns-4 .legacy-section-band {
+    grid-template-columns: 1fr;
+  }
+
+  body.layout-columns-4 .bars-and-notes {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(62px, 1fr);
+  }
+
+  body.layout-columns-4 .bar {
+    min-height: 56px;
+  }
+
+  body.layout-columns-4 .bar-event {
+    font-size: clamp(16px, 1.45vw, 21px);
+  }
+
+  body.layout-columns-4 .row-notes {
+    padding-inline: 4px;
+    font-size: 8px;
   }
 }
 
@@ -741,6 +818,10 @@ body.melody-hidden .ordered-melody-passage {
     border-radius: 9px;
     grid-template-columns: 36px minmax(0, 1fr);
     scroll-margin-top: 170px;
+  }
+
+  .legacy-section-band {
+    grid-template-columns: 1fr;
   }
 
   .section-heading {

@@ -47,9 +47,11 @@
 - preserve mobile-friendly one-song-at-a-time navigation
 - keep terminology normalized as `Bridge` and `Chorus`
 - treat the accepted responsive Section Bands prototype as binding prior art for the canonical generated viewer shell
-- use a compact sticky Song header, vertical Section Names, Section Codes, colored bands, and a responsive one/two-column stage-reading surface
+- use a compact sticky Song header, vertical Section Names, Section Codes, colored bands, and a responsive one/two/four-column stage-reading surface
 - keep the complete ordered Song catalog hidden until the sticky-header Song Picker opens; empty search browses all Songs and title/Artist search filters live
 - present the Song Picker as an accessible desktop overlay and mobile full-screen sheet, with visible Legacy/current states and reliable close/focus behavior
+- preserve the chosen Section-column preference when responsive constraints temporarily render fewer columns: one on phones, at most two below 1200 CSS pixels, and four only at wider laptop/desktop sizes
+- keep the ordered active Song Map for complete Charts; Legacy Songs show a readable Section summary and never imply Bar-level Chart content
 - stack Sections vertically in a fully Expanded Arrangement
 - preserve four Bars plus a side-by-side Row Note per Chart Row at every supported width
 - prioritize phone, iPad, and laptop; rely only on normal browser printing for v1
