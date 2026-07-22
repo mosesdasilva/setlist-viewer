@@ -18,7 +18,7 @@
 ## Naming
 
 - Working project name: **Setlist Viewer**
-- The current prototype remains `setlist-viewer-v1.html` until implementation migrates it to `setlist-viewer-portable.html`.
+- The generated portable viewer is `setlist-viewer-portable.html`; retain the earlier `setlist-viewer-v1.html` prototype until final acceptance passes.
 - Commit generated `src/chart-data.js` and `setlist-viewer-portable.html` so split `file://` use and instant handoff require no build.
 - Use a zero-dependency `python3 tools/build.py` for explicit local generation and `python3 tools/build.py --check` for read-only validation.
 - CI must validate charts and generated drift before deploying committed `src/`; failures show the rebuild command and never auto-commit changes.
