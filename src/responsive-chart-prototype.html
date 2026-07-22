@@ -19,7 +19,6 @@
       --control: #1f2937;
       --control-ink: #fff;
       --band-ink: #fff;
-      --melody: #fff;
       --melody-bubble: #c8102e;
       --intro: #334155;
       --verse: #1e4f91;
@@ -154,18 +153,19 @@
       min-width: 0;
     }
     .bar {
+      position: relative;
       display: grid;
       min-width: 0;
       min-height: 64px;
-      grid-template-rows: 1fr auto;
+      grid-template-rows: 1fr;
       align-items: center;
       justify-items: center;
       padding: 6px 2px 5px;
     }
     .bar:first-child { border-left: 0; }
     .bar-chord { display: grid; min-width: 0; place-items: center; font-size: clamp(19px, 2.4vw, 28px); font-weight: 850; letter-spacing: -.04em; }
-    .bar-melody { display: inline-flex; min-width: 0; max-width: calc(100% - 4px); min-height: 16px; align-items: center; justify-content: center; gap: 3px; color: var(--melody); font-size: clamp(7px, 1.05vw, 10px); font-weight: 900; line-height: 1.05; overflow-wrap: anywhere; text-align: center; }
-    .bar-melody.has-melody { padding: 3px 6px; border-radius: 999px; background: var(--melody-bubble); }
+    .bar-melody { position: absolute; bottom: 4px; left: 50%; display: inline-flex; min-width: 0; max-width: calc(100% - 2px); min-height: 16px; align-items: center; justify-content: center; gap: 3px; color: var(--band-ink); font-size: clamp(7px, 1.05vw, 10px); font-weight: 900; line-height: 1.05; overflow-wrap: normal; text-align: center; transform: translateX(-50%); white-space: nowrap; }
+    .bar-melody.has-melody { padding: 3px 4px; border-radius: 999px; background: var(--melody-bubble); }
     body.melody-hidden .bar-melody { visibility: hidden; }
     .event { position: relative; display: inline-grid; min-width: 0; place-items: center; }
     .diamond { width: 29px; height: 29px; border: 2px solid currentColor; transform: rotate(45deg); }
