@@ -11,7 +11,7 @@
 - Split source and chart data will be canonical; the portable single-file HTML will be generated.
 - Use a project-owned, musician-readable `.chart` notation as canonical chart source, shaped by the selected small-notation prototype and informed by ChordPro and ChordText vocabulary.
 - Avoid runtime `fetch()` or ES-module loading for essential chart data while direct `file://` use remains required; generate file-safe classic JavaScript for split runtime use and inline data for the portable artifact.
-- Keep generated browser data structured; specify the `.chart` grammar, escaping, parser, and line-aware validation before implementation.
+- Keep generated browser data structured; the resolved `.chart` grammar and line-aware validation contract live on the Wayfinder ticket and its final addendum.
 
 ## Naming
 

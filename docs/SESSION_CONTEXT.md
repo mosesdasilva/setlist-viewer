@@ -43,7 +43,9 @@ Any future Codex session should read this file first to understand:
 - Use `python3 tools/build.py --check` in CI before GitHub Pages deployment; fail on invalid charts or generated drift without auto-committing repairs.
 - Generate atomically, with source locations in diagnostics and generated-file headers warning against manual edits.
 - Use a project-owned, musician-readable `.chart` notation as canonical chart source; ChordPro and ChordText inform its vocabulary without becoming the storage format.
-- Use a strict line-oriented UTF-8 `.chart` grammar: lowercase directive metadata, pipe-delimited Section headers and four-slot Chart Rows, whitespace-delimited Bar Events, suffix Beat Dots, ASCII `diamond(...)`, typed ordered Row Notes, and repeated explicit arrangement IDs. Validation reports stable line/column errors, has no warnings, and prevents all generated output on failure.
+- Use a strict line-oriented UTF-8 `.chart` grammar: required metadata in fixed order, optional metadata next, Expanded Arrangement lines before pipe-delimited Section definitions, four-slot Chart Rows, whitespace-delimited Bar Events, suffix Beat Dots, ASCII `<chord>` Diamonds, and typed ordered Row Notes.
+- Reject tabs; support exactly `\\`, `\|`, `\;`, and `\]` escapes. A Melody Passage has exactly four fragments and at least one must be nonempty.
+- Validation reports stable line/column diagnostics. Unreferenced Section definitions are warnings that allow generation; errors prevent all generated output.
 - Essential chart data must load under `file://` without runtime `fetch()` or ES modules; generated classic JavaScript is the split-runtime candidate and inline data is the portable-artifact candidate.
 - Render an Expanded Arrangement: every repeated Section appears in full performance order.
 - Preserve four Bars and a side-by-side Row Note per Chart Row at phone, iPad, and laptop widths.
@@ -79,7 +81,7 @@ Any future Codex session should read this file first to understand:
 - [Define the v1 Nashville chart language](https://github.com/mosesdasilva/setlist-viewer/issues/4) is resolved; canonical terms live in `CONTEXT.md`, and its detailed resolution is recorded on the ticket.
 - [Prototype a human-editable chart source format](https://github.com/mosesdasilva/setlist-viewer/issues/5) is resolved: the small `.chart` notation won because musician readability outweighed JSON/JavaScript familiarity; ADR 0001 records the choice.
 - [Choose the canonical-source and portable-build workflow](https://github.com/mosesdasilva/setlist-viewer/issues/7) is resolved: committed runtime and portable outputs are produced by an explicit Python build and checked—not repaired—by CI.
-- [Specify the musician-readable .chart grammar and validation contract](https://github.com/mosesdasilva/setlist-viewer/issues/9) is resolved; its resolution comment defines the exact grammar, escaping, timing validation, arrangement rules, and diagnostic families.
+- [Specify the musician-readable .chart grammar and validation contract](https://github.com/mosesdasilva/setlist-viewer/issues/9) is resolved; its resolution and final addendum define the exact grammar, escaping, timing validation, arrangement rules, and diagnostics.
 
 ## Next Recommended Work
 
