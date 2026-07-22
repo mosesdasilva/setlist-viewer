@@ -2,7 +2,6 @@
   const catalog = window.SETLIST_SONGS || [];
   const body = document.body;
   const songList = document.getElementById("song-list");
-  const directory = document.getElementById("song-directory");
   const songMap = document.getElementById("song-map");
   const songTitle = document.getElementById("song-title");
   const songArtist = document.getElementById("song-artist");
@@ -15,6 +14,12 @@
   const melodyToggle = document.getElementById("melody-toggle");
   const paletteToggle = document.getElementById("palette-toggle");
   const themeToggle = document.getElementById("theme-toggle");
+  const songPickerTrigger = document.getElementById("song-picker-trigger");
+  const songPicker = document.getElementById("song-picker");
+  const songPickerClose = document.getElementById("song-picker-close");
+  const songSearch = document.getElementById("song-search");
+  const songPickerStatus = document.getElementById("song-picker-status");
+  const songPickerResults = document.getElementById("song-picker-results");
 
   const legacySectionCodes = {
     intro: "IN",
@@ -261,17 +266,6 @@
     }
     renderContent(song, sectionsElement);
 
-    const button = appendTextElement(
-      directory,
-      "button",
-      "directory-button",
-      song.title + (song.type === "legacy" ? " — Legacy" : "")
-    );
-    button.type = "button";
-    button.dataset.target = String(index);
-    button.addEventListener("click", function () {
-      setActiveSong(index);
-    });
   }
 
   function metadataChip(text) {
@@ -319,8 +313,61 @@
   catalog.forEach(renderSong);
 
   const songs = Array.from(songList.querySelectorAll(".song"));
-  const directoryButtons = Array.from(directory.querySelectorAll(".directory-button"));
   let activeIndex = 0;
+
+  function renderPickerResults(query) {
+    const normalizedQuery = query.trim().toLocaleLowerCase();
+    const matches = catalog
+      .map(function (song, index) { return { song: song, index: index }; })
+      .filter(function (entry) {
+        const song = entry.song;
+        return (
+          !normalizedQuery ||
+          song.title.toLocaleLowerCase().includes(normalizedQuery) ||
+          (song.artist || "").toLocaleLowerCase().includes(normalizedQuery)
+        );
+      });
+
+    clear(songPickerResults);
+    songPickerStatus.textContent = matches.length === 1 ? "1 Song" : matches.length + " Songs";
+
+    matches.forEach(function (entry) {
+      const song = entry.song;
+      const button = appendTextElement(songPickerResults, "button", "picker-result", "");
+      const isActive = entry.index === activeIndex;
+      button.type = "button";
+      button.dataset.target = String(entry.index);
+      button.classList.toggle("is-active", isActive);
+      button.setAttribute("aria-current", isActive ? "true" : "false");
+      appendTextElement(button, "span", "picker-result-title", song.title);
+      appendTextElement(button, "span", "picker-result-artist", song.artist || "Artist not listed");
+      const badges = appendTextElement(button, "span", "picker-result-badges", "");
+      if (song.type === "legacy") {
+        appendTextElement(badges, "span", "legacy-badge", "Legacy");
+      }
+      if (isActive) {
+        appendTextElement(badges, "span", "current-badge", "Current");
+      }
+      button.addEventListener("click", function () {
+        setActiveSong(entry.index);
+        closeSongPicker();
+      });
+    });
+  }
+
+  function openSongPicker() {
+    songSearch.value = "";
+    renderPickerResults("");
+    songPicker.showModal();
+    songPickerTrigger.setAttribute("aria-expanded", "true");
+    songSearch.focus();
+  }
+
+  function closeSongPicker() {
+    if (songPicker.open) {
+      songPicker.close();
+    }
+  }
 
   function savePreference(name, value) {
     try {
@@ -387,12 +434,11 @@
     songs.forEach(function (song, songIndex) {
       song.classList.toggle("active", songIndex === activeIndex);
     });
-    directoryButtons.forEach(function (button, buttonIndex) {
-      button.classList.toggle("is-active", buttonIndex === activeIndex);
-      button.setAttribute("aria-current", buttonIndex === activeIndex ? "true" : "false");
-    });
     updateHeader(catalog[activeIndex], activeIndex);
     rebuildSongMap(catalog[activeIndex], songs[activeIndex]);
+    if (songPicker.open) {
+      renderPickerResults(songSearch.value);
+    }
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -420,7 +466,41 @@
     applyPalette(body.classList.contains("pastel-palette") ? "strong" : "pastel");
   });
 
+  songPickerTrigger.addEventListener("click", openSongPicker);
+  songPickerClose.addEventListener("click", closeSongPicker);
+  songSearch.addEventListener("input", function () {
+    renderPickerResults(songSearch.value);
+  });
+  songPicker.addEventListener("cancel", function (event) {
+    event.preventDefault();
+    closeSongPicker();
+  });
+  songPicker.addEventListener("close", function () {
+    songSearch.value = "";
+    renderPickerResults("");
+    songPickerTrigger.setAttribute("aria-expanded", "false");
+    songPickerTrigger.focus();
+  });
+  songPicker.addEventListener("click", function (event) {
+    if (event.target === songPicker) {
+      const bounds = songPicker.getBoundingClientRect();
+      const outside =
+        event.clientX < bounds.left || event.clientX > bounds.right ||
+        event.clientY < bounds.top || event.clientY > bounds.bottom;
+      if (outside) {
+        closeSongPicker();
+      }
+    }
+  });
+
   document.addEventListener("keydown", function (event) {
+    if (songPicker.open) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeSongPicker();
+      }
+      return;
+    }
     if (event.target && /input|textarea|select/i.test(event.target.tagName)) {
       return;
     }
@@ -437,6 +517,7 @@
   applyColumns(loadPreference("columns", "2"));
   applyMelody(loadPreference("melody", "on"));
   applyPalette(loadPreference("palette", "strong"));
+  renderPickerResults("");
 
   if (songs.length) {
     setActiveSong(0);

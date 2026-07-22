@@ -172,8 +172,10 @@ button {
 
 .control-button:hover,
 .control-button:focus-visible,
-.directory-button:hover,
-.directory-button:focus-visible {
+.picker-close:hover,
+.picker-close:focus-visible,
+.picker-result:hover,
+.picker-result:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 2px;
 }
@@ -189,8 +191,14 @@ button {
   white-space: nowrap;
 }
 
-.song-map,
-.directory-strip {
+.picker-trigger {
+  width: auto;
+  padding: 0 11px;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.song-map {
   display: flex;
   width: 100%;
   min-width: 0;
@@ -227,42 +235,154 @@ button {
   box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.94), inset 0 0 0 4px rgba(0, 0, 0, 0.36);
 }
 
-.directory-strip {
-  gap: 7px;
-  padding-top: 4px;
-  border-top: 1px solid var(--line);
+.song-picker {
+  position: fixed;
+  width: min(560px, calc(100% - 32px));
+  max-height: min(720px, calc(100% - 48px));
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.38);
 }
 
-.directory-label {
+.song-picker::backdrop {
+  background: rgba(4, 9, 16, 0.68);
+  backdrop-filter: blur(3px);
+}
+
+.picker-panel {
+  display: flex;
+  max-height: min(720px, calc(100vh - 48px));
+  flex-direction: column;
+  padding: 20px;
+}
+
+.picker-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.picker-header h2 {
+  margin: 0;
+  font-size: 25px;
+  letter-spacing: -0.03em;
+}
+
+.picker-header p {
+  margin: 4px 0 0;
   color: var(--muted);
-  font-size: 9px;
+  font-size: 12px;
+}
+
+.picker-close {
+  display: inline-grid;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: var(--control);
+  color: var(--control-ink);
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  place-items: center;
+}
+
+.search-label {
+  margin: 18px 0 6px;
+  font-size: 11px;
   font-weight: 900;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-.song-directory {
-  display: flex;
-  min-width: 0;
-  gap: 5px;
+.song-search {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
 }
 
-.directory-button {
-  flex: 0 0 auto;
-  padding: 4px 7px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--paper);
+.song-search:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.picker-status {
+  min-height: 1.2em;
+  margin: 10px 0 6px;
   color: var(--muted);
+  font-size: 11px;
+}
+
+.picker-results {
+  display: grid;
+  min-height: 0;
+  gap: 6px;
+  padding: 2px;
+  overflow-y: auto;
+}
+
+.picker-result {
+  display: grid;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--ink);
   cursor: pointer;
-  font-size: 9px;
-  font-weight: 800;
+  gap: 3px 10px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  text-align: left;
+}
+
+.picker-result.is-active {
+  border-color: var(--ink);
+  box-shadow: inset 3px 0 var(--ink);
+}
+
+.picker-result-title {
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 900;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.directory-button.is-active {
-  background: var(--control);
-  color: var(--control-ink);
+.picker-result-artist {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 11px;
+  grid-column: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.picker-result-badges {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+.current-badge {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 #chart {
@@ -583,6 +703,28 @@ body.melody-hidden .ordered-melody-passage {
     width: 28px;
     height: 27px;
     font-size: 13px;
+  }
+
+  .picker-trigger {
+    width: auto;
+    padding-inline: 8px;
+    font-size: 9px;
+  }
+
+  .song-picker {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .picker-panel {
+    height: 100%;
+    max-height: none;
+    padding: max(16px, env(safe-area-inset-top)) 12px max(16px, env(safe-area-inset-bottom));
   }
 
   .sections {
