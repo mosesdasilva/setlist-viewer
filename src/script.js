@@ -11,10 +11,12 @@
   const legacyBadge = document.getElementById("legacy-badge");
   const prevButton = document.getElementById("prev-song");
   const nextButton = document.getElementById("next-song");
-  const layoutToggle = document.getElementById("layout-toggle");
+  const layoutButtons = Array.from(document.querySelectorAll(".layout-button"));
   const melodyToggle = document.getElementById("melody-toggle");
   const paletteToggle = document.getElementById("palette-toggle");
   const themeToggle = document.getElementById("theme-toggle");
+  const multiColumnMedia = window.matchMedia("(min-width: 700px)");
+  const fourColumnMedia = window.matchMedia("(min-width: 1200px)");
 
   const legacySectionCodes = {
     intro: "IN",
@@ -227,6 +229,8 @@
   }
 
   function renderLegacySong(song, sectionsElement) {
+    sectionsElement.classList.add("legacy-sections");
+    sectionsElement.setAttribute("aria-label", "Legacy Section summary");
     song.sections.forEach(function (section, sectionIndex) {
       const sectionElement = createSectionElement(sectionsElement, section, sectionIndex, 1);
       sectionElement.classList.add("legacy-section-band");
@@ -294,6 +298,11 @@
 
   function rebuildSongMap(song, article) {
     clear(songMap);
+    songMap.hidden = song.type !== "chart";
+    if (songMap.hidden) {
+      return;
+    }
+    songMap.setAttribute("aria-label", "Song Map for " + song.title);
     const sections = Array.from(article.querySelectorAll(".section-band"));
     sections.forEach(function (sectionElement, sectionIndex) {
       const section = song.sections[sectionIndex];
@@ -306,13 +315,24 @@
       );
       chip.addEventListener("click", function (event) {
         event.preventDefault();
-        Array.from(songMap.querySelectorAll(".map-chip")).forEach(function (candidate) {
-          candidate.classList.toggle("is-active", candidate === chip);
-        });
+        updateActiveMapTarget(sectionIndex);
         const headerHeight = document.querySelector(".song-header").offsetHeight;
         const targetTop = sectionElement.getBoundingClientRect().top + window.scrollY - headerHeight - 8;
         window.scrollTo({ top: targetTop, behavior: "smooth" });
       });
+    });
+    updateActiveMapTarget(0);
+  }
+
+  function updateActiveMapTarget(activeSectionIndex) {
+    Array.from(songMap.querySelectorAll(".map-chip")).forEach(function (chip, chipIndex) {
+      const active = chipIndex === activeSectionIndex;
+      chip.classList.toggle("is-active", active);
+      if (active) {
+        chip.setAttribute("aria-current", "location");
+      } else {
+        chip.removeAttribute("aria-current");
+      }
     });
   }
 
@@ -341,6 +361,7 @@
     const dark = theme === "dark";
     body.classList.toggle("dark-theme", dark);
     themeToggle.textContent = dark ? "☀" : "☾";
+    themeToggle.setAttribute("aria-pressed", String(dark));
     const label = dark ? "Use light mode" : "Use dark mode";
     themeToggle.setAttribute("aria-label", label);
     themeToggle.setAttribute("title", label);
@@ -348,14 +369,29 @@
   }
 
   function applyColumns(columns) {
-    const single = columns === "1";
-    body.classList.toggle("single-column", single);
-    layoutToggle.textContent = single ? "▤" : "▥";
-    layoutToggle.setAttribute("aria-pressed", String(single));
-    const label = single ? "Layout: one column" : "Layout: two columns";
-    layoutToggle.setAttribute("aria-label", label);
-    layoutToggle.setAttribute("title", label);
-    savePreference("columns", single ? "1" : "2");
+    if (!["1", "2", "4"].includes(columns)) {
+      columns = "2";
+    }
+    ["1", "2", "4"].forEach(function (candidate) {
+      body.classList.toggle("layout-columns-" + candidate, candidate === columns);
+    });
+    body.dataset.layoutPreference = columns;
+    updateRenderedColumns();
+    savePreference("columns", columns);
+  }
+
+  function updateRenderedColumns() {
+    const preferred = body.dataset.layoutPreference || "2";
+    let rendered = preferred;
+    if (!multiColumnMedia.matches) {
+      rendered = "1";
+    } else if (preferred === "4" && !fourColumnMedia.matches) {
+      rendered = "2";
+    }
+    body.dataset.renderedColumns = rendered;
+    layoutButtons.forEach(function (button) {
+      button.setAttribute("aria-pressed", String(button.dataset.columns === rendered));
+    });
   }
 
   function applyMelody(visibility) {
@@ -408,8 +444,10 @@
     applyTheme(body.classList.contains("dark-theme") ? "light" : "dark");
   });
 
-  layoutToggle.addEventListener("click", function () {
-    applyColumns(body.classList.contains("single-column") ? "2" : "1");
+  layoutButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      applyColumns(button.dataset.columns);
+    });
   });
 
   melodyToggle.addEventListener("click", function () {
@@ -437,6 +475,9 @@
   applyColumns(loadPreference("columns", "2"));
   applyMelody(loadPreference("melody", "on"));
   applyPalette(loadPreference("palette", "strong"));
+
+  multiColumnMedia.addEventListener("change", updateRenderedColumns);
+  fourColumnMedia.addEventListener("change", updateRenderedColumns);
 
   if (songs.length) {
     setActiveSong(0);
