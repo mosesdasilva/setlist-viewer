@@ -35,6 +35,7 @@ Any future Codex session should read this file first to understand:
 - Preserve the grayscale UI direction, with color concentrated in the section blocks.
 - Use the accepted Section Bands prototype as binding visual and interaction prior art for the canonical generated viewer: compact sticky Song header, vertical Section Names, colored bands, four-Bar rows, aligned Row Notes, and responsive one/two/four-column presentation.
 - Persist one-, two-, or four-column preference independently from the responsive rendered layout: phones render one column, tablet widths render at most two, and four columns render only at 1200 CSS pixels or wider.
+- Evolve the viewer through spec #25: use mutually exclusive Chords, Melody, and Lyrics display modes; occurrence-specific non-Bar-aligned Lyrics Blocks; selectable Per Section or Global Bar numbering; equal-footprint four/eight-Bar Section Bands; five persistent Band-size steps; and an explicit Strong/Pastel control without a color legend.
 - Expose the ordered Song Map only for complete Charts, mark exactly one active target with `aria-current="location"`, and keep Legacy Songs as readable Section summaries without Chart Rows.
 - Keep the generated catalog as the only runtime Song source; browse it through the hidden searchable Song Picker opened from the sticky header.
 - Keep the app static with no framework and no build step.
@@ -101,11 +102,12 @@ Any future Codex session should read this file first to understand:
 - [#21 Adopt the Section Bands shell for the canonical catalog](https://github.com/mosesdasilva/setlist-viewer/issues/21) is implemented on its focused branch: canonical Chart and Legacy Song data now share the compact sticky shell, responsive Section Bands, preserved navigation and display preferences, and aligned generated portable output.
 - [#22 Replace the directory with a searchable Song Picker](https://github.com/mosesdasilva/setlist-viewer/issues/22) is implemented on its focused branch: the ordered canonical catalog now opens in an accessible header-triggered picker with title/Artist filtering, visible Legacy and current-Song states, keyboard-safe modal dismissal and focus restoration, a desktop overlay, and a mobile full-screen sheet.
 - [#23 Integrate prototype display controls and Song Map](https://github.com/mosesdasilva/setlist-viewer/issues/23) is implemented on its focused branch: the canonical split and generated portable viewers now provide an accessible active Chart Song Map, readable Legacy summaries, persistent theme/palette/Melody controls, and responsive one/two/four-column preferences with safe narrow-width fallback.
+- [#25 Improve Section Band modes, sizing, colors, numbering, and lyrics](https://github.com/mosesdasilva/setlist-viewer/issues/25) is the approved parent specification; ticket decomposition is pending final graph approval.
 
 ## Next Recommended Work
 
-- Continue with #24 integration, cutover, and deployment acceptance after #22 and #23 merge.
-- Clear implementation context between tickets and follow each ticket's declared `Blocked by` edges.
+- Approve and publish the tracer-bullet tickets for #25, then implement its dependency frontier in isolated tasks.
+- Keep #24's remaining physical Safari and direct-file human checks distinct from #25 feature work.
 
 ## Update Rule
 

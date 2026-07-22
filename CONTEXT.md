@@ -20,6 +20,10 @@ _Avoid_: Placeholder Chart, Incomplete Chart
 A measure of musical time represented as one cell in a Nashville Number Chart. It contains one or more timed Bar Events.
 _Avoid_: Box
 
+**Bar Numbering Mode**:
+The viewer's choice for labeling Bars. Per Section restarts numbering at `1` for each Arrangement Occurrence; Global continues numbering across the full Expanded Arrangement.
+_Avoid_: Fixed bar numbering
+
 **Chart Row**:
 A horizontal group of exactly four consecutive Bar slots displayed together as one reading unit. At least one slot must contain a Bar; only unused trailing slots may remain empty. It may carry multiple Row Notes.
 _Avoid_: Line
@@ -32,6 +36,10 @@ _Avoid_: Per-bar annotation, line annotation
 A named part of a song, such as Intro, Verse, Chorus, or Bridge, containing at least one Chart Row.
 _Avoid_: Block
 
+**Section Band**:
+The equal-footprint visual card for one Arrangement Occurrence. A four-Bar occurrence expands or centers its single Chart Row within the same outer height as an eight-Bar occurrence without creating fake Bars.
+_Avoid_: Variable-height section card, padded musical data
+
 **Section Name**:
 The full human-readable name of a Section, used as its primary display label in the chart.
 _Avoid_: Section Code
@@ -39,6 +47,18 @@ _Avoid_: Section Code
 **Expanded Arrangement**:
 The complete performance order displayed Section by Section and Bar by Bar, including every repetition rather than repeat signs or interactive jumps.
 _Avoid_: Repeat navigation, collapsed arrangement
+
+**Arrangement Occurrence**:
+One specific appearance of a Section within an Expanded Arrangement. Repeated appearances of the same Section are separate Arrangement Occurrences and may carry different Lyrics Blocks.
+_Avoid_: Reusable Section definition, generic repetition
+
+**Lyrics Block**:
+The ordered, non-Bar-aligned lyric text assigned to one Arrangement Occurrence. It is occurrence-specific so repeated Sections may carry different words. Lyrics Mode presents it as one Section-level reading unit rather than inventing Bar timing.
+_Avoid_: Song-wide lyrics, reusable Section lyrics
+
+**Chart Display Mode**:
+The mutually exclusive content shown inside Bars. Chord Mode shows harmony only, Melody Mode shows Melody Fragments only, and Lyrics Mode shows lyrics only; content from different modes is never overlaid.
+_Avoid_: Melody overlay, combined chord-and-lyrics view
 
 **Section Code**:
 A compact label of exactly two uppercase letters representing a Section type in chart data. Standard types have default codes; custom codes must be unique within their song.
