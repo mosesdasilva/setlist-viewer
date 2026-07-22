@@ -13,11 +13,15 @@ from typing import Iterable
 REQUIRED_METADATA = ("title", "artist", "key", "tempo", "time")
 OPTIONAL_METADATA = ("lead-vocal", "details")
 ALL_METADATA = REQUIRED_METADATA + OPTIONAL_METADATA
+FREE_TEXT_METADATA = {"title", "artist", "lead-vocal", "details"}
 STANDARD_CODES = {"IN", "IS", "VS", "TG", "PC", "PS", "CH", "BR", "TR", "EN", "OU"}
 ID_PATTERN = re.compile(r"[a-z][a-z0-9-]*\Z")
 KEY_PATTERN = re.compile(r"[A-G](?:b|#)?m?\Z")
 CODE_PATTERN = re.compile(r"[A-Z]{2}\Z")
 TIME_PATTERN = re.compile(r"([1-9][0-9]*)/(1|2|4|8|16|32|64)\Z")
+CHORD_PATTERN = re.compile(
+    r"(?:b|#)?[1-7](?:maj7|sus2|sus4|add9|dim|aug|m7|m|7)?(?:/(?:b|#)?[1-7])?\Z"
+)
 
 
 @dataclass(frozen=True)
@@ -37,9 +41,28 @@ class Diagnostic:
 
 
 @dataclass(frozen=True)
+class BarEvent:
+    kind: str
+    chord: str | None
+    beats: int | None
+    diamond: bool = False
+
+
+@dataclass(frozen=True)
+class Bar:
+    events: tuple[BarEvent, ...]
+
+
+@dataclass(frozen=True)
+class RowNote:
+    kind: str
+    value: str | tuple[str, str, str, str]
+
+
+@dataclass(frozen=True)
 class ChartRow:
-    slots: tuple[str | None, str | None, str | None, str | None]
-    notes: str
+    slots: tuple[Bar | None, Bar | None, Bar | None, Bar | None]
+    notes: tuple[RowNote, ...]
     line: int
 
 
@@ -186,15 +209,20 @@ class _Validator:
                 source,
                 len(name),
             )
-        self.metadata[name] = value
-        if not value:
+        normalized_value = (
+            self._decode_free_text(line, value_column, value, source)
+            if name in FREE_TEXT_METADATA
+            else value
+        )
+        self.metadata[name] = normalized_value
+        if not normalized_value:
             self.diagnostic(line, value_column, "E013", f"metadata '@{name}' requires a value", source)
-        elif name == "key" and not KEY_PATTERN.fullmatch(value):
-            self.diagnostic(line, value_column, "E014", f"invalid key '{value}'", source, len(value))
-        elif name == "tempo" and (not value.isdigit() or int(value) < 1):
-            self.diagnostic(line, value_column, "E015", "tempo must be a positive integer", source, len(value))
-        elif name == "time" and not TIME_PATTERN.fullmatch(value):
-            self.diagnostic(line, value_column, "E016", "time must use a positive numerator and supported denominator", source, len(value))
+        elif name == "key" and not KEY_PATTERN.fullmatch(normalized_value):
+            self.diagnostic(line, value_column, "E014", f"invalid key '{normalized_value}'", source, len(normalized_value))
+        elif name == "tempo" and (not normalized_value.isdigit() or int(normalized_value) < 1):
+            self.diagnostic(line, value_column, "E015", "tempo must be a positive integer", source, len(normalized_value))
+        elif name == "time" and not TIME_PATTERN.fullmatch(normalized_value):
+            self.diagnostic(line, value_column, "E016", "time must use a positive numerator and supported denominator", source, len(normalized_value))
 
     def _parse_arrangement(
         self, line: int, column: int, value_column: int, value: str, source: str
@@ -224,11 +252,15 @@ class _Validator:
             self.diagnostic(line, column, "E021", "invalid Section header", source, len(text))
             return
         inside = text[1:-1]
-        fields = [item.strip() for item in _split_unescaped(inside, "|")]
+        raw_fields = _split_unescaped_with_offsets(inside, "|")
+        fields = [item.strip() for item, _ in raw_fields]
         if len(fields) not in (3, 4):
             self.diagnostic(line, column, "E021", "Section header requires ID, Code, Name, and optional Ordinal", source, len(text))
             return
-        section_id, code, name = fields[:3]
+        section_id, code, raw_name = fields[:3]
+        name_field, name_offset = raw_fields[2]
+        name_column = column + 1 + name_offset + len(name_field) - len(name_field.lstrip())
+        name = self._decode_free_text(line, name_column, raw_name, source)
         ordinal_text = fields[3] if len(fields) == 4 else ""
         if not ID_PATTERN.fullmatch(section_id):
             self.diagnostic(line, column + 1, "E022", f"invalid Section ID '{section_id}'", source, max(len(section_id), 1))
@@ -253,8 +285,8 @@ class _Validator:
         if parsed is None:
             self.diagnostic(line, column, "E031", "Chart Row must contain exactly four pipe-delimited Bar slots", source, len(text))
             return
-        raw_slots, notes = parsed
-        slots: list[str | None] = []
+        raw_slots, raw_notes, notes_offset = parsed
+        slots: list[Bar | None] = []
         empty_seen = False
         for index, (raw_slot, offset) in enumerate(raw_slots):
             slot = raw_slot.strip()
@@ -272,8 +304,125 @@ class _Validator:
             else:
                 if empty_seen:
                     self.diagnostic(line, slot_column, "E034", "Empty Bar Slots may only trail filled slots", source, slot_length)
-                slots.append(slot)
-        self.current_section.rows.append(ChartRow(tuple(slots), notes.strip(), line))
+                slots.append(self._parse_bar(line, slot_column, slot, source))
+        notes = self._parse_notes(line, column + notes_offset, raw_notes, source)
+        self.current_section.rows.append(ChartRow(tuple(slots), notes, line))
+
+    def _parse_bar(self, line: int, column: int, text: str, source: str) -> Bar:
+        events: list[BarEvent] = []
+        for match in re.finditer(r"\S+", text):
+            token = match.group()
+            token_column = column + match.start()
+            if token.startswith("<"):
+                if not token.endswith(">"):
+                    self.diagnostic(line, token_column, "E039", "Diamond Chord must use '<chord>' with no Beat Dots", source, len(token))
+                    continue
+                chord = token[1:-1]
+                if not CHORD_PATTERN.fullmatch(chord):
+                    self._invalid_chord(line, token_column + 1, chord, source)
+                    continue
+                events.append(BarEvent("chord", chord, None, True))
+                continue
+            body = token.rstrip(".")
+            dots = len(token) - len(body)
+            if body == "X":
+                events.append(BarEvent("no-chord", None, dots or None))
+            elif CHORD_PATTERN.fullmatch(body):
+                events.append(BarEvent("chord", body, dots or None))
+            else:
+                self._invalid_chord(line, token_column, body, source)
+        if any(event.diamond for event in events) and len(events) != 1:
+            self.diagnostic(line, column, "E039", "Diamond Chord must occupy the Bar alone", source, len(text))
+        self._validate_timing(line, column, text, source, events)
+        return Bar(tuple(events))
+
+    def _invalid_chord(self, line: int, column: int, text: str, source: str) -> None:
+        if text == "x":
+            message = "use uppercase 'X' for No Chord"
+        elif "♭" in text:
+            message = "use ASCII 'b' instead of Unicode '♭'"
+        elif "♯" in text:
+            message = "use ASCII '#' instead of Unicode '♯'"
+        else:
+            message = f"invalid Chord Symbol or Bar Event '{text}'"
+        self.diagnostic(line, column, "E036", message, source, max(len(text), 1))
+
+    def _validate_timing(
+        self, line: int, column: int, text: str, source: str, events: list[BarEvent]
+    ) -> None:
+        time_match = TIME_PATTERN.fullmatch(self.metadata.get("time", ""))
+        if not events or not time_match or any(event.diamond for event in events):
+            return
+        numerator = int(time_match.group(1))
+        dotted = [event.beats is not None for event in events]
+        if any(dotted) and not all(dotted):
+            self.diagnostic(line, column, "E037", "Beat Dots must appear on every Bar Event or none", source, len(text))
+        elif all(dotted) and sum(event.beats or 0 for event in events) != numerator:
+            self.diagnostic(line, column, "E038", f"Beat Dots must total time-signature numerator {numerator}", source, len(text))
+        elif not any(dotted) and numerator % len(events) != 0:
+            self.diagnostic(line, column, "E038", f"{len(events)} Bar Events do not divide {numerator} denominator units equally; add Beat Dots", source, len(text))
+
+    def _parse_notes(self, line: int, column: int, text: str, source: str) -> tuple[RowNote, ...]:
+        if not text.strip():
+            return ()
+        notes: list[RowNote] = []
+        for raw_note, offset in _split_unescaped_with_offsets(text, "||"):
+            note = raw_note.strip()
+            note_column = column + offset + len(raw_note) - len(raw_note.lstrip())
+            if note.startswith("direction:"):
+                value_part = note[len("direction:") :]
+                raw_value = value_part.strip()
+                value_column = note_column + len("direction:") + len(value_part) - len(value_part.lstrip())
+                value = self._decode_free_text(line, value_column, raw_value, source)
+                if not value:
+                    self.diagnostic(line, value_column, "E042", "Performance Direction cannot be empty", source)
+                notes.append(RowNote("direction", value))
+            elif note.startswith("melody:"):
+                value_part = note[len("melody:") :]
+                raw_value = value_part.strip()
+                value_column = note_column + len("melody:") + len(value_part) - len(value_part.lstrip())
+                raw_fragments = _split_unescaped_with_offsets(raw_value, ";")
+                if len(raw_fragments) != 4:
+                    self.diagnostic(line, value_column, "E043", "Melody Passage requires exactly four semicolon-delimited fragments", source, max(len(raw_value), 1))
+                    continue
+                fragments = []
+                for raw_fragment, fragment_offset in raw_fragments:
+                    fragment = raw_fragment.strip()
+                    fragment_column = (
+                        value_column
+                        + fragment_offset
+                        + len(raw_fragment)
+                        - len(raw_fragment.lstrip())
+                    )
+                    fragments.append(
+                        self._decode_free_text(line, fragment_column, fragment, source)
+                    )
+                fragment_values = tuple(fragments)
+                if not any(fragment_values):
+                    self.diagnostic(line, value_column, "E044", "Melody Passage requires at least one nonempty fragment", source, max(len(raw_value), 1))
+                notes.append(RowNote("melody", fragment_values))
+            else:
+                self.diagnostic(line, note_column, "E041", "Row Note must start with 'direction:' or 'melody:'", source, max(len(note), 1))
+        return tuple(notes)
+
+    def _decode_free_text(self, line: int, column: int, text: str, source: str) -> str:
+        decoded: list[str] = []
+        index = 0
+        escapes = {"\\": "\\", "|": "|", ";": ";", "]": "]"}
+        while index < len(text):
+            if text[index] != "\\":
+                decoded.append(text[index])
+                index += 1
+                continue
+            escaped = text[index + 1] if index + 1 < len(text) else ""
+            if escaped not in escapes:
+                shown = "\\" + escaped
+                self.diagnostic(line, column + index, "E045", f"unsupported escape '{shown}'", source, max(len(shown), 1))
+                decoded.append(shown)
+            else:
+                decoded.append(escapes[escaped])
+            index += 2 if escaped else 1
+        return "".join(decoded).strip()
 
     def _finish_section(self) -> None:
         if self.current_section is None:
@@ -351,13 +500,21 @@ def _is_escaped(text: str, index: int) -> bool:
 
 
 def _split_unescaped(text: str, delimiter: str) -> list[str]:
-    fields: list[str] = []
+    return [field for field, _ in _split_unescaped_with_offsets(text, delimiter)]
+
+
+def _split_unescaped_with_offsets(text: str, delimiter: str) -> list[tuple[str, int]]:
+    fields: list[tuple[str, int]] = []
     start = 0
-    for index, character in enumerate(text):
-        if character == delimiter and not _is_escaped(text, index):
-            fields.append(text[start:index])
-            start = index + 1
-    fields.append(text[start:])
+    index = 0
+    while index <= len(text) - len(delimiter):
+        if text.startswith(delimiter, index) and not _is_escaped(text, index):
+            fields.append((text[start:index], start))
+            start = index + len(delimiter)
+            index = start
+        else:
+            index += 1
+    fields.append((text[start:], start))
     return fields
 
 
@@ -365,7 +522,7 @@ def _has_unescaped_closing_bracket(text: str) -> bool:
     return len(text) >= 2 and text[-1] == "]" and not _is_escaped(text, len(text) - 1)
 
 
-def _split_row(text: str) -> tuple[list[tuple[str, int]], str] | None:
+def _split_row(text: str) -> tuple[list[tuple[str, int]], str, int] | None:
     if not text.startswith("|"):
         return None
     boundaries = [index for index, character in enumerate(text) if character == "|" and not _is_escaped(text, index)]
@@ -385,7 +542,7 @@ def _split_row(text: str) -> tuple[list[tuple[str, int]], str] | None:
         for index in range(0, len(note_boundaries), 2)
     ):
         return None
-    return slots, notes
+    return slots, notes, boundaries[4] + 1
 
 
 def _decode(path: Path, data: bytes) -> tuple[str | None, list[Diagnostic]]:

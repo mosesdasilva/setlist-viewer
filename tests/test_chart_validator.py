@@ -42,7 +42,13 @@ class ChartValidatorTest(unittest.TestCase):
         self.assertEqual("Más", result.chart.metadata["title"])
         self.assertEqual(("intro", "chorus-1", "intro"), result.chart.arrangement)
         self.assertEqual(("intro", "chorus-1"), tuple(section.id for section in result.chart.sections))
-        self.assertEqual(("1", "4", None, None), result.chart.sections[1].rows[0].slots)
+        self.assertEqual(
+            ("1", "4", None, None),
+            tuple(
+                slot.events[0].chord if slot is not None else None
+                for slot in result.chart.sections[1].rows[0].slots
+            ),
+        )
 
     def test_metadata_must_be_complete_ordered_and_valid(self):
         source = VALID_CHART.replace("@artist Miel San Marcos\n@key D", "@key H\n@artist Miel San Marcos")
@@ -108,7 +114,7 @@ class ChartValidatorTest(unittest.TestCase):
         )
         self.assertEqual(["E011"], [item.code for item in self.validate(reordered).errors])
 
-    def test_multiple_arrangements_concatenate_and_row_notes_remain_opaque(self):
+    def test_multiple_arrangements_concatenate_and_row_notes_are_typed(self):
         source = VALID_CHART.replace(
             "@arrangement intro chorus-1 intro",
             "@arrangement intro\n@arrangement chorus-1 intro",
@@ -121,15 +127,129 @@ class ChartValidatorTest(unittest.TestCase):
         self.assertEqual([], result.errors)
         self.assertEqual(("intro", "chorus-1", "intro"), result.chart.arrangement)
         self.assertEqual(
-            "direction: Rakes || melody: a ; b ; c ; d",
-            result.chart.sections[0].rows[0].notes,
+            (
+                ("direction", "Rakes"),
+                ("melody", ("a", "b", "c", "d")),
+            ),
+            tuple((note.kind, note.value) for note in result.chart.sections[0].rows[0].notes),
         )
 
-        deferred_note = source.replace(
+        invalid_note = source.replace(
             "direction: Rakes || melody: a ; b ; c ; d",
             "cue: validate this in issue 13",
         )
-        self.assertEqual([], self.validate(deferred_note).errors)
+        self.assertEqual(["E041"], [item.code for item in self.validate(invalid_note).errors])
+
+    def test_every_supported_chord_suffix_and_slash_form_is_accepted(self):
+        source = VALID_CHART.replace(
+            "| 4 | 2 | 6 | 3 |",
+            "| 1 2m 3m7 4maj7 | 5sus2 6sus4 7dim 1aug | 2add9 3/5 b4 #5m7/b7 | X |",
+        )
+        result = self.validate(source)
+
+        self.assertEqual([], result.errors)
+        self.assertEqual(
+            (
+                ("1", "2m", "3m7", "4maj7"),
+                ("5sus2", "6sus4", "7dim", "1aug"),
+                ("2add9", "3/5", "b4", "#5m7/b7"),
+                (None,),
+            ),
+            tuple(tuple(event.chord for event in slot.events) for slot in result.chart.sections[0].rows[0].slots),
+        )
+
+    def test_bar_timing_rejects_ambiguous_partial_and_wrong_dot_totals(self):
+        source = VALID_CHART.replace(
+            "| 4 | 2 | 6 | 3 |",
+            "| 1 2 3 | 1. 2 | 1. 2.. | 1.. 2... |",
+        )
+        result = self.validate(source)
+
+        self.assertIsNone(result.chart)
+        self.assertEqual(["E038", "E037", "E038", "E038"], [item.code for item in result.errors])
+
+    def test_diamonds_are_solo_dotless_chords(self):
+        source = VALID_CHART.replace(
+            "| 4 | 2 | 6 | 3 |",
+            "| <3>. | <1> X | <8> | <1m7/3> |",
+        )
+        result = self.validate(source)
+
+        self.assertIsNone(result.chart)
+        self.assertEqual(["E039", "E039", "E036"], [item.code for item in result.errors])
+
+    def test_invalid_events_suggest_canonical_case_and_ascii_accidentals(self):
+        source = VALID_CHART.replace(
+            "| 4 | 2 | 6 | 3 |",
+            "| x | ♭2 | ♯4 | 8 |",
+        )
+        result = self.validate(source)
+
+        self.assertEqual(["E036", "E036", "E036", "E036"], [item.code for item in result.errors])
+        self.assertIn("uppercase 'X'", result.errors[0].message)
+        self.assertIn("ASCII 'b'", result.errors[1].message)
+        self.assertIn("ASCII '#'", result.errors[2].message)
+
+    def test_row_notes_reject_empty_unknown_bad_arity_and_bad_escapes(self):
+        source = VALID_CHART.replace(
+            "| 4 | 2 | 6 | 3 |",
+            r"| 4 | 2 | 6 | 3 | direction: || melody: ; ; ; || melody: a ; b ; c "
+            r"|| direction: bad\n || cue: unknown",
+        )
+        result = self.validate(source)
+
+        self.assertIsNone(result.chart)
+        self.assertEqual(
+            ["E042", "E044", "E043", "E045", "E041"],
+            [item.code for item in result.errors],
+        )
+
+    def test_free_text_escapes_apply_to_metadata_and_section_names(self):
+        source = VALID_CHART.replace(
+            "@title Más",
+            r"@title Más \| Live \] Set\; A\\B",
+        ).replace(
+            "[intro | IN | Intro]",
+            r"[intro | IN | Intro \| Pickup \] End]",
+        )
+        result = self.validate(source)
+
+        self.assertEqual([], result.errors)
+        self.assertEqual("Más | Live ] Set; A\\B", result.chart.metadata["title"])
+        self.assertEqual("Intro | Pickup ] End", result.chart.sections[0].name)
+
+        invalid = source.replace(r"@title Más \| Live \] Set\; A\\B", r"@title Bad\q")
+        self.assertEqual(["E045"], [item.code for item in self.validate(invalid).errors])
+
+    def test_valid_events_and_ordered_row_notes_are_normalized(self):
+        source = VALID_CHART.replace(
+            "| 4 | 2 | 6 | 3 |",
+            "| b2m7... 5/7. | X. #4sus2... | <1maj7/3> | 6add9 | "
+            r"direction: Rakes \| hold \] semi\; slash\\ || melody: 1 ; ; 3\;4 ; 5",
+        )
+        result = self.validate(source)
+
+        self.assertEqual([], result.errors)
+        row = result.chart.sections[0].rows[0]
+        self.assertEqual(
+            (
+                (("chord", "b2m7", 3, False), ("chord", "5/7", 1, False)),
+                (("no-chord", None, 1, False), ("chord", "#4sus2", 3, False)),
+                (("chord", "1maj7/3", None, True),),
+                (("chord", "6add9", None, False),),
+            ),
+            tuple(
+                tuple((event.kind, event.chord, event.beats, event.diamond) for event in bar.events)
+                for bar in row.slots
+            ),
+        )
+        self.assertEqual(
+            (
+                ("direction", "Rakes | hold ] semi; slash\\"),
+                ("melody", ("1", "", "3;4", "5")),
+            ),
+            tuple((note.kind, note.value) for note in row.notes),
+        )
 
     def test_invalid_utf8_and_lone_carriage_return_report_encoding_family(self):
         self.assertEqual(["E001"], [item.code for item in self.validate(b"\xff").errors])
