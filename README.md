@@ -44,7 +44,8 @@ After the repo is pushed to GitHub:
 
 1. Enable GitHub Pages to use GitHub Actions.
 2. Push to the default branch.
-3. GitHub will deploy the site automatically.
+3. GitHub will run the complete Python 3.9 test suite and `python3 tools/build.py --check`.
+4. GitHub will deploy the site only after both checks pass.
 
 ## Next Likely Improvements
 

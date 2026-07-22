@@ -93,10 +93,11 @@ Any future Codex session should read this file first to understand:
 - [#14 Generate the canonical catalog and browser data](https://github.com/mosesdasilva/setlist-viewer/issues/14) is implemented on its focused branch: the explicit catalog preserves all 11 Legacy Songs then appends the accepted authored `Más` Chart; `tools/build.py` validates, replaces by Song ID, expands arrangements, atomically generates `src/chart-data.js`, and checks drift without writes.
 - [#15 Render complete Nashville Number Charts](https://github.com/mosesdasilva/setlist-viewer/issues/15) is implemented on its focused branch: the split viewer now loads the generated catalog and renders complete Expanded Arrangements with four-slot Chart Rows, Nashville events and timing, and ordered side-by-side Row Notes while retaining shared navigation and Legacy Song behavior.
 - [#16 Generate the portable single-file viewer](https://github.com/mosesdasilva/setlist-viewer/issues/16) is implemented on its focused branch: the Python 3.9 standard-library build deterministically generates and checks `setlist-viewer-portable.html` from canonical split UI and normalized catalog data, safely embeds inline data, rolls back publication failures, and recovers durable interrupted transactions on the next build. The prior `setlist-viewer-v1.html` prototype remains unchanged pending final acceptance.
+- [#17 Gate GitHub Pages deployment](https://github.com/mosesdasilva/setlist-viewer/issues/17) is implemented on its focused branch: a Python 3.9 validation job runs the complete standard-library test suite and `python3 tools/build.py --check`; Pages upload and deployment require that job to pass.
 
 ## Next Recommended Work
 
-- After #16 lands, work [#17 Add generated-drift CI before Pages deployment](https://github.com/mosesdasilva/setlist-viewer/issues/17).
+- After #17 lands, continue with the next unblocked implementation ticket under #10.
 - Clear implementation context between tickets and follow each ticket's declared `Blocked by` edges.
 
 ## Update Rule
