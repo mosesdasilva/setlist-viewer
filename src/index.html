@@ -6,31 +6,39 @@
   <title>Setlist Viewer</title>
   <meta
     name="description"
-    content="A static setlist viewer for rehearsals and live services with song-by-song maps, quick navigation, and theme toggle."
+    content="A stage-ready static viewer for Nashville Number Charts and Legacy Song maps."
   >
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main class="page">
-    <section class="hero">
-      <p class="eyebrow">Static Project / Reusable Viewer</p>
-      <h1>Setlist Viewer</h1>
-      <p>
-        A browser-based setlist reference for rehearsals and live use. Each song shows the title,
-        BPM, key, lead vocalist, notes, and a fully expanded section map with consistent color coding.
-      </p>
-      <div class="nav-panel">
-        <div class="slide-controls">
-          <button class="nav-button" type="button" id="prev-song">Previous Song</button>
-          <div class="song-count" id="song-count">Song 1 of 1</div>
-          <button class="nav-button" type="button" id="next-song">Next Song</button>
-          <button class="nav-button theme-toggle" type="button" id="theme-toggle">Dark Mode</button>
-        </div>
-        <p class="directory-label">Quick Song Directory</p>
-        <div class="song-directory" id="song-directory"></div>
+  <header class="song-header">
+    <div class="song-identity">
+      <div class="title-row">
+        <h1 id="song-title">Setlist Viewer</h1>
+        <span class="legacy-badge" id="legacy-badge" hidden>Legacy</span>
       </div>
-    </section>
+      <p class="artist" id="song-artist"></p>
+    </div>
+    <div class="header-tools">
+      <div class="meta" id="song-meta" aria-label="Song metadata"></div>
+      <div class="song-controls" aria-label="Song and display controls">
+        <button class="control-button nav-button" type="button" id="prev-song" aria-label="Previous Song" title="Previous Song">←</button>
+        <span class="song-count" id="song-count">Song 0 of 0</span>
+        <button class="control-button nav-button" type="button" id="next-song" aria-label="Next Song" title="Next Song">→</button>
+        <button class="control-button layout-toggle" type="button" id="layout-toggle" aria-pressed="false" aria-label="Layout: two columns" title="Layout: two columns">▥</button>
+        <button class="control-button melody-toggle" type="button" id="melody-toggle" aria-pressed="true" aria-label="Hide melody" title="Hide melody">♫</button>
+        <button class="control-button palette-toggle" type="button" id="palette-toggle" aria-pressed="false" aria-label="Use pastel Section colors" title="Use pastel Section colors">●</button>
+        <button class="control-button theme-toggle" type="button" id="theme-toggle" aria-label="Use dark mode" title="Use dark mode">☾</button>
+      </div>
+    </div>
+    <nav class="song-map" id="song-map" aria-label="Song map"></nav>
+    <div class="directory-strip" aria-label="Quick Song Directory">
+      <span class="directory-label">Songs</span>
+      <div class="song-directory" id="song-directory"></div>
+    </div>
+  </header>
 
+  <main id="chart">
     <section class="song-list" id="song-list"></section>
   </main>
   <script src="chart-data.js"></script>

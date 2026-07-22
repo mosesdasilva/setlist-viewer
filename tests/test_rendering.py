@@ -16,21 +16,35 @@ class RenderingContractTest(unittest.TestCase):
 
         self.assertEqual(["chart-data.js", "script.js"], scripts)
 
+    def test_viewer_uses_compact_section_bands_shell(self):
+        html = (ROOT / "src" / "index.html").read_text(encoding="utf-8")
+
+        self.assertIn('class="song-header"', html)
+        self.assertIn('id="song-map"', html)
+        self.assertIn('id="song-directory"', html)
+        self.assertIn('id="song-title"', html)
+        self.assertNotIn('class="hero"', html)
+        self.assertNotIn("prototype-warning", html)
+
     def test_chart_renderer_exposes_complete_stage_reading_structure(self):
         script = (ROOT / "src" / "script.js").read_text(encoding="utf-8")
 
         for public_hook in (
-            "chart-section",
+            "section-band",
+            "section-heading",
+            "section-name",
+            "section-code",
             "chart-row",
-            "bar-grid",
-            "bar-slot",
-            "empty-bar-slot",
+            "bars-and-notes",
+            "bar",
+            "empty-bar",
             "beat-dots",
             "no-chord",
-            "diamond-chord",
+            "diamond",
             "chord-suffix",
             "slash-bass",
             "row-notes",
+            "ordered-row-note",
             "performance-direction",
             "melody-passage",
             "melody-fragment",
@@ -43,14 +57,25 @@ class RenderingContractTest(unittest.TestCase):
 
         self.assertRegex(
             styles,
-            r"\.chart-row\s*\{[^}]*grid-template-columns:\s*minmax\(0,\s*1fr\)[^;]*;",
+            r"\.bars-and-notes\s*\{[^}]*grid-template-columns:\s*repeat\(4,\s*minmax\(0,\s*1fr\)\)\s+minmax\(",
         )
-        self.assertRegex(
-            styles,
-            r"\.bar-grid\s*\{[^}]*grid-template-columns:\s*repeat\(4,\s*minmax\(0,\s*1fr\)\)",
-        )
-        mobile = styles[styles.index("@media (max-width: 640px)") :]
-        self.assertNotRegex(mobile, r"\.chart-row\s*\{[^}]*grid-template-columns:\s*1fr\s*;")
+        mobile = styles[styles.index("@media (max-width: 699px)") :]
+        self.assertNotRegex(mobile, r"\.bars-and-notes\s*\{[^}]*grid-template-columns:\s*1fr\s*;")
+
+    def test_shell_is_sticky_two_column_capable_and_phone_single_column(self):
+        styles = (ROOT / "src" / "styles.css").read_text(encoding="utf-8")
+
+        self.assertRegex(styles, r"\.song-header\s*\{[^}]*position:\s*sticky;")
+        desktop = styles[styles.index("@media (min-width: 700px)") :]
+        self.assertRegex(desktop, r"\.sections\s*\{[^}]*column-count:\s*2;")
+        mobile = styles[styles.index("@media (max-width: 699px)") :]
+        self.assertRegex(mobile, r"\.sections\s*\{[^}]*column-count:\s*1;")
+
+    def test_every_canonical_legacy_section_type_has_a_display_code(self):
+        script = (ROOT / "src" / "script.js").read_text(encoding="utf-8")
+
+        self.assertIn('flow: "FL"', script)
+        self.assertIn('medley: "MD"', script)
 
 
 if __name__ == "__main__":

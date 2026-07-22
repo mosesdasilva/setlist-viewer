@@ -46,6 +46,9 @@
 - section boxes carry the main color
 - preserve mobile-friendly one-song-at-a-time navigation
 - keep terminology normalized as `Bridge` and `Chorus`
+- treat the accepted responsive Section Bands prototype as binding prior art for the canonical generated viewer shell
+- use a compact sticky Song header, vertical Section Names, Section Codes, colored bands, and a responsive one/two-column stage-reading surface
+- retain the compact horizontal Song directory only until the dedicated Song Picker replaces it
 - stack Sections vertically in a fully Expanded Arrangement
 - preserve four Bars plus a side-by-side Row Note per Chart Row at every supported width
 - prioritize phone, iPad, and laptop; rely only on normal browser printing for v1

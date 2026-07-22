@@ -1,12 +1,36 @@
 (function () {
   const catalog = window.SETLIST_SONGS || [];
+  const body = document.body;
   const songList = document.getElementById("song-list");
+  const directory = document.getElementById("song-directory");
+  const songMap = document.getElementById("song-map");
+  const songTitle = document.getElementById("song-title");
+  const songArtist = document.getElementById("song-artist");
+  const songMeta = document.getElementById("song-meta");
+  const songCount = document.getElementById("song-count");
+  const legacyBadge = document.getElementById("legacy-badge");
   const prevButton = document.getElementById("prev-song");
   const nextButton = document.getElementById("next-song");
+  const layoutToggle = document.getElementById("layout-toggle");
+  const melodyToggle = document.getElementById("melody-toggle");
+  const paletteToggle = document.getElementById("palette-toggle");
   const themeToggle = document.getElementById("theme-toggle");
-  const songCount = document.getElementById("song-count");
-  const directory = document.getElementById("song-directory");
-  const body = document.body;
+
+  const legacySectionCodes = {
+    intro: "IN",
+    instrumental: "IS",
+    verse: "VS",
+    tag: "TG",
+    prechorus: "PC",
+    postchorus: "PS",
+    chorus: "CH",
+    bridge: "BR",
+    turnaround: "TR",
+    ending: "EN",
+    outro: "OU",
+    flow: "FL",
+    medley: "MD"
+  };
 
   function appendTextElement(parent, tagName, className, text) {
     const element = document.createElement(tagName);
@@ -16,21 +40,31 @@
     return element;
   }
 
-  function sectionClass(sectionName) {
+  function clear(element) {
+    while (element.firstChild) {
+      element.removeChild(element.firstChild);
+    }
+  }
+
+  function compactSectionName(sectionName) {
     return sectionName
       .replace(/\s+\d+$/, "")
       .toLowerCase()
       .replace(/[^a-z]+/g, "");
   }
 
-  function renderLegacySong(song, article) {
-    const mapCard = appendTextElement(article, "div", "map-card", "");
-    appendTextElement(mapCard, "h2", "", "Map");
-    const mapList = appendTextElement(mapCard, "ol", "map-list", "");
+  function sectionCode(section) {
+    return section.code || legacySectionCodes[compactSectionName(section.name)] || "--";
+  }
 
-    song.sections.forEach(function (section) {
-      appendTextElement(mapList, "li", "section " + sectionClass(section.name), section.name);
-    });
+  function sectionLabel(section) {
+    return sectionCode(section) + (section.ordinal || "");
+  }
+
+  function renderSectionHeading(sectionElement, section) {
+    const heading = appendTextElement(sectionElement, "header", "section-heading", "");
+    appendTextElement(heading, "h2", "section-name", section.name);
+    appendTextElement(heading, "span", "section-code", sectionLabel(section));
   }
 
   function renderChordSymbol(parent, chord) {
@@ -59,9 +93,9 @@
     }
   }
 
-  function renderBarEvent(barSlot, event) {
+  function renderBarEvent(barEvents, event) {
     const eventElement = appendTextElement(
-      barSlot,
+      barEvents,
       "span",
       "bar-event " + (event.type === "no-chord" ? "no-chord" : "chord-event"),
       ""
@@ -73,7 +107,7 @@
     }
 
     if (event.diamond) {
-      const diamond = appendTextElement(eventElement, "span", "diamond-chord", "");
+      const diamond = appendTextElement(eventElement, "span", "diamond", "");
       const diamondSymbol = appendTextElement(diamond, "span", "diamond-symbol", "");
       renderChordSymbol(diamondSymbol, event.chord);
       diamond.setAttribute("aria-label", "Diamond " + event.chord);
@@ -91,86 +125,111 @@
     }
   }
 
-  function renderBar(barGrid, bar) {
-    const barSlot = appendTextElement(barGrid, "div", "bar-slot", "");
+  function renderBar(rowElement, bar, melodyPassages, barIndex) {
+    const barElement = appendTextElement(rowElement, "div", "bar", "");
     if (bar === null) {
-      barSlot.classList.add("empty-bar-slot");
-      barSlot.setAttribute("aria-label", "Empty Bar Slot");
-      return;
+      barElement.classList.add("empty-bar");
+      barElement.setAttribute("aria-label", "Empty Bar Slot");
+    } else {
+      const barEvents = appendTextElement(barElement, "div", "bar-events", "");
+      bar.forEach(function (event) {
+        renderBarEvent(barEvents, event);
+      });
     }
 
-    bar.forEach(function (event) {
-      renderBarEvent(barSlot, event);
-    });
-  }
-
-  function renderRowNote(rowNotes, note) {
-    if (note.type === "direction") {
-      const direction = appendTextElement(
-        rowNotes,
-        "div",
-        "row-note performance-direction",
-        ""
+    const melodies = appendTextElement(barElement, "div", "bar-melodies melody-fragments", "");
+    melodyPassages.forEach(function (passage) {
+      const fragment = passage.fragments[barIndex];
+      if (!fragment) {
+        return;
+      }
+      const melody = appendTextElement(
+        melodies,
+        "span",
+        "bar-melody melody-passage melody-fragment",
+        fragment
       );
-      appendTextElement(direction, "span", "note-label", "Direction");
-      appendTextElement(direction, "span", "note-text", note.text);
-      return;
-    }
-
-    const melody = appendTextElement(rowNotes, "div", "row-note melody-passage", "");
-    appendTextElement(melody, "span", "note-label", "Melody");
-    const fragments = appendTextElement(melody, "div", "melody-fragments", "");
-    note.fragments.forEach(function (fragment) {
-      appendTextElement(fragments, "span", "melody-fragment", fragment);
+      melody.dataset.noteIndex = String(passage.noteIndex);
+      melody.setAttribute("aria-hidden", "true");
     });
   }
 
-  function renderChartRow(sectionBody, row) {
-    const chartRow = appendTextElement(sectionBody, "div", "chart-row", "");
-    const barGrid = appendTextElement(chartRow, "div", "bar-grid", "");
-    row.bars.forEach(function (bar) {
-      renderBar(barGrid, bar);
+  function renderChartRow(sectionElement, row) {
+    const chartRow = appendTextElement(sectionElement, "div", "chart-row", "");
+    const barsAndNotes = appendTextElement(chartRow, "div", "bars-and-notes", "");
+    const melodies = row.notes
+      .map(function (note, noteIndex) {
+        return { type: note.type, fragments: note.fragments, noteIndex: noteIndex };
+      })
+      .filter(function (note) { return note.type === "melody"; });
+
+    row.bars.forEach(function (bar, barIndex) {
+      renderBar(barsAndNotes, bar, melodies, barIndex);
     });
 
-    const rowNotes = appendTextElement(chartRow, "aside", "row-notes", "");
+    const rowNotes = appendTextElement(barsAndNotes, "aside", "row-notes", "");
+    rowNotes.setAttribute("aria-label", "Row Notes");
     if (!row.notes.length) {
       rowNotes.classList.add("no-row-notes");
-      rowNotes.setAttribute("aria-label", "No Row Notes");
     }
-    row.notes.forEach(function (note) {
-      renderRowNote(rowNotes, note);
+    row.notes.forEach(function (note, noteIndex) {
+      if (note.type === "direction") {
+        const direction = appendTextElement(
+          rowNotes,
+          "span",
+          "ordered-row-note performance-direction",
+          note.text
+        );
+        direction.dataset.noteIndex = String(noteIndex);
+        return;
+      }
+
+      const passage = appendTextElement(
+        rowNotes,
+        "span",
+        "ordered-row-note ordered-melody-passage melody-passage visually-hidden",
+        "Melody: " + note.fragments.join(" | ")
+      );
+      passage.dataset.noteIndex = String(noteIndex);
     });
   }
 
-  function renderChartSong(song, article) {
-    article.classList.add("chart-song");
-    const chartCard = appendTextElement(article, "div", "chart-card", "");
-    appendTextElement(chartCard, "h2", "chart-card-title", "Expanded Arrangement");
+  function createSectionElement(sectionsElement, section, sectionIndex, rowCount) {
+    const sectionElement = appendTextElement(
+      sectionsElement,
+      "section",
+      "section-band",
+      ""
+    );
+    sectionElement.id = sectionsElement.parentElement.id + "-section-" + sectionIndex;
+    sectionElement.dataset.code = sectionCode(section);
+    sectionElement.dataset.rowCount = String(rowCount);
+    sectionElement.style.setProperty("--row-count", String(Math.max(1, rowCount)));
+    if (section.ordinal) {
+      sectionElement.dataset.sectionOrdinal = String(section.ordinal);
+    }
+    renderSectionHeading(sectionElement, section);
+    return sectionElement;
+  }
 
-    song.sections.forEach(function (section) {
-      const sectionElement = appendTextElement(
-        chartCard,
-        "section",
-        "chart-section " + sectionClass(section.name),
-        ""
+  function renderChartSong(song, sectionsElement) {
+    song.sections.forEach(function (section, sectionIndex) {
+      const sectionElement = createSectionElement(
+        sectionsElement,
+        section,
+        sectionIndex,
+        section.rows.length
       );
-      sectionElement.dataset.sectionCode = section.code;
-      if (section.ordinal) {
-        sectionElement.dataset.sectionOrdinal = String(section.ordinal);
-      }
-
-      const heading = appendTextElement(sectionElement, "header", "chart-section-heading", "");
-      appendTextElement(heading, "h3", "chart-section-name", section.name);
-      appendTextElement(
-        heading,
-        "span",
-        "section-code",
-        section.code + (section.ordinal || "")
-      );
-      const sectionBody = appendTextElement(sectionElement, "div", "chart-section-body", "");
       section.rows.forEach(function (row) {
-        renderChartRow(sectionBody, row);
+        renderChartRow(sectionElement, row);
       });
+    });
+  }
+
+  function renderLegacySong(song, sectionsElement) {
+    song.sections.forEach(function (section, sectionIndex) {
+      const sectionElement = createSectionElement(sectionsElement, section, sectionIndex, 1);
+      sectionElement.classList.add("legacy-section-band");
     });
   }
 
@@ -185,40 +244,22 @@
     article.dataset.index = String(index);
     article.dataset.songType = song.type;
 
-    const songMain = appendTextElement(article, "div", "song-main", "");
-    const titleRow = appendTextElement(songMain, "div", "song-heading", "");
-    appendTextElement(titleRow, "h2", "song-title", song.title);
-    if (song.type === "legacy") {
-      appendTextElement(titleRow, "span", "legacy-badge", "Legacy");
-    }
-
-    const metadata = appendTextElement(songMain, "div", "meta", "");
-    if (song.artist) {
-      appendTextElement(metadata, "span", "chip", "Artist: " + song.artist);
-    }
-    appendTextElement(metadata, "span", "chip", song.tempo);
-    appendTextElement(metadata, "span", "chip", "Key: " + song.key);
-    if (song.timeSignature) {
-      appendTextElement(metadata, "span", "chip", "Time: " + song.timeSignature);
-    }
+    const details = appendTextElement(article, "div", "song-details", "");
     if (song.leadVocal) {
-      appendTextElement(metadata, "span", "chip", "Lead Vocal: " + song.leadVocal);
+      const lead = appendTextElement(details, "span", "", "");
+      appendTextElement(lead, "span", "detail-label", "Lead Vocal: ");
+      lead.appendChild(document.createTextNode(song.leadVocal));
     }
+    const detail = appendTextElement(details, "span", "", "");
+    appendTextElement(detail, "span", "detail-label", "Details: ");
+    detail.appendChild(document.createTextNode(song.details || "No additional details."));
 
-    const detailsCard = appendTextElement(songMain, "div", "details-card", "");
-    appendTextElement(detailsCard, "h2", "", "Details");
-    appendTextElement(
-      detailsCard,
-      "p",
-      song.detailsEmpty || !song.details ? "empty-detail" : "",
-      song.details || "No additional details."
-    );
-
+    const sectionsElement = appendTextElement(article, "div", "sections", "");
     const renderContent = contentRenderers[song.type];
     if (!renderContent) {
       throw new Error("Unsupported song type: " + song.type);
     }
-    renderContent(song, article);
+    renderContent(song, sectionsElement);
 
     const button = appendTextElement(
       directory,
@@ -233,43 +274,125 @@
     });
   }
 
+  function metadataChip(text) {
+    appendTextElement(songMeta, "span", "", text);
+  }
+
+  function updateHeader(song, index) {
+    songTitle.textContent = song.title;
+    songArtist.textContent = song.artist || "";
+    songArtist.hidden = !song.artist;
+    legacyBadge.hidden = song.type !== "legacy";
+    clear(songMeta);
+    metadataChip("Key " + song.key);
+    metadataChip(song.tempo);
+    if (song.timeSignature) {
+      metadataChip(song.timeSignature);
+    }
+    songCount.textContent = "Song " + (index + 1) + " of " + catalog.length;
+  }
+
+  function rebuildSongMap(song, article) {
+    clear(songMap);
+    const sections = Array.from(article.querySelectorAll(".section-band"));
+    sections.forEach(function (sectionElement, sectionIndex) {
+      const section = song.sections[sectionIndex];
+      const chip = appendTextElement(songMap, "a", "map-chip", sectionLabel(section));
+      chip.dataset.code = sectionCode(section);
+      chip.href = "#" + sectionElement.id;
+      chip.setAttribute(
+        "aria-label",
+        "Go to " + section.name + ", position " + (sectionIndex + 1)
+      );
+      chip.addEventListener("click", function (event) {
+        event.preventDefault();
+        Array.from(songMap.querySelectorAll(".map-chip")).forEach(function (candidate) {
+          candidate.classList.toggle("is-active", candidate === chip);
+        });
+        const headerHeight = document.querySelector(".song-header").offsetHeight;
+        const targetTop = sectionElement.getBoundingClientRect().top + window.scrollY - headerHeight - 8;
+        window.scrollTo({ top: targetTop, behavior: "smooth" });
+      });
+    });
+  }
+
   catalog.forEach(renderSong);
 
   const songs = Array.from(songList.querySelectorAll(".song"));
   const directoryButtons = Array.from(directory.querySelectorAll(".directory-button"));
   let activeIndex = 0;
 
-  if (!songs.length) {
-    songCount.textContent = "No songs";
-    return;
-  }
-
-  function updateThemeButton() {
-    const isDark = body.classList.contains("dark-theme");
-    themeToggle.textContent = isDark ? "Light Mode" : "Dark Mode";
-  }
-
-  function setTheme(theme) {
-    body.classList.toggle("dark-theme", theme === "dark");
-    updateThemeButton();
+  function savePreference(name, value) {
     try {
-      localStorage.setItem("setlist-theme", theme);
+      localStorage.setItem("setlist-" + name, value);
     } catch (error) {
     }
   }
 
-  function setActiveSong(index) {
-    activeIndex = (index + songs.length) % songs.length;
+  function loadPreference(name, fallback) {
+    try {
+      return localStorage.getItem("setlist-" + name) || fallback;
+    } catch (error) {
+      return fallback;
+    }
+  }
 
+  function applyTheme(theme) {
+    const dark = theme === "dark";
+    body.classList.toggle("dark-theme", dark);
+    themeToggle.textContent = dark ? "☀" : "☾";
+    const label = dark ? "Use light mode" : "Use dark mode";
+    themeToggle.setAttribute("aria-label", label);
+    themeToggle.setAttribute("title", label);
+    savePreference("theme", dark ? "dark" : "light");
+  }
+
+  function applyColumns(columns) {
+    const single = columns === "1";
+    body.classList.toggle("single-column", single);
+    layoutToggle.textContent = single ? "▤" : "▥";
+    layoutToggle.setAttribute("aria-pressed", String(single));
+    const label = single ? "Layout: one column" : "Layout: two columns";
+    layoutToggle.setAttribute("aria-label", label);
+    layoutToggle.setAttribute("title", label);
+    savePreference("columns", single ? "1" : "2");
+  }
+
+  function applyMelody(visibility) {
+    const visible = visibility !== "off";
+    body.classList.toggle("melody-hidden", !visible);
+    melodyToggle.textContent = visible ? "♫" : "×";
+    melodyToggle.setAttribute("aria-pressed", String(visible));
+    const label = visible ? "Hide melody" : "Show melody";
+    melodyToggle.setAttribute("aria-label", label);
+    melodyToggle.setAttribute("title", label);
+    savePreference("melody", visible ? "on" : "off");
+  }
+
+  function applyPalette(palette) {
+    const pastel = palette === "pastel";
+    body.classList.toggle("pastel-palette", pastel);
+    paletteToggle.setAttribute("aria-pressed", String(pastel));
+    const label = pastel ? "Use strong Section colors" : "Use pastel Section colors";
+    paletteToggle.setAttribute("aria-label", label);
+    paletteToggle.setAttribute("title", label);
+    savePreference("palette", pastel ? "pastel" : "strong");
+  }
+
+  function setActiveSong(index) {
+    if (!songs.length) {
+      return;
+    }
+    activeIndex = (index + songs.length) % songs.length;
     songs.forEach(function (song, songIndex) {
       song.classList.toggle("active", songIndex === activeIndex);
     });
-
     directoryButtons.forEach(function (button, buttonIndex) {
       button.classList.toggle("is-active", buttonIndex === activeIndex);
+      button.setAttribute("aria-current", buttonIndex === activeIndex ? "true" : "false");
     });
-
-    songCount.textContent = "Song " + (activeIndex + 1) + " of " + songs.length;
+    updateHeader(catalog[activeIndex], activeIndex);
+    rebuildSongMap(catalog[activeIndex], songs[activeIndex]);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -282,36 +405,42 @@
   });
 
   themeToggle.addEventListener("click", function () {
-    const nextTheme = body.classList.contains("dark-theme") ? "light" : "dark";
-    setTheme(nextTheme);
+    applyTheme(body.classList.contains("dark-theme") ? "light" : "dark");
+  });
+
+  layoutToggle.addEventListener("click", function () {
+    applyColumns(body.classList.contains("single-column") ? "2" : "1");
+  });
+
+  melodyToggle.addEventListener("click", function () {
+    applyMelody(body.classList.contains("melody-hidden") ? "on" : "off");
+  });
+
+  paletteToggle.addEventListener("click", function () {
+    applyPalette(body.classList.contains("pastel-palette") ? "strong" : "pastel");
   });
 
   document.addEventListener("keydown", function (event) {
     if (event.target && /input|textarea|select/i.test(event.target.tagName)) {
       return;
     }
-
     if (event.key.toLowerCase() === "d") {
-      const nextTheme = body.classList.contains("dark-theme") ? "light" : "dark";
-      setTheme(nextTheme);
-    }
-
-    if (event.key === "ArrowRight") {
+      applyTheme(body.classList.contains("dark-theme") ? "light" : "dark");
+    } else if (event.key === "ArrowRight") {
       setActiveSong(activeIndex + 1);
-    }
-
-    if (event.key === "ArrowLeft") {
+    } else if (event.key === "ArrowLeft") {
       setActiveSong(activeIndex - 1);
     }
   });
 
-  let savedTheme = "light";
+  applyTheme(loadPreference("theme", "light"));
+  applyColumns(loadPreference("columns", "2"));
+  applyMelody(loadPreference("melody", "on"));
+  applyPalette(loadPreference("palette", "strong"));
 
-  try {
-    savedTheme = localStorage.getItem("setlist-theme") || "light";
-  } catch (error) {
+  if (songs.length) {
+    setActiveSong(0);
+  } else {
+    songCount.textContent = "No songs";
   }
-
-  setTheme(savedTheme);
-  setActiveSong(0);
 })();

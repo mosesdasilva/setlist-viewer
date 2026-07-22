@@ -33,6 +33,8 @@ Any future Codex session should read this file first to understand:
 - Keep a versioned single-file HTML artifact available for prototyping and sharing.
 - Maintain the split-file version in parallel for easier editing.
 - Preserve the grayscale UI direction, with color concentrated in the section blocks.
+- Use the accepted Section Bands prototype as binding visual and interaction prior art for the canonical generated viewer: compact sticky Song header, vertical Section Names, colored bands, four-Bar rows, aligned Row Notes, and responsive one/two-column presentation.
+- Keep the generated catalog as the only runtime Song source; retain the compact horizontal directory only as a transition until the dedicated Song Picker replaces it.
 - Keep the app static with no framework and no build step.
 - Treat the website as the source of truth for song map flow unless the user explicitly calls out a correction from a sheet.
 - Normalize repeated map sections by expanding them into repeated labels instead of compact notation like `2X` or `3X`.
@@ -94,10 +96,11 @@ Any future Codex session should read this file first to understand:
 - [#15 Render complete Nashville Number Charts](https://github.com/mosesdasilva/setlist-viewer/issues/15) is implemented on its focused branch: the split viewer now loads the generated catalog and renders complete Expanded Arrangements with four-slot Chart Rows, Nashville events and timing, and ordered side-by-side Row Notes while retaining shared navigation and Legacy Song behavior.
 - [#16 Generate the portable single-file viewer](https://github.com/mosesdasilva/setlist-viewer/issues/16) is implemented on its focused branch: the Python 3.9 standard-library build deterministically generates and checks `setlist-viewer-portable.html` from canonical split UI and normalized catalog data, safely embeds inline data, rolls back publication failures, and recovers durable interrupted transactions on the next build. The prior `setlist-viewer-v1.html` prototype remains unchanged pending final acceptance.
 - [#17 Gate GitHub Pages deployment](https://github.com/mosesdasilva/setlist-viewer/issues/17) is implemented on its focused branch: a Python 3.9 validation job runs the complete standard-library test suite and `python3 tools/build.py --check`; Pages upload and deployment require that job to pass.
+- [#21 Adopt the Section Bands shell for the canonical catalog](https://github.com/mosesdasilva/setlist-viewer/issues/21) is implemented on its focused branch: canonical Chart and Legacy Song data now share the compact sticky shell, responsive Section Bands, preserved navigation and display preferences, and aligned generated portable output.
 
 ## Next Recommended Work
 
-- After #17 lands, continue with the next unblocked implementation ticket under #10.
+- After #21 lands, continue with #22's dedicated Song Picker replacement for the transitional compact directory.
 - Clear implementation context between tickets and follow each ticket's declared `Blocked by` edges.
 
 ## Update Rule
