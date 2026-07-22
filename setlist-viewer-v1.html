@@ -140,6 +140,20 @@
       letter-spacing: -0.03em;
     }
 
+    .legacy-badge {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 5px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--chip-bg);
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
     .meta {
       display: flex;
       flex-wrap: wrap;
@@ -774,10 +788,15 @@
         song.id = id;
         song.dataset.index = String(index);
 
+        const badge = document.createElement("span");
+        badge.className = "legacy-badge";
+        badge.textContent = "Legacy";
+        song.querySelector(".song-title")?.insertAdjacentElement("afterend", badge);
+
         const button = document.createElement("button");
         button.type = "button";
         button.className = "directory-button";
-        button.textContent = title;
+        button.textContent = title + " — Legacy";
         button.dataset.target = String(index);
         button.addEventListener("click", function () {
           setActiveSong(index);
