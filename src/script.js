@@ -1,5 +1,6 @@
 (function () {
-  const songs = Array.from(document.querySelectorAll(".song"));
+  const catalog = window.SETLIST_SONGS || [];
+  const songList = document.getElementById("song-list");
   const prevButton = document.getElementById("prev-song");
   const nextButton = document.getElementById("next-song");
   const themeToggle = document.getElementById("theme-toggle");
@@ -7,37 +8,91 @@
   const directory = document.getElementById("song-directory");
   const body = document.body;
 
-  if (!songs.length) {
-    return;
+  function appendTextElement(parent, tagName, className, text) {
+    const element = document.createElement(tagName);
+    element.className = className;
+    element.textContent = text;
+    parent.appendChild(element);
+    return element;
   }
 
-  const slugify = (text) =>
-    text
+  function sectionClass(sectionName) {
+    return sectionName
+      .replace(/\s+\d+$/, "")
       .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "");
+      .replace(/[^a-z]+/g, "");
+  }
 
-  songs.forEach((song, index) => {
-    const title = song.querySelector(".song-title")?.textContent?.trim() || "Song";
-    const id = slugify(title) || "song-" + (index + 1);
-    song.id = id;
-    song.dataset.index = String(index);
+  function renderLegacySong(song, article) {
+    const mapCard = appendTextElement(article, "div", "map-card", "");
+    appendTextElement(mapCard, "h2", "", "Map");
+    const mapList = appendTextElement(mapCard, "ol", "map-list", "");
 
-    const button = document.createElement("button");
+    song.sections.forEach(function (section) {
+      appendTextElement(mapList, "li", "section " + sectionClass(section.name), section.name);
+    });
+  }
+
+  const contentRenderers = {
+    legacy: renderLegacySong
+  };
+
+  function renderSong(song, index) {
+    const article = appendTextElement(songList, "article", "song", "");
+    article.id = song.id;
+    article.dataset.index = String(index);
+    article.dataset.songType = song.type;
+
+    const songMain = appendTextElement(article, "div", "song-main", "");
+    const titleRow = appendTextElement(songMain, "div", "song-heading", "");
+    appendTextElement(titleRow, "h2", "song-title", song.title);
+    if (song.type === "legacy") {
+      appendTextElement(titleRow, "span", "legacy-badge", "Legacy");
+    }
+
+    const metadata = appendTextElement(songMain, "div", "meta", "");
+    appendTextElement(metadata, "span", "chip", song.tempo);
+    appendTextElement(metadata, "span", "chip", "Key: " + song.key);
+    appendTextElement(metadata, "span", "chip", "Lead Vocal: " + song.leadVocal);
+
+    const detailsCard = appendTextElement(songMain, "div", "details-card", "");
+    appendTextElement(detailsCard, "h2", "", "Details");
+    appendTextElement(
+      detailsCard,
+      "p",
+      song.detailsEmpty ? "empty-detail" : "",
+      song.details
+    );
+
+    const renderContent = contentRenderers[song.type];
+    if (!renderContent) {
+      throw new Error("Unsupported song type: " + song.type);
+    }
+    renderContent(song, article);
+
+    const button = appendTextElement(
+      directory,
+      "button",
+      "directory-button",
+      song.title + (song.type === "legacy" ? " — Legacy" : "")
+    );
     button.type = "button";
-    button.className = "directory-button";
-    button.textContent = title;
     button.dataset.target = String(index);
     button.addEventListener("click", function () {
       setActiveSong(index);
     });
-    directory.appendChild(button);
-  });
+  }
 
+  catalog.forEach(renderSong);
+
+  const songs = Array.from(songList.querySelectorAll(".song"));
   const directoryButtons = Array.from(directory.querySelectorAll(".directory-button"));
   let activeIndex = 0;
+
+  if (!songs.length) {
+    songCount.textContent = "No songs";
+    return;
+  }
 
   function updateThemeButton() {
     const isDark = body.classList.contains("dark-theme");
@@ -56,11 +111,11 @@
   function setActiveSong(index) {
     activeIndex = (index + songs.length) % songs.length;
 
-    songs.forEach((song, songIndex) => {
+    songs.forEach(function (song, songIndex) {
       song.classList.toggle("active", songIndex === activeIndex);
     });
 
-    directoryButtons.forEach((button, buttonIndex) => {
+    directoryButtons.forEach(function (button, buttonIndex) {
       button.classList.toggle("is-active", buttonIndex === activeIndex);
     });
 
