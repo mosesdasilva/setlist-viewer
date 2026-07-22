@@ -38,6 +38,9 @@ Any future Codex session should read this file first to understand:
 - Normalize repeated map sections by expanding them into repeated labels instead of compact notation like `2X` or `3X`.
 - Treat `CH` as `Chorus` and `BD` or `B` as `Bridge` when translating sheet shorthand into the website.
 - Evolve the viewer toward manually authored Nashville Number Charts rather than lyrics.
+- Retain the current 11 metadata-and-section-order entries as Legacy Songs during migration; move them from HTML into structured classic JavaScript, show them alongside charts with a Legacy badge, and add new Nashville Number Charts only from complete authored chart content—never invented placeholder Bars.
+- A completed `.chart` replaces its matching Legacy Song. Use `Más` as the first complete chart and preserve every unreplaced Legacy Song's metadata and section sequence.
+- Acceptance combines zero-dependency Python tests and `python3 tools/build.py --check` with manual checks of split, portable, and GitHub Pages variants at phone, tablet, and desktop sizes. Cover Chrome desktop plus Safari iPhone/iPad spot checks, navigation wrapping and directory jumps, keyboard controls, theme persistence, fully expanded order, four-Bar Rows, side-by-side Row Notes, and unchanged Legacy Song content.
 - Keep split source and chart data canonical; generate the portable single-file HTML from them.
 - Commit generated `src/chart-data.js` and `setlist-viewer-portable.html`; regenerate both explicitly with zero-dependency `python3 tools/build.py`.
 - Use `python3 tools/build.py --check` in CI before GitHub Pages deployment; fail on invalid charts or generated drift without auto-committing repairs.
@@ -82,11 +85,13 @@ Any future Codex session should read this file first to understand:
 - [Prototype a human-editable chart source format](https://github.com/mosesdasilva/setlist-viewer/issues/5) is resolved: the small `.chart` notation won because musician readability outweighed JSON/JavaScript familiarity; ADR 0001 records the choice.
 - [Choose the canonical-source and portable-build workflow](https://github.com/mosesdasilva/setlist-viewer/issues/7) is resolved: committed runtime and portable outputs are produced by an explicit Python build and checked—not repaired—by CI.
 - [Specify the musician-readable .chart grammar and validation contract](https://github.com/mosesdasilva/setlist-viewer/issues/9) is resolved; its resolution and final addendum define the exact grammar, escaping, timing validation, arrangement rules, and diagnostics.
+- [Define migration and acceptance checks](https://github.com/mosesdasilva/setlist-viewer/issues/8) is resolved; its resolution preserves ordered, visibly badged Legacy Songs until complete ID-matched Charts replace them and defines automated, local-browser, and deployed acceptance gates.
+- The Wayfinder map is complete: its destination is now implementation-ready, with no remaining frontier tickets or fog.
 
 ## Next Recommended Work
 
-- Resolve [Define migration and acceptance checks](https://github.com/mosesdasilva/setlist-viewer/issues/8); it is the remaining Wayfinder decision before implementation handoff.
-- Continue through the unblocked frontier of the Wayfinder map; do not implement the destination during planning.
+- Do not implement until explicitly requested in a later session.
+- When requested, implement from the completed [Map a static Nashville chart system](https://github.com/mosesdasilva/setlist-viewer/issues/1) and the detailed migration/acceptance resolution.
 
 ## Update Rule
 

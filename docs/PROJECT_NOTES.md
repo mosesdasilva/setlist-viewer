@@ -12,6 +12,8 @@
 - Use a project-owned, musician-readable `.chart` notation as canonical chart source, shaped by the selected small-notation prototype and informed by ChordPro and ChordText vocabulary.
 - Avoid runtime `fetch()` or ES-module loading for essential chart data while direct `file://` use remains required; generate file-safe classic JavaScript for split runtime use and inline data for the portable artifact.
 - Keep generated browser data structured; the resolved `.chart` grammar and line-aware validation contract live on the Wayfinder ticket and its final addendum.
+- Preserve the current 11 songs as structured Legacy Songs until complete, ID-matched `.chart` files replace them; never invent placeholder Bars.
+- Keep Legacy Songs and complete Charts in one ordered directory, with visible `Legacy` text in both directory and song header.
 
 ## Naming
 
@@ -21,6 +23,7 @@
 - Use a zero-dependency `python3 tools/build.py` for explicit local generation and `python3 tools/build.py --check` for read-only validation.
 - CI must validate charts and generated drift before deploying committed `src/`; failures show the rebuild command and never auto-commit changes.
 - Build output is atomic and generated files identify their sources and warn against manual editing.
+- Use `.chart` filename stems as stable Song IDs; replacement matches IDs rather than titles.
 
 ## Constraints
 
@@ -47,6 +50,12 @@
 - preserve four Bars plus a side-by-side Row Note per Chart Row at every supported width
 - prioritize phone, iPad, and laptop; rely only on normal browser printing for v1
 - use [MultiTracks ChartBuilder](https://www.multitracks.com/products/chartbuilder/) as UX inspiration for number notation, visible colored Section containers, Song Map navigation, and side-positioned MD-style notes; retain Setlist Viewer's static Expanded Arrangement and scope
+
+## Acceptance Direction
+
+- Run zero-dependency Python tests and `python3 tools/build.py --check` before merge.
+- Record split/portable checks at phone, tablet, and desktop sizes in `docs/acceptance.md`, covering Chrome desktop and Safari iPhone/iPad spot checks.
+- Smoke-test the deployed GitHub Pages site immediately after merge; a failed deployment check means the change remains incomplete.
 
 ## Notes For Future Iteration
 

@@ -12,6 +12,10 @@ _Avoid_: Natural number chart, lyrics chart
 The person or band credited for the song version represented by a Nashville Number Chart.
 _Avoid_: Lead Vocal
 
+**Legacy Song**:
+A pre-chart song entry containing metadata and a section-order summary but no Bar-level Nashville content. It remains distinct from a Nashville Number Chart during migration.
+_Avoid_: Placeholder Chart, Incomplete Chart
+
 **Bar**:
 A measure of musical time represented as one cell in a Nashville Number Chart. It contains one or more timed Bar Events.
 _Avoid_: Box
