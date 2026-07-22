@@ -61,10 +61,17 @@ class LegacySongRegressionTests(unittest.TestCase):
         self.assertNotIn('type="module"', html)
         self.assertNotIn("fetch(", (ROOT / "src" / "script.js").read_text(encoding="utf-8"))
 
-    def test_portable_viewer_keeps_visible_legacy_labels(self):
-        html = (ROOT / "setlist-viewer-v1.html").read_text(encoding="utf-8")
-        self.assertIn('badge.textContent = "Legacy"', html)
-        self.assertIn('button.textContent = title + " — Legacy"', html)
+    def test_generated_portable_viewer_keeps_visible_legacy_labels(self):
+        html = (ROOT / "setlist-viewer-portable.html").read_text(encoding="utf-8")
+        self.assertIn('id="legacy-badge" hidden>Legacy</span>', html)
+        self.assertIn('legacyBadge.hidden = song.type !== "legacy"', html)
+        self.assertIn('song.title + (song.type === "legacy" ? " — Legacy" : "")', html)
+
+    def test_section_band_heading_is_the_single_legacy_summary_label(self):
+        script = (ROOT / "src" / "script.js").read_text(encoding="utf-8")
+
+        self.assertIn('"section-name", section.name', script)
+        self.assertNotIn('"legacy-summary", section.name', script)
 
 
 if __name__ == "__main__":
