@@ -33,8 +33,150 @@
     });
   }
 
+  function renderChordSymbol(parent, chord) {
+    const parts = chord.match(
+      /^([b#]?)([1-7])(maj7|sus2|sus4|add9|dim|aug|m7|m|7)?(?:\/([b#]?)([1-7]))?$/
+    );
+    if (!parts) {
+      parent.textContent = chord;
+      return;
+    }
+
+    if (parts[1]) {
+      appendTextElement(parent, "span", "chord-accidental", parts[1]);
+    }
+    appendTextElement(parent, "span", "chord-degree", parts[2]);
+    if (parts[3]) {
+      appendTextElement(parent, "span", "chord-suffix", parts[3]);
+    }
+    if (parts[5]) {
+      appendTextElement(parent, "span", "slash-divider", "/");
+      const bass = appendTextElement(parent, "span", "slash-bass", "");
+      if (parts[4]) {
+        appendTextElement(bass, "span", "chord-accidental", parts[4]);
+      }
+      appendTextElement(bass, "span", "chord-degree", parts[5]);
+    }
+  }
+
+  function renderBarEvent(barSlot, event) {
+    const eventElement = appendTextElement(
+      barSlot,
+      "span",
+      "bar-event " + (event.type === "no-chord" ? "no-chord" : "chord-event"),
+      ""
+    );
+
+    if (event.beats) {
+      const dots = appendTextElement(eventElement, "span", "beat-dots", "•".repeat(event.beats));
+      dots.setAttribute("aria-label", event.beats + (event.beats === 1 ? " beat" : " beats"));
+    }
+
+    if (event.diamond) {
+      const diamond = appendTextElement(eventElement, "span", "diamond-chord", "");
+      const diamondSymbol = appendTextElement(diamond, "span", "diamond-symbol", "");
+      renderChordSymbol(diamondSymbol, event.chord);
+      diamond.setAttribute("aria-label", "Diamond " + event.chord);
+      return;
+    }
+
+    const eventSymbol = appendTextElement(
+      eventElement,
+      "span",
+      "event-symbol",
+      event.type === "no-chord" ? "X" : ""
+    );
+    if (event.type !== "no-chord") {
+      renderChordSymbol(eventSymbol, event.chord);
+    }
+  }
+
+  function renderBar(barGrid, bar) {
+    const barSlot = appendTextElement(barGrid, "div", "bar-slot", "");
+    if (bar === null) {
+      barSlot.classList.add("empty-bar-slot");
+      barSlot.setAttribute("aria-label", "Empty Bar Slot");
+      return;
+    }
+
+    bar.forEach(function (event) {
+      renderBarEvent(barSlot, event);
+    });
+  }
+
+  function renderRowNote(rowNotes, note) {
+    if (note.type === "direction") {
+      const direction = appendTextElement(
+        rowNotes,
+        "div",
+        "row-note performance-direction",
+        ""
+      );
+      appendTextElement(direction, "span", "note-label", "Direction");
+      appendTextElement(direction, "span", "note-text", note.text);
+      return;
+    }
+
+    const melody = appendTextElement(rowNotes, "div", "row-note melody-passage", "");
+    appendTextElement(melody, "span", "note-label", "Melody");
+    const fragments = appendTextElement(melody, "div", "melody-fragments", "");
+    note.fragments.forEach(function (fragment) {
+      appendTextElement(fragments, "span", "melody-fragment", fragment);
+    });
+  }
+
+  function renderChartRow(sectionBody, row) {
+    const chartRow = appendTextElement(sectionBody, "div", "chart-row", "");
+    const barGrid = appendTextElement(chartRow, "div", "bar-grid", "");
+    row.bars.forEach(function (bar) {
+      renderBar(barGrid, bar);
+    });
+
+    const rowNotes = appendTextElement(chartRow, "aside", "row-notes", "");
+    if (!row.notes.length) {
+      rowNotes.classList.add("no-row-notes");
+      rowNotes.setAttribute("aria-label", "No Row Notes");
+    }
+    row.notes.forEach(function (note) {
+      renderRowNote(rowNotes, note);
+    });
+  }
+
+  function renderChartSong(song, article) {
+    article.classList.add("chart-song");
+    const chartCard = appendTextElement(article, "div", "chart-card", "");
+    appendTextElement(chartCard, "h2", "chart-card-title", "Expanded Arrangement");
+
+    song.sections.forEach(function (section) {
+      const sectionElement = appendTextElement(
+        chartCard,
+        "section",
+        "chart-section " + sectionClass(section.name),
+        ""
+      );
+      sectionElement.dataset.sectionCode = section.code;
+      if (section.ordinal) {
+        sectionElement.dataset.sectionOrdinal = String(section.ordinal);
+      }
+
+      const heading = appendTextElement(sectionElement, "header", "chart-section-heading", "");
+      appendTextElement(heading, "h3", "chart-section-name", section.name);
+      appendTextElement(
+        heading,
+        "span",
+        "section-code",
+        section.code + (section.ordinal || "")
+      );
+      const sectionBody = appendTextElement(sectionElement, "div", "chart-section-body", "");
+      section.rows.forEach(function (row) {
+        renderChartRow(sectionBody, row);
+      });
+    });
+  }
+
   const contentRenderers = {
-    legacy: renderLegacySong
+    legacy: renderLegacySong,
+    chart: renderChartSong
   };
 
   function renderSong(song, index) {
@@ -51,17 +193,25 @@
     }
 
     const metadata = appendTextElement(songMain, "div", "meta", "");
+    if (song.artist) {
+      appendTextElement(metadata, "span", "chip", "Artist: " + song.artist);
+    }
     appendTextElement(metadata, "span", "chip", song.tempo);
     appendTextElement(metadata, "span", "chip", "Key: " + song.key);
-    appendTextElement(metadata, "span", "chip", "Lead Vocal: " + song.leadVocal);
+    if (song.timeSignature) {
+      appendTextElement(metadata, "span", "chip", "Time: " + song.timeSignature);
+    }
+    if (song.leadVocal) {
+      appendTextElement(metadata, "span", "chip", "Lead Vocal: " + song.leadVocal);
+    }
 
     const detailsCard = appendTextElement(songMain, "div", "details-card", "");
     appendTextElement(detailsCard, "h2", "", "Details");
     appendTextElement(
       detailsCard,
       "p",
-      song.detailsEmpty ? "empty-detail" : "",
-      song.details
+      song.detailsEmpty || !song.details ? "empty-detail" : "",
+      song.details || "No additional details."
     );
 
     const renderContent = contentRenderers[song.type];

@@ -91,10 +91,11 @@ Any future Codex session should read this file first to understand:
 - Issue #10 is decomposed into implementation tickets #11–#19. The initial frontier is [#11 Move Legacy Songs into the data-driven viewer](https://github.com/mosesdasilva/setlist-viewer/issues/11) and [#12 Validate core .chart structure](https://github.com/mosesdasilva/setlist-viewer/issues/12); later tickets declare their blocking edges in their issue bodies.
 - [#13 Validate Nashville events and Row Notes](https://github.com/mosesdasilva/setlist-viewer/issues/13) is implemented on its focused branch: validation now normalizes Chord Events, No Chord, Beat Dots, Diamond Chords, Performance Directions, and Melody Passages; invalid timing, notation, and escapes produce actionable diagnostics.
 - [#14 Generate the canonical catalog and browser data](https://github.com/mosesdasilva/setlist-viewer/issues/14) is implemented on its focused branch: the explicit catalog preserves all 11 Legacy Songs then appends the accepted authored `Más` Chart; `tools/build.py` validates, replaces by Song ID, expands arrangements, atomically generates `src/chart-data.js`, and checks drift without writes.
+- [#15 Render complete Nashville Number Charts](https://github.com/mosesdasilva/setlist-viewer/issues/15) is implemented on its focused branch: the split viewer now loads the generated catalog and renders complete Expanded Arrangements with four-slot Chart Rows, Nashville events and timing, and ordered side-by-side Row Notes while retaining shared navigation and Legacy Song behavior.
 
 ## Next Recommended Work
 
-- After #14 lands, work [#15 Render complete Nashville Number Charts](https://github.com/mosesdasilva/setlist-viewer/issues/15).
+- After #15 lands, work [#16 Generate the portable single-file viewer](https://github.com/mosesdasilva/setlist-viewer/issues/16).
 - Clear implementation context between tickets and follow each ticket's declared `Blocked by` edges.
 
 ## Update Rule

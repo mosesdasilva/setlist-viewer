@@ -56,7 +56,7 @@ class LegacySongRegressionTests(unittest.TestCase):
         self.assertNotIn('<article class="song">', html)
         self.assertRegex(
             html,
-            r'<script src="song-data\.js"></script>\s*<script src="script\.js"></script>',
+            r'<script src="chart-data\.js"></script>\s*<script src="script\.js"></script>',
         )
         self.assertNotIn('type="module"', html)
         self.assertNotIn("fetch(", (ROOT / "src" / "script.js").read_text(encoding="utf-8"))
