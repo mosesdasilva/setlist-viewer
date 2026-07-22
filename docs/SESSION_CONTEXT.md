@@ -94,11 +94,12 @@ Any future Codex session should read this file first to understand:
 - [#15 Render complete Nashville Number Charts](https://github.com/mosesdasilva/setlist-viewer/issues/15) is implemented on its focused branch: the split viewer now loads the generated catalog and renders complete Expanded Arrangements with four-slot Chart Rows, Nashville events and timing, and ordered side-by-side Row Notes while retaining shared navigation and Legacy Song behavior.
 - [#16 Generate the portable single-file viewer](https://github.com/mosesdasilva/setlist-viewer/issues/16) is implemented on its focused branch: the Python 3.9 standard-library build deterministically generates and checks `setlist-viewer-portable.html` from canonical split UI and normalized catalog data, safely embeds inline data, rolls back publication failures, and recovers durable interrupted transactions on the next build. The prior `setlist-viewer-v1.html` prototype remains unchanged pending final acceptance.
 - [#17 Gate GitHub Pages deployment](https://github.com/mosesdasilva/setlist-viewer/issues/17) is implemented on its focused branch: a Python 3.9 validation job runs the complete standard-library test suite and `python3 tools/build.py --check`; Pages upload and deployment require that job to pass.
+- [#18 Complete local acceptance and portable cutover](https://github.com/mosesdasilva/setlist-viewer/issues/18) has partial acceptance recorded in `docs/acceptance.md`: 44 Python 3.9 tests, generated drift validation, and bundled Node syntax checks pass. Direct-disk Chrome automation was blocked from loading `file://` URLs by browser-control policy, and physical iPhone/iPad Safari devices were unavailable. Maintainer browser participation remains required; the prior `setlist-viewer-v1.html` fallback was correctly retained.
 
 ## Next Recommended Work
 
-- After #17 lands, continue with the next unblocked implementation ticket under #10.
-- Clear implementation context between tickets and follow each ticket's declared `Blocked by` edges.
+- Complete the pending direct-disk Chrome matrix and physical iPhone/iPad Safari spot checks in `docs/acceptance.md` with browser, viewport, interaction, console, and result evidence.
+- Remove `setlist-viewer-v1.html` only if every #18 acceptance gate passes, then update this context. Do not begin #19 before #18 completes.
 
 ## Update Rule
 
