@@ -88,11 +88,12 @@ Any future Codex session should read this file first to understand:
 - [Define migration and acceptance checks](https://github.com/mosesdasilva/setlist-viewer/issues/8) is resolved; its resolution preserves ordered, visibly badged Legacy Songs until complete ID-matched Charts replace them and defines automated, local-browser, and deployed acceptance gates.
 - The Wayfinder map is complete: its destination is now implementation-ready, with no remaining frontier tickets or fog.
 - [Implement v1 static Nashville Number Chart system](https://github.com/mosesdasilva/setlist-viewer/issues/10) is the consolidated implementation spec, linked to map issue #1 and labelled `ready-for-agent`.
+- Issue #10 is decomposed into implementation tickets #11–#19. The initial frontier is [#11 Move Legacy Songs into the data-driven viewer](https://github.com/mosesdasilva/setlist-viewer/issues/11) and [#12 Validate core .chart structure](https://github.com/mosesdasilva/setlist-viewer/issues/12); later tickets declare their blocking edges in their issue bodies.
 
 ## Next Recommended Work
 
-- Do not implement until explicitly requested in a later session.
-- When requested, implement [issue #10](https://github.com/mosesdasilva/setlist-viewer/issues/10), using the completed [map issue #1](https://github.com/mosesdasilva/setlist-viewer/issues/1) and its resolved research as supporting context.
+- Work the issue #10 frontier one ticket at a time with `/implement`, beginning with either #11 or #12.
+- Clear implementation context between tickets and follow each ticket's declared `Blocked by` edges.
 
 ## Update Rule
 
