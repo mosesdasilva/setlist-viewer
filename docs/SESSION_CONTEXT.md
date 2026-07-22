@@ -87,11 +87,12 @@ Any future Codex session should read this file first to understand:
 - [Specify the musician-readable .chart grammar and validation contract](https://github.com/mosesdasilva/setlist-viewer/issues/9) is resolved; its resolution and final addendum define the exact grammar, escaping, timing validation, arrangement rules, and diagnostics.
 - [Define migration and acceptance checks](https://github.com/mosesdasilva/setlist-viewer/issues/8) is resolved; its resolution preserves ordered, visibly badged Legacy Songs until complete ID-matched Charts replace them and defines automated, local-browser, and deployed acceptance gates.
 - The Wayfinder map is complete: its destination is now implementation-ready, with no remaining frontier tickets or fog.
+- [Implement v1 static Nashville Number Chart system](https://github.com/mosesdasilva/setlist-viewer/issues/10) is the consolidated implementation spec, linked to map issue #1 and labelled `ready-for-agent`.
 
 ## Next Recommended Work
 
 - Do not implement until explicitly requested in a later session.
-- When requested, implement from the completed [Map a static Nashville chart system](https://github.com/mosesdasilva/setlist-viewer/issues/1) and the detailed migration/acceptance resolution.
+- When requested, implement [issue #10](https://github.com/mosesdasilva/setlist-viewer/issues/10), using the completed [map issue #1](https://github.com/mosesdasilva/setlist-viewer/issues/1) and its resolved research as supporting context.
 
 ## Update Rule
 
