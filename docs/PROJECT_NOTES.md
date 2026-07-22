@@ -62,6 +62,7 @@
 - Run zero-dependency Python tests and `python3 tools/build.py --check` before merge.
 - Record split/portable checks at phone, tablet, and desktop sizes in `docs/acceptance.md`, covering Chrome desktop and Safari iPhone/iPad spot checks.
 - Smoke-test the deployed GitHub Pages site immediately after merge; a failed deployment check means the change remains incomplete.
+- Issue #24 pre-merge acceptance evidence is recorded in `docs/acceptance.md`: automated Python 3.9/build and Node checks, in-app Chromium split/portable checks, and current-main Pages smoke tests pass. Direct `file://` browser interaction and physical Safari iPhone/iPad checks remain explicit human/environment gates, so retain `setlist-viewer-v1.html` until they pass.
 
 ## Notes For Future Iteration
 

@@ -101,11 +101,12 @@ Any future Codex session should read this file first to understand:
 - [#21 Adopt the Section Bands shell for the canonical catalog](https://github.com/mosesdasilva/setlist-viewer/issues/21) is implemented on its focused branch: canonical Chart and Legacy Song data now share the compact sticky shell, responsive Section Bands, preserved navigation and display preferences, and aligned generated portable output.
 - [#22 Replace the directory with a searchable Song Picker](https://github.com/mosesdasilva/setlist-viewer/issues/22) is implemented on its focused branch: the ordered canonical catalog now opens in an accessible header-triggered picker with title/Artist filtering, visible Legacy and current-Song states, keyboard-safe modal dismissal and focus restoration, a desktop overlay, and a mobile full-screen sheet.
 - [#23 Integrate prototype display controls and Song Map](https://github.com/mosesdasilva/setlist-viewer/issues/23) is implemented on its focused branch: the canonical split and generated portable viewers now provide an accessible active Chart Song Map, readable Legacy summaries, persistent theme/palette/Melody controls, and responsive one/two/four-column preferences with safe narrow-width fallback.
+- [#24 Complete prototype-first cutover and deployment acceptance](https://github.com/mosesdasilva/setlist-viewer/issues/24) has completed every feasible automated, in-app Chromium, and current-main Pages gate on `issue-24-prototype-cutover-acceptance`; exact evidence is in `docs/acceptance.md`. Direct `file://` browser interaction and physical Safari iPhone/iPad spot checks remain unavailable, so the prior `setlist-viewer-v1.html` artifact is retained and #20/#24 are not ready to close solely from this environment.
 
 ## Next Recommended Work
 
-- Continue with #24 integration, cutover, and deployment acceptance after #22 and #23 merge.
-- Clear implementation context between tickets and follow each ticket's declared `Blocked by` edges.
+- Obtain maintainer Safari iPhone/iPad spot checks and, where available, direct `file://` interaction evidence recorded in `docs/acceptance.md`.
+- After those gates pass, merge the focused #24 commit through the normal stable-main workflow, verify the resulting Pages run/deployment, then decide whether `setlist-viewer-v1.html` can be retired and whether #20/#24 can close.
 
 ## Update Rule
 
