@@ -13,14 +13,15 @@ Setlist Viewer is a static web app for browsing song maps during rehearsal or li
 
 ## Local Use
 
-Open [setlist-viewer-v1.html](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/setlist-viewer-v1.html) for the portable single-file version, or [src/index.html](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/src/index.html) for the split source version.
+Open `setlist-viewer-portable.html` for the generated portable single-file viewer, or [src/index.html](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/src/index.html) for the canonical split version. The earlier [setlist-viewer-v1.html](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/setlist-viewer-v1.html) remains available as a fallback until final acceptance.
 
 Canonical chart sources and catalog order live under `charts/`. Regenerate browser data with
-`python3 tools/build.py`; verify committed data without writing via `python3 tools/build.py --check`.
+`python3 tools/build.py`; verify committed browser data and portable HTML without writing via `python3 tools/build.py --check`.
 
 ## Project Structure
 
-- [setlist-viewer-v1.html](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/setlist-viewer-v1.html): portable single-file prototype and current handoff-friendly artifact
+- [setlist-viewer-v1.html](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/setlist-viewer-v1.html): prior portable prototype retained as a fallback through final acceptance
+- `setlist-viewer-portable.html`: generated self-contained viewer built from canonical split source and normalized catalog data
 - [src/](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/src): split website source for GitHub Pages
 - [src/index.html](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/src/index.html): split markup source
 - [src/styles.css](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/src/styles.css): split visual styling source
