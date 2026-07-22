@@ -41,8 +41,8 @@
 - stack Sections vertically in a fully Expanded Arrangement
 - pair the Expanded Arrangement with a compact left-to-right Song Map that preserves every repeated Section occurrence
 - use the uniform Grid treatment for Chart Rows; remove the experimental Bar Bubble treatment
-- let performers hide or show Melody Fragments without hiding Row Notes
-- offer Strong and Pastel Section color palettes independently from dark-blue and off-white page themes
+- let performers hide or show Melody Fragments without hiding Row Notes or shifting Chord Symbols
+- offer Strong and Pastel Section color palettes, including matching strong-red and pastel-rose Melody capsules, independently from dark-blue and off-white page themes
 - preserve four Bars plus a side-by-side Row Note per Chart Row at every supported width
 - prioritize phone, iPad, and laptop; rely only on normal browser printing for v1
 - use [MultiTracks ChartBuilder](https://www.multitracks.com/products/chartbuilder/) as UX inspiration for number notation, visible colored Section containers, Song Map navigation, and side-positioned MD-style notes; retain Setlist Viewer's static Expanded Arrangement and scope
