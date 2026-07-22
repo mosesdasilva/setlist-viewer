@@ -20,6 +20,7 @@
       --control-ink: #fff;
       --band-ink: #fff;
       --melody-bubble: #c8102e;
+      --melody-ink: #fff;
       --intro: #334155;
       --verse: #1e4f91;
       --tag: #9a4d0d;
@@ -164,7 +165,7 @@
     }
     .bar:first-child { border-left: 0; }
     .bar-chord { display: grid; min-width: 0; place-items: center; font-size: clamp(19px, 2.4vw, 28px); font-weight: 850; letter-spacing: -.04em; }
-    .bar-melody { position: absolute; bottom: 4px; left: 50%; display: inline-flex; min-width: 0; max-width: calc(100% - 2px); min-height: 16px; align-items: center; justify-content: center; gap: 3px; color: var(--band-ink); font-size: clamp(7px, 1.05vw, 10px); font-weight: 900; line-height: 1.05; overflow-wrap: normal; text-align: center; transform: translateX(-50%); white-space: nowrap; }
+    .bar-melody { position: absolute; bottom: 2px; left: 50%; display: inline-flex; min-width: 0; max-width: calc(100% - 2px); min-height: 16px; align-items: center; justify-content: center; gap: 3px; color: var(--melody-ink); font-size: clamp(7px, 1.05vw, 10px); font-weight: 900; line-height: 1.05; overflow-wrap: normal; text-align: center; transform: translateX(-50%); white-space: nowrap; }
     .bar-melody.has-melody { padding: 3px 4px; border-radius: 999px; background: var(--melody-bubble); }
     body.melody-hidden .bar-melody { visibility: hidden; }
     .event { position: relative; display: inline-grid; min-width: 0; place-items: center; }
