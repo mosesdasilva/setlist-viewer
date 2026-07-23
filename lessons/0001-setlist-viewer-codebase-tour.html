@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A beginner-friendly visual guide to the Setlist Viewer repository.">
+  <title>Setlist Viewer: Beginner’s Codebase Tour</title>
+  <link rel="stylesheet" href="../assets/lesson.css">
+</head>
+<body>
+  <div class="page">
+    <aside class="sidebar">
+      <strong>Codebase tour</strong>
+      <nav aria-label="Lesson chapters">
+        <a href="#big-picture">Big picture</a>
+        <a href="#structure">Structure</a>
+        <a href="#run">Run it</a>
+        <a href="#runtime">Runtime flow</a>
+        <a href="#build">Build flow</a>
+        <a href="#edit">What to edit</a>
+        <a href="#verify">Test changes</a>
+        <a href="#deploy">Deployment</a>
+        <a href="#glossary">Glossary</a>
+      </nav>
+    </aside>
+
+    <main>
+      <header class="hero">
+        <p class="eyebrow">Lesson 0001 · no experience required</p>
+        <h1>Meet Setlist Viewer</h1>
+        <p class="lede">
+          A map of what this repository is, which files matter, how the browser starts it,
+          how to edit safely, and how a change reaches the live website.
+        </p>
+        <div class="outcome-grid">
+          <div class="outcome"><b>Run it</b><span>Open directly or use a tiny local server.</span></div>
+          <div class="outcome"><b>Trace it</b><span>Follow data from source to browser screen.</span></div>
+          <div class="outcome"><b>Edit it</b><span>Know the source files and avoid generated files.</span></div>
+        </div>
+      </header>
+
+      <section class="chapter" id="big-picture">
+        <span class="chapter-number">01 · Big picture</span>
+        <h2>What is this repo?</h2>
+        <p class="plain">
+          Setlist Viewer is a static website for musicians. It shows one song at a time,
+          including song details, Nashville Number Chart bars, melody notes, lyrics, and
+          section navigation.
+        </p>
+
+        <div class="card-grid">
+          <article class="card">
+            <span class="label source">HTML</span>
+            <h3>The skeleton</h3>
+            <p>Names the header, buttons, dialog, and empty area where songs appear.</p>
+          </article>
+          <article class="card">
+            <span class="label source">CSS</span>
+            <h3>The appearance</h3>
+            <p>Controls color, spacing, mobile layout, columns, themes, and print behavior.</p>
+          </article>
+          <article class="card">
+            <span class="label source">JavaScript</span>
+            <h3>The behavior</h3>
+            <p>Creates songs on screen, reacts to clicks, and remembers preferences.</p>
+          </article>
+        </div>
+
+        <div class="callout">
+          <strong>“Static” does not mean “non-interactive.”</strong>
+          It means no application server or database is needed. The browser receives files
+          and runs the JavaScript locally.
+        </div>
+
+        <h3>The most important mental model</h3>
+        <div class="flow">
+          <div class="flow-box"><strong>Content data</strong><small>songs, charts, lyrics</small></div>
+          <div class="arrow" aria-hidden="true">→</div>
+          <div class="flow-box"><strong>Browser code</strong><small>HTML + CSS + JavaScript</small></div>
+          <div class="arrow" aria-hidden="true">→</div>
+          <div class="flow-box"><strong>Visible viewer</strong><small>the page musicians use</small></div>
+        </div>
+      </section>
+
+      <section class="chapter" id="structure">
+        <span class="chapter-number">02 · Structure</span>
+        <h2>Repository map</h2>
+        <p>
+          A repository is simply a project folder tracked by Git. These are the important
+          paths, grouped by job.
+        </p>
+
+        <pre class="tree"><code>Setlist Viewer/
+├── src/                         ← canonical website source
+│   ├── index.html               ← browser entry point / page skeleton
+│   ├── styles.css               ← all visual rules
+│   ├── script.js                ← rendering and interactions
+│   ├── song-data.js             ← hand-edited Legacy Song data
+│   ├── chart-data.js            ← GENERATED combined catalog
+│   └── .nojekyll                ← tells Pages to serve files as-is
+│
+├── charts/
+│   ├── catalog.json             ← song order
+│   └── mas.chart                ← hand-edited complete chart
+│
+├── tools/
+│   ├── build.py                 ← generator command entry point
+│   └── chart_validator.py       ← reads/checks .chart notation
+│
+├── tests/                       ← automatic safety checks
+├── .github/workflows/
+│   └── deploy-pages.yml         ← GitHub Pages automation
+│
+├── setlist-viewer-portable.html ← GENERATED all-in-one viewer
+├── setlist-viewer-v1.html       ← old fallback prototype
+├── README.md                    ← quick project instructions
+├── docs/                        ← decisions, history, acceptance
+└── AGENTS.md                    ← rules for coding agents</code></pre>
+
+        <div class="warning">
+          <strong>Never casually edit generated files.</strong>
+          <code>src/chart-data.js</code> and <code>setlist-viewer-portable.html</code>
+          are overwritten by <code>python3 tools/build.py</code>.
+        </div>
+
+        <table class="file-table">
+          <thead>
+            <tr><th>Kind</th><th>Meaning</th><th>Examples</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="label source">Source</span></td>
+              <td>A human edits this. It is an input.</td>
+              <td><code>src/index.html</code>, <code>src/styles.css</code>, <code>charts/mas.chart</code></td>
+            </tr>
+            <tr>
+              <td><span class="label generated">Generated</span></td>
+              <td>A program creates this. It is an output.</td>
+              <td><code>src/chart-data.js</code>, <code>setlist-viewer-portable.html</code></td>
+            </tr>
+            <tr>
+              <td><span class="label fallback">Fallback</span></td>
+              <td>Old prototype kept for safety and comparison.</td>
+              <td><code>setlist-viewer-v1.html</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="chapter" id="run">
+        <span class="chapter-number">03 · Run it</span>
+        <h2>No installation needed</h2>
+        <p class="plain">
+          There is no framework, package manager, <code>npm install</code>, or compilation
+          step required to view the committed site.
+        </p>
+
+        <h3>Fastest: open a file</h3>
+        <p>From the repository folder on macOS:</p>
+        <pre><code>open src/index.html</code></pre>
+        <p>
+          This opens the canonical split viewer. It works through <code>file://</code>
+          because data loads from a normal script file, not from a network request.
+        </p>
+
+        <h3>Portable: open the all-in-one file</h3>
+        <pre><code>open setlist-viewer-portable.html</code></pre>
+        <p>
+          Use this when sharing or testing one self-contained file. Do not edit it directly.
+        </p>
+
+        <h3>Optional: local web server</h3>
+        <pre><code>python3 -m http.server 8000 --directory src</code></pre>
+        <p>
+          Keep that Terminal window open, then visit
+          <a href="http://localhost:8000/">http://localhost:8000/</a>.
+          Stop the server with <code>Control+C</code>.
+        </p>
+
+        <div class="success">
+          <strong>Which run method should I use?</strong>
+          Start with <code>open src/index.html</code>. Use the server when testing behavior
+          closer to GitHub Pages. Use the portable file when testing the handoff artifact.
+        </div>
+      </section>
+
+      <section class="chapter" id="runtime">
+        <span class="chapter-number">04 · Browser control flow</span>
+        <h2>What happens when the page opens?</h2>
+        <p>
+          “Control flow” means the order in which code runs and decisions happen.
+          The browser begins at <code>src/index.html</code>.
+        </p>
+
+        <div class="flow stack">
+          <div class="flow-box"><strong>1. Browser reads index.html</strong><small>Creates the header, controls, picker, and empty song list.</small></div>
+          <div class="arrow" aria-hidden="true">→</div>
+          <div class="flow-box"><strong>2. Browser loads styles.css</strong><small>Applies layout, colors, responsive rules, themes, and modes.</small></div>
+          <div class="arrow" aria-hidden="true">→</div>
+          <div class="flow-box"><strong>3. Browser loads chart-data.js</strong><small>Creates <code>window.SETLIST_SONGS</code>, the runtime catalog.</small></div>
+          <div class="arrow" aria-hidden="true">→</div>
+          <div class="flow-box"><strong>4. Browser runs script.js</strong><small>Builds song elements, binds events, restores preferences, activates song 1.</small></div>
+        </div>
+
+        <h3>The two runtime entry points</h3>
+        <div class="two-up">
+          <article class="card">
+            <span class="label source">Main</span>
+            <h3><code>src/index.html</code></h3>
+            <p>Canonical split website. GitHub Pages publishes this folder.</p>
+          </article>
+          <article class="card">
+            <span class="label generated">Portable</span>
+            <h3><code>setlist-viewer-portable.html</code></h3>
+            <p>Same CSS, data, and JavaScript inserted into one generated file.</p>
+          </article>
+        </div>
+
+        <h3>How a button click travels</h3>
+        <div class="flow">
+          <div class="flow-box"><strong>User clicks</strong><small>Next Song</small></div>
+          <div class="arrow" aria-hidden="true">→</div>
+          <div class="flow-box"><strong>Event handler runs</strong><small><code>setActiveSong(...)</code></small></div>
+          <div class="arrow" aria-hidden="true">→</div>
+          <div class="flow-box"><strong>Page updates</strong><small>active class, header, Song Map, scroll</small></div>
+        </div>
+
+        <p>
+          Other handlers apply theme, palette, columns, display mode, numbering, band size,
+          Song Picker search, keyboard arrows, and the <kbd>D</kbd> theme shortcut.
+          Preferences are stored in the browser’s <code>localStorage</code>.
+        </p>
+      </section>
+
+      <section class="chapter" id="build">
+        <span class="chapter-number">05 · Build flow</span>
+        <h2>When “no build step” still has a build command</h2>
+        <p class="plain">
+          The website needs no build to run. The repository does have a small Python
+          generator to validate chart sources and refresh committed output files.
+        </p>
+
+        <div class="flow">
+          <div class="flow-box"><strong>Canonical inputs</strong><small><code>charts/</code> + <code>src/song-data.js</code> + split UI</small></div>
+          <div class="arrow" aria-hidden="true">→</div>
+          <div class="flow-box"><strong>Python build</strong><small>validate, order, combine, inline</small></div>
+          <div class="arrow" aria-hidden="true">→</div>
+          <div class="flow-box"><strong>Generated outputs</strong><small><code>chart-data.js</code> + portable HTML</small></div>
+        </div>
+
+        <h3>Generate outputs</h3>
+        <pre><code>python3 tools/build.py</code></pre>
+        <p>
+          This validates every <code>.chart</code>, combines complete Charts with Legacy
+          Songs in catalog order, then atomically replaces both generated files.
+        </p>
+
+        <h3>Check without writing</h3>
+        <pre><code>python3 tools/build.py --check</code></pre>
+        <p>
+          This fails if chart input is invalid or generated files are missing/stale.
+          It does not repair anything. GitHub runs this exact check before deployment.
+        </p>
+
+        <div class="quiz" data-quiz>
+          <h3>Quick check</h3>
+          <p>If a song title in <code>src/chart-data.js</code> is wrong, what kind of file should you find and edit?</p>
+          <div class="quiz-options">
+            <button type="button" data-answer="correct">Source file</button>
+            <button type="button" data-answer="wrong">Build output</button>
+            <button type="button" data-answer="wrong">Old fallback</button>
+          </div>
+          <p class="quiz-feedback" data-feedback aria-live="polite"></p>
+        </div>
+      </section>
+
+      <section class="chapter" id="edit">
+        <span class="chapter-number">06 · Editing guide</span>
+        <h2>Start from the change you want</h2>
+
+        <div class="two-up">
+          <article class="recipe">
+            <span class="label source">Content</span>
+            <h3>Edit a Legacy Song</h3>
+            <p>Edit its object in <code>src/song-data.js</code>. Keep valid JSON-style punctuation. Run the build afterward.</p>
+          </article>
+          <article class="recipe">
+            <span class="label source">Content</span>
+            <h3>Edit a complete Chart</h3>
+            <p>Edit <code>charts/mas.chart</code> or another <code>.chart</code>. Run the build; validation reports line and column errors.</p>
+          </article>
+          <article class="recipe">
+            <span class="label source">Order</span>
+            <h3>Reorder songs</h3>
+            <p>Change ID order in <code>charts/catalog.json</code>. Every available song must appear exactly once. Run the build.</p>
+          </article>
+          <article class="recipe">
+            <span class="label source">Appearance</span>
+            <h3>Change visuals</h3>
+            <p>Edit <code>src/styles.css</code>. Search for the class shown in HTML or created by JavaScript. Rebuild portable output afterward.</p>
+          </article>
+          <article class="recipe">
+            <span class="label source">Structure</span>
+            <h3>Add a visible control</h3>
+            <p>Edit <code>src/index.html</code>. Usually add matching behavior in <code>src/script.js</code> and styles in <code>src/styles.css</code>.</p>
+          </article>
+          <article class="recipe">
+            <span class="label source">Behavior</span>
+            <h3>Change interactions</h3>
+            <p>Edit <code>src/script.js</code>. Follow the pattern: find element → bind event → update DOM/state → save preference if needed.</p>
+          </article>
+        </div>
+
+        <h3>A safe beginner loop</h3>
+        <ol class="steps">
+          <li>Run <code>git status --short</code>. Notice existing work; do not overwrite it.</li>
+          <li>Open the current viewer so you know the “before” state.</li>
+          <li>Make one small change in a canonical source file.</li>
+          <li>Run <code>python3 tools/build.py</code> if any generated output depends on it.</li>
+          <li>Refresh both split and portable viewers. Check desktop and narrow mobile width.</li>
+          <li>Run automated checks. Review <code>git diff</code> before committing.</li>
+        </ol>
+
+        <div class="warning">
+          <strong>Common beginner trap</strong>
+          Editing <code>setlist-viewer-portable.html</code> may look successful today,
+          but the next build erases the change. Edit split source and regenerate.
+        </div>
+      </section>
+
+      <section class="chapter" id="verify">
+        <span class="chapter-number">07 · Verification</span>
+        <h2>Prove the change works</h2>
+
+        <h3>Run every automated test</h3>
+        <pre><code>python3 -m unittest discover -s tests -p 'test_*.py'</code></pre>
+        <p>
+          The tests cover chart validation, generation, Legacy Songs, rendering contracts,
+          and the GitHub Pages workflow. They use Python’s standard library; no packages
+          need installing.
+        </p>
+
+        <h3>Check generated files</h3>
+        <pre><code>python3 tools/build.py --check</code></pre>
+
+        <h3>Inspect your changes</h3>
+        <pre><code>git status --short
+git diff</code></pre>
+
+        <h3>Manual Done Criteria</h3>
+        <ul>
+          <li><code>src/index.html</code> opens and song navigation works.</li>
+          <li><code>setlist-viewer-portable.html</code> opens and behaves the same.</li>
+          <li>Theme toggle and display controls still work.</li>
+          <li>Desktop and mobile layouts remain readable.</li>
+          <li>Project/session docs are updated if a decision or next step changed.</li>
+        </ul>
+      </section>
+
+      <section class="chapter" id="deploy">
+        <span class="chapter-number">08 · Deployment</span>
+        <h2>How code reaches GitHub Pages</h2>
+        <p>
+          The deployment entry point is
+          <code>.github/workflows/deploy-pages.yml</code>. It runs when <code>main</code>
+          is pushed, or when manually started in GitHub Actions.
+        </p>
+
+        <div class="flow stack">
+          <div class="flow-box"><strong>1. Push main</strong><small>GitHub receives the committed files.</small></div>
+          <div class="arrow" aria-hidden="true">→</div>
+          <div class="flow-box"><strong>2. Validate</strong><small>Set up Python 3.9 → run all tests → run build --check.</small></div>
+          <div class="arrow" aria-hidden="true">→</div>
+          <div class="flow-box"><strong>3. Upload src/</strong><small>Only after validation succeeds.</small></div>
+          <div class="arrow" aria-hidden="true">→</div>
+          <div class="flow-box"><strong>4. Deploy Pages</strong><small>GitHub publishes the static website.</small></div>
+        </div>
+
+        <p>
+          If tests or drift checks fail, deployment stops. This protects the live viewer
+          from invalid charts and forgotten generated updates.
+        </p>
+      </section>
+
+      <section class="chapter" id="glossary">
+        <span class="chapter-number">09 · Glossary</span>
+        <h2>Words you will see</h2>
+        <dl class="glossary">
+          <dt>Repository</dt><dd>A project folder whose history Git tracks.</dd>
+          <dt>Entry point</dt><dd>The file or function where a process starts.</dd>
+          <dt>Runtime</dt><dd>What happens while the browser is executing the site.</dd>
+          <dt>DOM</dt><dd>The browser’s in-memory tree of HTML elements. JavaScript changes it.</dd>
+          <dt>Event</dt><dd>A click, key press, input, resize, or other occurrence code can react to.</dd>
+          <dt>State</dt><dd>Current information, such as active song, theme, or selected mode.</dd>
+          <dt>Canonical</dt><dd>The official source to edit—the source of truth.</dd>
+          <dt>Generated</dt><dd>Output created from canonical source by a command.</dd>
+          <dt>Build</dt><dd>Here: validate sources and generate browser data plus portable HTML.</dd>
+          <dt>Test</dt><dd>Code that automatically checks expected behavior or structure.</dd>
+          <dt>CI</dt><dd>Automated checks GitHub runs after code is pushed.</dd>
+          <dt>Deploy</dt><dd>Publish checked files so people can visit the website.</dd>
+          <dt>Legacy Song</dt><dd>Metadata and section summary without full chart rows.</dd>
+          <dt>Chart</dt><dd>A complete validated Nashville Number Chart from a <code>.chart</code> file.</dd>
+        </dl>
+
+        <h3>Primary follow-up reading</h3>
+        <p>
+          Start with
+          <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/What_is_JavaScript">MDN’s “What is JavaScript?”</a>.
+          It explains how HTML, CSS, and JavaScript form the same three layers used here.
+        </p>
+
+        <p class="footer-note">
+          Ask your agent follow-up questions whenever a term, file, command, or diagram is
+          unclear. A useful next lesson: make one tiny style change, rebuild, test, and inspect
+          the Git diff together.
+        </p>
+      </section>
+    </main>
+  </div>
+  <script src="../assets/quiz.js"></script>
+</body>
+</html>

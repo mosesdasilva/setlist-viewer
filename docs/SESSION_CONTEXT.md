@@ -81,6 +81,7 @@ Any future Codex session should read this file first to understand:
 
 ## Current Status
 
+- A beginner teaching workspace now exists at root (`MISSION.md`, `RESOURCES.md`, `assets/`, and `lessons/`). `lessons/0001-setlist-viewer-codebase-tour.html` is the visual guide to repository structure, runtime/build control flow, safe editing, testing, and deployment.
 - Repository has been created and pushed to GitHub manually by the user.
 - GitHub Pages workflow exists in `.github/workflows/deploy-pages.yml`.
 - The generated primary portable artifact is `setlist-viewer-portable.html`; `setlist-viewer-v1.html` remains the fallback until final human acceptance.
@@ -117,6 +118,7 @@ Any future Codex session should read this file first to understand:
 
 ## Next Recommended Work
 
+- Use lesson 0001 for onboarding; a practical follow-up lesson can guide one small CSS edit through rebuild, tests, and Git diff.
 - Human-check the best-effort lyric mapping and, when available, physical Safari iPhone/iPad plus direct-`file://` interaction.
 
 ## Update Rule
