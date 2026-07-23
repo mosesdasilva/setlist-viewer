@@ -154,6 +154,11 @@ button {
   gap: 5px;
 }
 
+.song-controls {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
 .meta {
   flex-wrap: wrap;
   justify-content: flex-end;
@@ -210,6 +215,37 @@ button {
 
 .layout-four {
   display: none;
+}
+
+.mode-controls {
+  display: inline-flex;
+  padding: 2px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper);
+}
+
+.mode-button {
+  min-height: 26px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 9px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.mode-button[aria-checked="true"] {
+  background: var(--control);
+  color: var(--control-ink);
+}
+
+.mode-button:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
 }
 
 .song-count {
@@ -455,6 +491,7 @@ button {
 
 .section-band {
   --section-color: var(--ending);
+  --section-band-height: 130px;
   display: inline-grid;
   width: 100%;
   margin: 0 0 12px;
@@ -467,6 +504,11 @@ button {
   grid-template-columns: 42px minmax(0, 1fr);
   scroll-margin-top: 150px;
   vertical-align: top;
+}
+
+.section-band[data-bar-count="4"],
+.section-band[data-bar-count="8"] {
+  height: var(--section-band-height);
 }
 
 .section-band[data-code="IN"] { --section-color: var(--intro); }
@@ -517,6 +559,7 @@ button {
 
 .bars-and-notes {
   display: grid;
+  height: 100%;
   min-width: 0;
   grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(80px, 1.15fr);
 }
@@ -528,8 +571,19 @@ button {
   min-height: 64px;
   align-items: center;
   justify-content: space-evenly;
-  padding: 5px 2px 18px;
+  padding: 17px 2px 18px;
   border-right: 1px solid var(--grid-line);
+}
+
+.bar-number {
+  position: absolute;
+  top: 4px;
+  left: 5px;
+  color: currentColor;
+  font-size: 9px;
+  font-weight: 900;
+  line-height: 1;
+  opacity: 0.72;
 }
 
 .bar-events {
@@ -645,12 +699,50 @@ button {
   white-space: nowrap;
 }
 
-body.melody-hidden .bar-melody {
+.lyrics-block {
+  display: none;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  grid-column: 2;
+  text-align: center;
+}
+
+.lyrics-empty-state {
+  color: var(--band-ink);
+  font-size: 12px;
+  font-style: italic;
+  opacity: 0.78;
+}
+
+body[data-chart-mode="chords"] .bar-melodies {
+  display: none;
+}
+
+body[data-chart-mode="chords"] .row-notes,
+body[data-chart-mode="melody"] .row-notes {
   visibility: hidden;
 }
 
-body.melody-hidden .ordered-melody-passage {
+body[data-chart-mode="melody"] .bar-events {
   display: none;
+}
+
+body[data-chart-mode="melody"] .empty-bar::after {
+  content: "";
+}
+
+body[data-chart-mode="lyrics"] .chart-row {
+  display: none;
+}
+
+body[data-chart-mode="lyrics"] .lyrics-block {
+  display: flex;
+}
+
+body[data-chart-mode="lyrics"] .section-heading {
+  grid-row: 1;
 }
 
 .visually-hidden {
@@ -772,7 +864,8 @@ body.layout-columns-1 .sections {
   }
 
   .song-identity {
-    max-width: calc(100% - 175px);
+    width: 100%;
+    max-width: none;
   }
 
   .artist {
@@ -780,8 +873,41 @@ body.layout-columns-1 .sections {
   }
 
   .header-tools {
-    max-width: 170px;
+    width: 100%;
+    max-width: none;
     gap: 4px;
+  }
+
+  .meta {
+    justify-content: flex-start;
+  }
+
+  .song-controls {
+    display: grid;
+    width: 100%;
+    justify-content: stretch;
+    grid-template-areas:
+      "previous count next picker palette theme"
+      "display display display numbering numbering numbering";
+    grid-template-columns: 28px auto 28px minmax(74px, 1fr) 28px 28px;
+  }
+
+  #prev-song { grid-area: previous; }
+  .song-count { grid-area: count; align-self: center; text-align: center; }
+  #next-song { grid-area: next; }
+  .picker-trigger { grid-area: picker; }
+  .display-mode-controls { grid-area: display; }
+  .bar-numbering-controls { grid-area: numbering; }
+  .palette-toggle { grid-area: palette; }
+  .theme-toggle { grid-area: theme; }
+
+  .mode-controls {
+    justify-content: center;
+  }
+
+  .mode-button {
+    flex: 1 1 auto;
+    padding-inline: 5px;
   }
 
   .meta span {
@@ -890,7 +1016,15 @@ body.layout-columns-1 .sections {
           <button class="control-button layout-button" type="button" id="layout-two" aria-pressed="true" title="Use two Section columns" aria-label="Use two Section columns" data-columns="2">▥</button>
           <button class="control-button layout-button layout-four" type="button" id="layout-four" aria-pressed="false" title="Use four Section columns" aria-label="Use four Section columns" data-columns="4">▦</button>
         </div>
-        <button class="control-button melody-toggle" type="button" id="melody-toggle" aria-pressed="true" aria-label="Hide melody" title="Hide melody">♫</button>
+        <div class="mode-controls display-mode-controls" role="radiogroup" aria-label="Chart Display Mode">
+          <button class="mode-button display-mode-button" type="button" role="radio" aria-checked="true" data-chart-mode="chords">Chords</button>
+          <button class="mode-button display-mode-button" type="button" role="radio" aria-checked="false" data-chart-mode="melody">Melody</button>
+          <button class="mode-button display-mode-button" type="button" role="radio" aria-checked="false" data-chart-mode="lyrics">Lyrics</button>
+        </div>
+        <div class="mode-controls bar-numbering-controls" role="radiogroup" aria-label="Bar Numbering Mode">
+          <button class="mode-button bar-numbering-button" type="button" role="radio" aria-checked="true" data-bar-numbering="section">Per Section</button>
+          <button class="mode-button bar-numbering-button" type="button" role="radio" aria-checked="false" data-bar-numbering="global">Global</button>
+        </div>
         <button class="control-button palette-toggle" type="button" id="palette-toggle" aria-pressed="false" aria-label="Use pastel Section colors" title="Use pastel Section colors">●</button>
         <button class="control-button theme-toggle" type="button" id="theme-toggle" aria-pressed="false" aria-label="Use dark mode" title="Use dark mode">☾</button>
       </div>
@@ -3045,7 +3179,8 @@ window.SETLIST_SONGS = [
   const prevButton = document.getElementById("prev-song");
   const nextButton = document.getElementById("next-song");
   const layoutButtons = Array.from(document.querySelectorAll(".layout-button"));
-  const melodyToggle = document.getElementById("melody-toggle");
+  const displayModeButtons = Array.from(document.querySelectorAll(".display-mode-button"));
+  const barNumberingButtons = Array.from(document.querySelectorAll(".bar-numbering-button"));
   const paletteToggle = document.getElementById("palette-toggle");
   const themeToggle = document.getElementById("theme-toggle");
   const songPickerTrigger = document.getElementById("song-picker-trigger");
@@ -3166,12 +3301,16 @@ window.SETLIST_SONGS = [
     }
   }
 
-  function renderBar(rowElement, bar, melodyPassages, barIndex) {
+  function renderBar(rowElement, bar, melodyPassages, barIndex, barNumbers) {
     const barElement = appendTextElement(rowElement, "div", "bar", "");
     if (bar === null) {
       barElement.classList.add("empty-bar");
       barElement.setAttribute("aria-label", "Empty Bar Slot");
     } else {
+      const barNumber = appendTextElement(barElement, "span", "bar-number", "");
+      barElement.dataset.sectionBarNumber = String(barNumbers.section);
+      barElement.dataset.globalBarNumber = String(barNumbers.global);
+      barNumber.setAttribute("aria-label", "Bar " + barNumbers.section);
       const barEvents = appendTextElement(barElement, "div", "bar-events", "");
       bar.forEach(function (event) {
         renderBarEvent(barEvents, event);
@@ -3195,7 +3334,7 @@ window.SETLIST_SONGS = [
     });
   }
 
-  function renderChartRow(sectionElement, row) {
+  function renderChartRow(sectionElement, row, barNumbers) {
     const chartRow = appendTextElement(sectionElement, "div", "chart-row", "");
     const barsAndNotes = appendTextElement(chartRow, "div", "bars-and-notes", "");
     const melodies = row.notes
@@ -3205,7 +3344,11 @@ window.SETLIST_SONGS = [
       .filter(function (note) { return note.type === "melody"; });
 
     row.bars.forEach(function (bar, barIndex) {
-      renderBar(barsAndNotes, bar, melodies, barIndex);
+      if (bar !== null) {
+        barNumbers.section += 1;
+        barNumbers.global += 1;
+      }
+      renderBar(barsAndNotes, bar, melodies, barIndex, barNumbers);
     });
 
     const rowNotes = appendTextElement(barsAndNotes, "aside", "row-notes", "");
@@ -3235,7 +3378,7 @@ window.SETLIST_SONGS = [
     });
   }
 
-  function createSectionElement(sectionsElement, section, sectionIndex, rowCount) {
+  function createSectionElement(sectionsElement, section, sectionIndex, rowCount, barCount) {
     const sectionElement = appendTextElement(
       sectionsElement,
       "section",
@@ -3245,6 +3388,7 @@ window.SETLIST_SONGS = [
     sectionElement.id = sectionsElement.parentElement.id + "-section-" + sectionIndex;
     sectionElement.dataset.code = sectionCode(section);
     sectionElement.dataset.rowCount = String(rowCount);
+    sectionElement.dataset.barCount = String(barCount);
     sectionElement.style.setProperty("--row-count", String(Math.max(1, rowCount)));
     if (section.ordinal) {
       sectionElement.dataset.sectionOrdinal = String(section.ordinal);
@@ -3254,16 +3398,29 @@ window.SETLIST_SONGS = [
   }
 
   function renderChartSong(song, sectionsElement) {
+    const barNumbers = { section: 0, global: 0 };
     song.sections.forEach(function (section, sectionIndex) {
+      const barCount = section.rows.reduce(function (count, row) {
+        return count + row.bars.filter(function (bar) { return bar !== null; }).length;
+      }, 0);
       const sectionElement = createSectionElement(
         sectionsElement,
         section,
         sectionIndex,
-        section.rows.length
+        section.rows.length,
+        barCount
       );
+      barNumbers.section = 0;
       section.rows.forEach(function (row) {
-        renderChartRow(sectionElement, row);
+        renderChartRow(sectionElement, row, barNumbers);
       });
+      const lyrics = appendTextElement(
+        sectionElement,
+        "div",
+        "lyrics-block lyrics-empty-state",
+        "Lyrics not available."
+      );
+      lyrics.setAttribute("aria-label", "Lyrics");
     });
   }
 
@@ -3271,7 +3428,7 @@ window.SETLIST_SONGS = [
     sectionsElement.classList.add("legacy-sections");
     sectionsElement.setAttribute("aria-label", "Legacy Section summary");
     song.sections.forEach(function (section, sectionIndex) {
-      const sectionElement = createSectionElement(sectionsElement, section, sectionIndex, 1);
+      const sectionElement = createSectionElement(sectionsElement, section, sectionIndex, 1, 0);
       sectionElement.classList.add("legacy-section-band");
     });
   }
@@ -3475,15 +3632,56 @@ window.SETLIST_SONGS = [
     });
   }
 
-  function applyMelody(visibility) {
-    const visible = visibility !== "off";
-    body.classList.toggle("melody-hidden", !visible);
-    melodyToggle.textContent = visible ? "♫" : "×";
-    melodyToggle.setAttribute("aria-pressed", String(visible));
-    const label = visible ? "Hide melody" : "Show melody";
-    melodyToggle.setAttribute("aria-label", label);
-    melodyToggle.setAttribute("title", label);
-    savePreference("melody", visible ? "on" : "off");
+  function applyRadioSelection(buttons, dataName, value) {
+    buttons.forEach(function (button) {
+      const selected = button.dataset[dataName] === value;
+      button.setAttribute("aria-checked", String(selected));
+      button.tabIndex = selected ? 0 : -1;
+    });
+  }
+
+  function applyChartMode(mode) {
+    if (!["chords", "melody", "lyrics"].includes(mode)) {
+      mode = "chords";
+    }
+    body.dataset.chartMode = mode;
+    applyRadioSelection(displayModeButtons, "chartMode", mode);
+    savePreference("chart-mode", mode);
+  }
+
+  function applyBarNumbering(mode) {
+    if (!["section", "global"].includes(mode)) {
+      mode = "section";
+    }
+    body.dataset.barNumbering = mode;
+    applyRadioSelection(barNumberingButtons, "barNumbering", mode);
+    Array.from(document.querySelectorAll(".bar:not(.empty-bar)")).forEach(function (bar) {
+      const number = mode === "global"
+        ? bar.dataset.globalBarNumber
+        : bar.dataset.sectionBarNumber;
+      const label = bar.querySelector(".bar-number");
+      label.textContent = number;
+      label.setAttribute("aria-label", "Bar " + number);
+    });
+    savePreference("bar-numbering", mode);
+  }
+
+  function bindRadioGroup(buttons, applyValue, dataName) {
+    buttons.forEach(function (button, buttonIndex) {
+      button.addEventListener("click", function () {
+        applyValue(button.dataset[dataName]);
+      });
+      button.addEventListener("keydown", function (event) {
+        if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) {
+          return;
+        }
+        event.preventDefault();
+        const direction = event.key === "ArrowLeft" || event.key === "ArrowUp" ? -1 : 1;
+        const target = buttons[(buttonIndex + direction + buttons.length) % buttons.length];
+        applyValue(target.dataset[dataName]);
+        target.focus();
+      });
+    });
   }
 
   function applyPalette(palette) {
@@ -3530,9 +3728,8 @@ window.SETLIST_SONGS = [
     });
   });
 
-  melodyToggle.addEventListener("click", function () {
-    applyMelody(body.classList.contains("melody-hidden") ? "on" : "off");
-  });
+  bindRadioGroup(displayModeButtons, applyChartMode, "chartMode");
+  bindRadioGroup(barNumberingButtons, applyBarNumbering, "barNumbering");
 
   paletteToggle.addEventListener("click", function () {
     applyPalette(body.classList.contains("pastel-palette") ? "strong" : "pastel");
@@ -3566,6 +3763,9 @@ window.SETLIST_SONGS = [
   });
 
   document.addEventListener("keydown", function (event) {
+    if (event.defaultPrevented) {
+      return;
+    }
     if (songPicker.open) {
       if (event.key === "Escape") {
         event.preventDefault();
@@ -3587,7 +3787,8 @@ window.SETLIST_SONGS = [
 
   applyTheme(loadPreference("theme", "light"));
   applyColumns(loadPreference("columns", "2"));
-  applyMelody(loadPreference("melody", "on"));
+  applyChartMode(loadPreference("chart-mode", "chords"));
+  applyBarNumbering(loadPreference("bar-numbering", "section"));
   applyPalette(loadPreference("palette", "strong"));
   renderPickerResults("");
 

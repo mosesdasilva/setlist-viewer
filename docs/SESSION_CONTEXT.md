@@ -102,11 +102,12 @@ Any future Codex session should read this file first to understand:
 - [#21 Adopt the Section Bands shell for the canonical catalog](https://github.com/mosesdasilva/setlist-viewer/issues/21) is implemented on its focused branch: canonical Chart and Legacy Song data now share the compact sticky shell, responsive Section Bands, preserved navigation and display preferences, and aligned generated portable output.
 - [#22 Replace the directory with a searchable Song Picker](https://github.com/mosesdasilva/setlist-viewer/issues/22) is implemented on its focused branch: the ordered canonical catalog now opens in an accessible header-triggered picker with title/Artist filtering, visible Legacy and current-Song states, keyboard-safe modal dismissal and focus restoration, a desktop overlay, and a mobile full-screen sheet.
 - [#23 Integrate prototype display controls and Song Map](https://github.com/mosesdasilva/setlist-viewer/issues/23) is implemented on its focused branch: the canonical split and generated portable viewers now provide an accessible active Chart Song Map, readable Legacy summaries, persistent theme/palette/Melody controls, and responsive one/two/four-column preferences with safe narrow-width fallback.
-- [#25 Improve Section Band modes, sizing, colors, numbering, and lyrics](https://github.com/mosesdasilva/setlist-viewer/issues/25) is the approved parent specification; ticket decomposition is pending final graph approval.
+- [#25 Improve Section Band modes, sizing, colors, numbering, and lyrics](https://github.com/mosesdasilva/setlist-viewer/issues/25) is the approved parent specification; its implementation graph is published as tickets #26–#30.
+- [#27 Add exclusive Chart modes, Bar numbering, and symmetrical Section Bands](https://github.com/mosesdasilva/setlist-viewer/issues/27) is implemented on its focused branch: Chords, Melody, and Lyrics are exclusive accessible modes; Per Section and Global Bar numbering persist; and four/eight-Bar occurrences share one footprint in split and portable viewers.
 
 ## Next Recommended Work
 
-- Approve and publish the tracer-bullet tickets for #25, then implement its dependency frontier in isolated tasks.
+- Continue the published #25 implementation graph in isolated focused branches.
 - Keep #24's remaining physical Safari and direct-file human checks distinct from #25 feature work.
 
 ## Update Rule

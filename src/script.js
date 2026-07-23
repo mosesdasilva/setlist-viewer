@@ -11,7 +11,8 @@
   const prevButton = document.getElementById("prev-song");
   const nextButton = document.getElementById("next-song");
   const layoutButtons = Array.from(document.querySelectorAll(".layout-button"));
-  const melodyToggle = document.getElementById("melody-toggle");
+  const displayModeButtons = Array.from(document.querySelectorAll(".display-mode-button"));
+  const barNumberingButtons = Array.from(document.querySelectorAll(".bar-numbering-button"));
   const paletteToggle = document.getElementById("palette-toggle");
   const themeToggle = document.getElementById("theme-toggle");
   const songPickerTrigger = document.getElementById("song-picker-trigger");
@@ -132,12 +133,16 @@
     }
   }
 
-  function renderBar(rowElement, bar, melodyPassages, barIndex) {
+  function renderBar(rowElement, bar, melodyPassages, barIndex, barNumbers) {
     const barElement = appendTextElement(rowElement, "div", "bar", "");
     if (bar === null) {
       barElement.classList.add("empty-bar");
       barElement.setAttribute("aria-label", "Empty Bar Slot");
     } else {
+      const barNumber = appendTextElement(barElement, "span", "bar-number", "");
+      barElement.dataset.sectionBarNumber = String(barNumbers.section);
+      barElement.dataset.globalBarNumber = String(barNumbers.global);
+      barNumber.setAttribute("aria-label", "Bar " + barNumbers.section);
       const barEvents = appendTextElement(barElement, "div", "bar-events", "");
       bar.forEach(function (event) {
         renderBarEvent(barEvents, event);
@@ -161,7 +166,7 @@
     });
   }
 
-  function renderChartRow(sectionElement, row) {
+  function renderChartRow(sectionElement, row, barNumbers) {
     const chartRow = appendTextElement(sectionElement, "div", "chart-row", "");
     const barsAndNotes = appendTextElement(chartRow, "div", "bars-and-notes", "");
     const melodies = row.notes
@@ -171,7 +176,11 @@
       .filter(function (note) { return note.type === "melody"; });
 
     row.bars.forEach(function (bar, barIndex) {
-      renderBar(barsAndNotes, bar, melodies, barIndex);
+      if (bar !== null) {
+        barNumbers.section += 1;
+        barNumbers.global += 1;
+      }
+      renderBar(barsAndNotes, bar, melodies, barIndex, barNumbers);
     });
 
     const rowNotes = appendTextElement(barsAndNotes, "aside", "row-notes", "");
@@ -201,7 +210,7 @@
     });
   }
 
-  function createSectionElement(sectionsElement, section, sectionIndex, rowCount) {
+  function createSectionElement(sectionsElement, section, sectionIndex, rowCount, barCount) {
     const sectionElement = appendTextElement(
       sectionsElement,
       "section",
@@ -211,6 +220,7 @@
     sectionElement.id = sectionsElement.parentElement.id + "-section-" + sectionIndex;
     sectionElement.dataset.code = sectionCode(section);
     sectionElement.dataset.rowCount = String(rowCount);
+    sectionElement.dataset.barCount = String(barCount);
     sectionElement.style.setProperty("--row-count", String(Math.max(1, rowCount)));
     if (section.ordinal) {
       sectionElement.dataset.sectionOrdinal = String(section.ordinal);
@@ -220,16 +230,29 @@
   }
 
   function renderChartSong(song, sectionsElement) {
+    const barNumbers = { section: 0, global: 0 };
     song.sections.forEach(function (section, sectionIndex) {
+      const barCount = section.rows.reduce(function (count, row) {
+        return count + row.bars.filter(function (bar) { return bar !== null; }).length;
+      }, 0);
       const sectionElement = createSectionElement(
         sectionsElement,
         section,
         sectionIndex,
-        section.rows.length
+        section.rows.length,
+        barCount
       );
+      barNumbers.section = 0;
       section.rows.forEach(function (row) {
-        renderChartRow(sectionElement, row);
+        renderChartRow(sectionElement, row, barNumbers);
       });
+      const lyrics = appendTextElement(
+        sectionElement,
+        "div",
+        "lyrics-block lyrics-empty-state",
+        "Lyrics not available."
+      );
+      lyrics.setAttribute("aria-label", "Lyrics");
     });
   }
 
@@ -237,7 +260,7 @@
     sectionsElement.classList.add("legacy-sections");
     sectionsElement.setAttribute("aria-label", "Legacy Section summary");
     song.sections.forEach(function (section, sectionIndex) {
-      const sectionElement = createSectionElement(sectionsElement, section, sectionIndex, 1);
+      const sectionElement = createSectionElement(sectionsElement, section, sectionIndex, 1, 0);
       sectionElement.classList.add("legacy-section-band");
     });
   }
@@ -441,15 +464,56 @@
     });
   }
 
-  function applyMelody(visibility) {
-    const visible = visibility !== "off";
-    body.classList.toggle("melody-hidden", !visible);
-    melodyToggle.textContent = visible ? "♫" : "×";
-    melodyToggle.setAttribute("aria-pressed", String(visible));
-    const label = visible ? "Hide melody" : "Show melody";
-    melodyToggle.setAttribute("aria-label", label);
-    melodyToggle.setAttribute("title", label);
-    savePreference("melody", visible ? "on" : "off");
+  function applyRadioSelection(buttons, dataName, value) {
+    buttons.forEach(function (button) {
+      const selected = button.dataset[dataName] === value;
+      button.setAttribute("aria-checked", String(selected));
+      button.tabIndex = selected ? 0 : -1;
+    });
+  }
+
+  function applyChartMode(mode) {
+    if (!["chords", "melody", "lyrics"].includes(mode)) {
+      mode = "chords";
+    }
+    body.dataset.chartMode = mode;
+    applyRadioSelection(displayModeButtons, "chartMode", mode);
+    savePreference("chart-mode", mode);
+  }
+
+  function applyBarNumbering(mode) {
+    if (!["section", "global"].includes(mode)) {
+      mode = "section";
+    }
+    body.dataset.barNumbering = mode;
+    applyRadioSelection(barNumberingButtons, "barNumbering", mode);
+    Array.from(document.querySelectorAll(".bar:not(.empty-bar)")).forEach(function (bar) {
+      const number = mode === "global"
+        ? bar.dataset.globalBarNumber
+        : bar.dataset.sectionBarNumber;
+      const label = bar.querySelector(".bar-number");
+      label.textContent = number;
+      label.setAttribute("aria-label", "Bar " + number);
+    });
+    savePreference("bar-numbering", mode);
+  }
+
+  function bindRadioGroup(buttons, applyValue, dataName) {
+    buttons.forEach(function (button, buttonIndex) {
+      button.addEventListener("click", function () {
+        applyValue(button.dataset[dataName]);
+      });
+      button.addEventListener("keydown", function (event) {
+        if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) {
+          return;
+        }
+        event.preventDefault();
+        const direction = event.key === "ArrowLeft" || event.key === "ArrowUp" ? -1 : 1;
+        const target = buttons[(buttonIndex + direction + buttons.length) % buttons.length];
+        applyValue(target.dataset[dataName]);
+        target.focus();
+      });
+    });
   }
 
   function applyPalette(palette) {
@@ -496,9 +560,8 @@
     });
   });
 
-  melodyToggle.addEventListener("click", function () {
-    applyMelody(body.classList.contains("melody-hidden") ? "on" : "off");
-  });
+  bindRadioGroup(displayModeButtons, applyChartMode, "chartMode");
+  bindRadioGroup(barNumberingButtons, applyBarNumbering, "barNumbering");
 
   paletteToggle.addEventListener("click", function () {
     applyPalette(body.classList.contains("pastel-palette") ? "strong" : "pastel");
@@ -532,6 +595,9 @@
   });
 
   document.addEventListener("keydown", function (event) {
+    if (event.defaultPrevented) {
+      return;
+    }
     if (songPicker.open) {
       if (event.key === "Escape") {
         event.preventDefault();
@@ -553,7 +619,8 @@
 
   applyTheme(loadPreference("theme", "light"));
   applyColumns(loadPreference("columns", "2"));
-  applyMelody(loadPreference("melody", "on"));
+  applyChartMode(loadPreference("chart-mode", "chords"));
+  applyBarNumbering(loadPreference("bar-numbering", "section"));
   applyPalette(loadPreference("palette", "strong"));
   renderPickerResults("");
 

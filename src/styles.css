@@ -141,6 +141,11 @@ button {
   gap: 5px;
 }
 
+.song-controls {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
 .meta {
   flex-wrap: wrap;
   justify-content: flex-end;
@@ -197,6 +202,37 @@ button {
 
 .layout-four {
   display: none;
+}
+
+.mode-controls {
+  display: inline-flex;
+  padding: 2px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper);
+}
+
+.mode-button {
+  min-height: 26px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 9px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.mode-button[aria-checked="true"] {
+  background: var(--control);
+  color: var(--control-ink);
+}
+
+.mode-button:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
 }
 
 .song-count {
@@ -442,6 +478,7 @@ button {
 
 .section-band {
   --section-color: var(--ending);
+  --section-band-height: 130px;
   display: inline-grid;
   width: 100%;
   margin: 0 0 12px;
@@ -454,6 +491,11 @@ button {
   grid-template-columns: 42px minmax(0, 1fr);
   scroll-margin-top: 150px;
   vertical-align: top;
+}
+
+.section-band[data-bar-count="4"],
+.section-band[data-bar-count="8"] {
+  height: var(--section-band-height);
 }
 
 .section-band[data-code="IN"] { --section-color: var(--intro); }
@@ -504,6 +546,7 @@ button {
 
 .bars-and-notes {
   display: grid;
+  height: 100%;
   min-width: 0;
   grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(80px, 1.15fr);
 }
@@ -515,8 +558,19 @@ button {
   min-height: 64px;
   align-items: center;
   justify-content: space-evenly;
-  padding: 5px 2px 18px;
+  padding: 17px 2px 18px;
   border-right: 1px solid var(--grid-line);
+}
+
+.bar-number {
+  position: absolute;
+  top: 4px;
+  left: 5px;
+  color: currentColor;
+  font-size: 9px;
+  font-weight: 900;
+  line-height: 1;
+  opacity: 0.72;
 }
 
 .bar-events {
@@ -632,12 +686,50 @@ button {
   white-space: nowrap;
 }
 
-body.melody-hidden .bar-melody {
+.lyrics-block {
+  display: none;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  grid-column: 2;
+  text-align: center;
+}
+
+.lyrics-empty-state {
+  color: var(--band-ink);
+  font-size: 12px;
+  font-style: italic;
+  opacity: 0.78;
+}
+
+body[data-chart-mode="chords"] .bar-melodies {
+  display: none;
+}
+
+body[data-chart-mode="chords"] .row-notes,
+body[data-chart-mode="melody"] .row-notes {
   visibility: hidden;
 }
 
-body.melody-hidden .ordered-melody-passage {
+body[data-chart-mode="melody"] .bar-events {
   display: none;
+}
+
+body[data-chart-mode="melody"] .empty-bar::after {
+  content: "";
+}
+
+body[data-chart-mode="lyrics"] .chart-row {
+  display: none;
+}
+
+body[data-chart-mode="lyrics"] .lyrics-block {
+  display: flex;
+}
+
+body[data-chart-mode="lyrics"] .section-heading {
+  grid-row: 1;
 }
 
 .visually-hidden {
@@ -759,7 +851,8 @@ body.layout-columns-1 .sections {
   }
 
   .song-identity {
-    max-width: calc(100% - 175px);
+    width: 100%;
+    max-width: none;
   }
 
   .artist {
@@ -767,8 +860,41 @@ body.layout-columns-1 .sections {
   }
 
   .header-tools {
-    max-width: 170px;
+    width: 100%;
+    max-width: none;
     gap: 4px;
+  }
+
+  .meta {
+    justify-content: flex-start;
+  }
+
+  .song-controls {
+    display: grid;
+    width: 100%;
+    justify-content: stretch;
+    grid-template-areas:
+      "previous count next picker palette theme"
+      "display display display numbering numbering numbering";
+    grid-template-columns: 28px auto 28px minmax(74px, 1fr) 28px 28px;
+  }
+
+  #prev-song { grid-area: previous; }
+  .song-count { grid-area: count; align-self: center; text-align: center; }
+  #next-song { grid-area: next; }
+  .picker-trigger { grid-area: picker; }
+  .display-mode-controls { grid-area: display; }
+  .bar-numbering-controls { grid-area: numbering; }
+  .palette-toggle { grid-area: palette; }
+  .theme-toggle { grid-area: theme; }
+
+  .mode-controls {
+    justify-content: center;
+  }
+
+  .mode-button {
+    flex: 1 1 auto;
+    padding-inline: 5px;
   }
 
   .meta span {
