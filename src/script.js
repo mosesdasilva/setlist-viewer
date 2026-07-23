@@ -13,6 +13,10 @@
   const layoutButtons = Array.from(document.querySelectorAll(".layout-button"));
   const displayModeButtons = Array.from(document.querySelectorAll(".display-mode-button"));
   const barNumberingButtons = Array.from(document.querySelectorAll(".bar-numbering-button"));
+  const bandSizeSteps = ["80", "90", "100", "110", "120"];
+  const bandSizeDecrease = document.getElementById("band-size-decrease");
+  const bandSizeIncrease = document.getElementById("band-size-increase");
+  const bandSizeValue = document.getElementById("band-size-value");
   const paletteToggle = document.getElementById("palette-toggle");
   const themeToggle = document.getElementById("theme-toggle");
   const songPickerTrigger = document.getElementById("song-picker-trigger");
@@ -499,6 +503,28 @@
     savePreference("bar-numbering", mode);
   }
 
+  function applyBandSize(size) {
+    if (!bandSizeSteps.includes(size)) {
+      size = "100";
+    }
+    const index = bandSizeSteps.indexOf(size);
+    body.dataset.bandSize = size;
+    bandSizeValue.value = size + "%";
+    bandSizeValue.textContent = size + "%";
+    bandSizeValue.setAttribute("aria-label", "Section Band size: " + size + "%");
+    bandSizeDecrease.disabled = index === 0;
+    bandSizeIncrease.disabled = index === bandSizeSteps.length - 1;
+    bandSizeDecrease.setAttribute("aria-disabled", String(bandSizeDecrease.disabled));
+    bandSizeIncrease.setAttribute("aria-disabled", String(bandSizeIncrease.disabled));
+    savePreference("band-size", size);
+  }
+
+  function stepBandSize(direction) {
+    const current = bandSizeSteps.indexOf(body.dataset.bandSize);
+    const target = Math.max(0, Math.min(bandSizeSteps.length - 1, current + direction));
+    applyBandSize(bandSizeSteps[target]);
+  }
+
   function bindRadioGroup(buttons, applyValue, dataName) {
     buttons.forEach(function (button, buttonIndex) {
       button.addEventListener("click", function () {
@@ -571,6 +597,14 @@
   bindRadioGroup(displayModeButtons, applyChartMode, "chartMode");
   bindRadioGroup(barNumberingButtons, applyBarNumbering, "barNumbering");
 
+  bandSizeDecrease.addEventListener("click", function () {
+    stepBandSize(-1);
+  });
+
+  bandSizeIncrease.addEventListener("click", function () {
+    stepBandSize(1);
+  });
+
   paletteToggle.addEventListener("click", function () {
     applyPalette(body.classList.contains("pastel-palette") ? "strong" : "pastel");
   });
@@ -629,6 +663,7 @@
   applyColumns(loadPreference("columns", "2"));
   applyChartMode(loadPreference("chart-mode", "chords"));
   applyBarNumbering(loadPreference("bar-numbering", "section"));
+  applyBandSize(loadPreference("band-size", "100"));
   applyPalette(loadPreference("palette", "strong"));
   renderPickerResults("");
 

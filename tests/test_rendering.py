@@ -251,6 +251,43 @@ class RenderingContractTest(unittest.TestCase):
             r'minmax\(64px, 1fr\) 44px 44px;',
         )
 
+    def test_section_band_size_controls_are_persistent_bounded_and_portable(self):
+        split_html = (ROOT / "src" / "index.html").read_text(encoding="utf-8")
+        script = (ROOT / "src" / "script.js").read_text(encoding="utf-8")
+        styles = (ROOT / "src" / "styles.css").read_text(encoding="utf-8")
+        portable = (ROOT / "setlist-viewer-portable.html").read_text(encoding="utf-8")
+
+        for viewer, html in (("split", split_html), ("portable", portable)):
+            with self.subTest(viewer=viewer):
+                self.assertIn('role="group" aria-label="Section Band size"', html)
+                self.assertIn('aria-label="Decrease Section Band size"', html)
+                self.assertIn('aria-label="Increase Section Band size"', html)
+                self.assertRegex(
+                    html,
+                    r'id="band-size-value"[^>]*aria-live="polite"[^>]*>100%</output>',
+                )
+
+        self.assertIn('const bandSizeSteps = ["80", "90", "100", "110", "120"]', script)
+        self.assertIn('if (!bandSizeSteps.includes(size))', script)
+        self.assertIn('size = "100"', script)
+        self.assertIn('body.dataset.bandSize = size', script)
+        self.assertIn('savePreference("band-size", size)', script)
+        self.assertIn('bandSizeDecrease.disabled = index === 0', script)
+        self.assertIn('bandSizeIncrease.disabled = index === bandSizeSteps.length - 1', script)
+        self.assertIn('applyBandSize(loadPreference("band-size", "100"))', script)
+        self.assertNotIn("body.style.zoom", script)
+        self.assertRegex(
+            styles,
+            r'\.section-band\s*\{[^}]*zoom:\s*var\(--section-band-scale\);',
+        )
+        for size, scale in (("80", ".8"), ("90", ".9"), ("100", "1"), ("110", "1.1"), ("120", "1.2")):
+            with self.subTest(size=size):
+                self.assertRegex(
+                    styles,
+                    rf'body\[data-band-size="{size}"\]\s*\{{[^}}]*'
+                    rf'--section-band-scale:\s*{re.escape(scale)};',
+                )
+
     def test_legacy_songs_render_a_summary_without_chart_rows(self):
         script = (ROOT / "src" / "script.js").read_text(encoding="utf-8")
 
