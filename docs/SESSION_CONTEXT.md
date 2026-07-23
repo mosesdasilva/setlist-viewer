@@ -106,11 +106,11 @@ Any future Codex session should read this file first to understand:
 - Issue #25 is decomposed into implementation tickets #26–#30. The parallel frontier is [#26 Make palette state explicit and color active Section navigation](https://github.com/mosesdasilva/setlist-viewer/issues/26) and [#27 Add exclusive Chart modes, Bar numbering, and symmetrical Section Bands](https://github.com/mosesdasilva/setlist-viewer/issues/27). Lyrics ticket #28 and Band-size ticket #29 depend on #27; integrated acceptance ticket #30 depends on #26, #28, and #29.
 - Superseded acceptance issues #18, #19, and #24 are closed in favor of #30. Completed foundation issues #10 and #20 are closed; their evidence remains in their issue histories.
 - [#26 Make palette state explicit and color active Section navigation](https://github.com/mosesdasilva/setlist-viewer/issues/26) is implemented: Strong/Pastel and Light/Dark show their current state, invalid palette preferences fall back to Strong, and the active Song Map target shares its Section header color in split and generated portable viewers.
+- [#27 Add exclusive Chart modes, Bar numbering, and symmetrical Section Bands](https://github.com/mosesdasilva/setlist-viewer/issues/27) is implemented: Chords, Melody, and Lyrics are exclusive accessible modes; Per Section and Global Bar numbering persist; and four/eight-Bar occurrences share one footprint in split and portable viewers.
 
 ## Next Recommended Work
 
-- Complete and merge #27's isolated implementation.
-- After #27 merges, implement #28 and #29 in parallel; finish with #30 integrated deployment acceptance, including #24's remaining physical Safari and direct-file human checks.
+- Implement #28 and #29 in parallel; finish with #30 integrated deployment acceptance, including #24's remaining physical Safari and direct-file human checks.
 
 ## Update Rule
 

@@ -79,12 +79,82 @@ class RenderingContractTest(unittest.TestCase):
                     rf'id="layout-{columns}"[^>]*aria-pressed="(?:true|false)"[^>]*title="Use {columns} Section column',
                 )
 
-        for control in ("melody-toggle", "palette-toggle", "theme-toggle"):
+        for control in ("palette-toggle", "theme-toggle"):
             with self.subTest(control=control):
                 self.assertRegex(
                     html,
                     rf'id="{control}"[^>]*aria-pressed="(?:true|false)"[^>]*aria-label="[^"]+"[^>]*title="[^"]+"',
                 )
+
+    def test_chart_display_modes_are_one_accessible_exclusive_control(self):
+        html = (ROOT / "src" / "index.html").read_text(encoding="utf-8")
+
+        self.assertIn('role="radiogroup" aria-label="Chart Display Mode"', html)
+        for mode, checked in (("chords", "true"), ("melody", "false"), ("lyrics", "false")):
+            with self.subTest(mode=mode):
+                self.assertRegex(
+                    html,
+                    rf'class="[^"]*display-mode-button[^"]*"[^>]*role="radio"[^>]*'
+                    rf'aria-checked="{checked}"[^>]*data-chart-mode="{mode}"',
+                )
+        self.assertNotIn('id="melody-toggle"', html)
+
+    def test_chart_modes_render_exclusive_content_and_a_lyrics_empty_seam(self):
+        script = (ROOT / "src" / "script.js").read_text(encoding="utf-8")
+        styles = (ROOT / "src" / "styles.css").read_text(encoding="utf-8")
+
+        self.assertIn('"lyrics-block lyrics-empty-state"', script)
+        self.assertIn('"Lyrics not available."', script)
+        self.assertIn('body.dataset.chartMode = mode', script)
+        self.assertIn('savePreference("chart-mode", mode)', script)
+        self.assertIn("if (event.defaultPrevented)", script)
+        self.assertRegex(
+            styles,
+            r'body\[data-chart-mode="chords"\] \.bar-melodies\s*\{[^}]*display:\s*none;',
+        )
+        self.assertRegex(
+            styles,
+            r'body\[data-chart-mode="melody"\] \.bar-events\s*\{[^}]*display:\s*none;',
+        )
+        self.assertRegex(
+            styles,
+            r'body\[data-chart-mode="lyrics"\] \.chart-row\s*\{[^}]*display:\s*none;',
+        )
+        self.assertRegex(
+            styles,
+            r'body\[data-chart-mode="lyrics"\] \.lyrics-block\s*\{[^}]*display:\s*flex;',
+        )
+
+    def test_bar_numbering_modes_are_persistent_and_invalid_values_fall_back(self):
+        html = (ROOT / "src" / "index.html").read_text(encoding="utf-8")
+        script = (ROOT / "src" / "script.js").read_text(encoding="utf-8")
+
+        self.assertIn('role="radiogroup" aria-label="Bar Numbering Mode"', html)
+        self.assertRegex(
+            html,
+            r'data-bar-numbering="section"[^>]*>Per Section<',
+        )
+        self.assertRegex(
+            html,
+            r'data-bar-numbering="global"[^>]*>Global<',
+        )
+        self.assertIn('"bar-number"', script)
+        self.assertIn("barElement.dataset.sectionBarNumber", script)
+        self.assertIn("barElement.dataset.globalBarNumber", script)
+        self.assertIn('if (!["section", "global"].includes(mode))', script)
+        self.assertIn('savePreference("bar-numbering", mode)', script)
+
+    def test_four_and_eight_bar_occurrences_share_one_outer_footprint(self):
+        styles = (ROOT / "src" / "styles.css").read_text(encoding="utf-8")
+        script = (ROOT / "src" / "script.js").read_text(encoding="utf-8")
+
+        self.assertIn("sectionElement.dataset.barCount", script)
+        self.assertRegex(
+            styles,
+            r'\.section-band\[data-bar-count="4"\],\s*'
+            r'\.section-band\[data-bar-count="8"\]\s*\{[^}]*height:\s*var\(--section-band-height\);',
+        )
+        self.assertNotIn("push(null)", script)
 
     def test_chart_renderer_exposes_complete_stage_reading_structure(self):
         script = (ROOT / "src" / "script.js").read_text(encoding="utf-8")
@@ -174,6 +244,11 @@ class RenderingContractTest(unittest.TestCase):
         self.assertRegex(
             styles,
             r'\.section-heading\s*\{[^}]*background:\s*var\(--section-color\);',
+        )
+        self.assertRegex(
+            styles,
+            r'grid-template-columns:\s*28px minmax\(34px, auto\) 28px '
+            r'minmax\(64px, 1fr\) 44px 44px;',
         )
 
     def test_legacy_songs_render_a_summary_without_chart_rows(self):

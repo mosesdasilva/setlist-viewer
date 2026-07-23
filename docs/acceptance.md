@@ -34,3 +34,21 @@ Limitations before merge acceptance:
 
 - The in-app browser disallows `file://` navigation. Direct-file behavior was covered by the no-fetch/no-module rendering contract, generated self-contained artifact checks, and build equivalence; browser interaction used the same unchanged files over localhost.
 - Safari iPhone/iPad spot checks were unavailable in this environment and remain pending under the project-wide acceptance direction.
+
+## Issue #27 — Chart Modes, Bar Numbering, and Section Band Geometry
+
+Automated and browser checks run 2026-07-23 against canonical split source and the generated portable viewer.
+
+- Automated: all 58 Python 3.9 tests, `python3 tools/build.py --check`, and the Node syntax check pass.
+- Phone, 390×844: one column; 4- and 8-Bar occurrences both measured 130 px high; no page overflow. The compact two-row controls remain keyboard accessible.
+- Tablet, 834×1112: two columns with 400 px Section Bands; equal 130 px 4/8-Bar footprints; no page overflow.
+- Desktop, 1440×900: four columns with 285 px Section Bands; equal 130 px 4/8-Bar footprints; no page overflow.
+- Chords Mode showed Bar numbers and harmony only. Melody Mode showed 80 authored Melody Fragments, 144 Bar numbers, and no chord content. Lyrics Mode showed 22 empty Lyrics Blocks and no Bars, chords, or Melody Fragments.
+- Per Section numbering restarted at each occurrence. Global numbering continued from Bars 1–8 in the first occurrence to 9–16 in the second; both the selected mode and numbering mode survived reload.
+- Arrow-key mode selection maintained one checked/one tabbable option without triggering Song navigation.
+- Split and portable behavior matched at all three widths; browser console reported no errors.
+
+Limitations before merge acceptance:
+
+- The in-app browser disallows `file://` navigation. Direct-file behavior remains covered by classic-script/no-fetch contracts, self-contained portable generation, and build equivalence.
+- Physical Safari iPhone/iPad checks are human-only and remain pending.
