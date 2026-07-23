@@ -144,6 +144,38 @@ class RenderingContractTest(unittest.TestCase):
         self.assertIn('updateActiveMapTarget', script)
         self.assertIn('songMap.hidden = song.type !== "chart"', script)
 
+    def test_palette_state_and_section_color_link_render_in_split_and_portable_viewers(self):
+        split_html = (ROOT / "src" / "index.html").read_text(encoding="utf-8")
+        script = (ROOT / "src" / "script.js").read_text(encoding="utf-8")
+        styles = (ROOT / "src" / "styles.css").read_text(encoding="utf-8")
+        portable = (ROOT / "setlist-viewer-portable.html").read_text(encoding="utf-8")
+
+        for viewer, html in (("split", split_html), ("portable", portable)):
+            with self.subTest(viewer=viewer):
+                self.assertRegex(
+                    html,
+                    r'id="palette-toggle"[^>]*aria-pressed="false"[^>]*'
+                    r'aria-label="Section colors: Strong\. Use pastel Section colors"'
+                    r'[^>]*>Strong</button>',
+                )
+                self.assertRegex(
+                    html,
+                    r'id="theme-toggle"[^>]*aria-pressed="false"[^>]*'
+                    r'aria-label="Theme: Light\. Use dark mode"[^>]*>Light</button>',
+                )
+
+        self.assertIn('const paletteName = pastel ? "Pastel" : "Strong"', script)
+        self.assertIn('"Section colors: " + paletteName', script)
+        self.assertIn('if (!["strong", "pastel"].includes(palette))', script)
+        self.assertRegex(
+            styles,
+            r'\.map-chip\.is-active\s*\{[^}]*background:\s*var\(--section-color\);',
+        )
+        self.assertRegex(
+            styles,
+            r'\.section-heading\s*\{[^}]*background:\s*var\(--section-color\);',
+        )
+
     def test_legacy_songs_render_a_summary_without_chart_rows(self):
         script = (ROOT / "src" / "script.js").read_text(encoding="utf-8")
 

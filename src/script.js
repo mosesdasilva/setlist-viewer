@@ -406,10 +406,11 @@
 
   function applyTheme(theme) {
     const dark = theme === "dark";
+    const themeName = dark ? "Dark" : "Light";
     body.classList.toggle("dark-theme", dark);
-    themeToggle.textContent = dark ? "☀" : "☾";
+    themeToggle.textContent = themeName;
     themeToggle.setAttribute("aria-pressed", String(dark));
-    const label = dark ? "Use light mode" : "Use dark mode";
+    const label = "Theme: " + themeName + ". " + (dark ? "Use light mode" : "Use dark mode");
     themeToggle.setAttribute("aria-label", label);
     themeToggle.setAttribute("title", label);
     savePreference("theme", dark ? "dark" : "light");
@@ -453,10 +454,17 @@
   }
 
   function applyPalette(palette) {
+    if (!["strong", "pastel"].includes(palette)) {
+      palette = "strong";
+    }
     const pastel = palette === "pastel";
+    const paletteName = pastel ? "Pastel" : "Strong";
     body.classList.toggle("pastel-palette", pastel);
+    paletteToggle.textContent = paletteName;
     paletteToggle.setAttribute("aria-pressed", String(pastel));
-    const label = pastel ? "Use strong Section colors" : "Use pastel Section colors";
+    const label =
+      "Section colors: " + paletteName + ". " +
+      (pastel ? "Use strong Section colors" : "Use pastel Section colors");
     paletteToggle.setAttribute("aria-label", label);
     paletteToggle.setAttribute("title", label);
     savePreference("palette", pastel ? "pastel" : "strong");

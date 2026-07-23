@@ -226,6 +226,14 @@ button {
   white-space: nowrap;
 }
 
+.state-toggle {
+  width: auto;
+  min-width: 48px;
+  padding: 0 9px;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
 .song-map {
   display: flex;
   width: 100%;
@@ -245,14 +253,15 @@ button {
 }
 
 .map-chip {
+  --section-color: var(--ending);
   display: inline-grid;
   width: 26px;
   height: 26px;
   flex: 0 0 26px;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 999px;
-  background: var(--ending);
-  color: var(--band-ink);
+  background: var(--paper);
+  color: var(--ink);
   font-size: 8px;
   font-weight: 900;
   line-height: 1;
@@ -261,8 +270,14 @@ button {
 }
 
 .map-chip:hover,
-.map-chip:focus-visible,
+.map-chip:focus-visible {
+  outline: 0;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.94), inset 0 0 0 4px rgba(0, 0, 0, 0.36);
+}
+
 .map-chip.is-active {
+  background: var(--section-color);
+  color: var(--band-ink);
   outline: 0;
   box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.94), inset 0 0 0 4px rgba(0, 0, 0, 0.36);
 }
@@ -469,14 +484,22 @@ button {
   vertical-align: top;
 }
 
-.section-band[data-code="IN"] { --section-color: var(--intro); }
-.section-band[data-code="VS"] { --section-color: var(--verse); }
-.section-band[data-code="TG"] { --section-color: var(--tag); }
+.section-band[data-code="IN"],
+.map-chip[data-code="IN"] { --section-color: var(--intro); }
+.section-band[data-code="VS"],
+.map-chip[data-code="VS"] { --section-color: var(--verse); }
+.section-band[data-code="TG"],
+.map-chip[data-code="TG"] { --section-color: var(--tag); }
 .section-band[data-code="PC"],
-.section-band[data-code="PS"] { --section-color: var(--prechorus); }
-.section-band[data-code="CH"] { --section-color: var(--chorus); }
-.section-band[data-code="IS"] { --section-color: var(--instrumental); }
-.section-band[data-code="BR"] { --section-color: var(--bridge); }
+.section-band[data-code="PS"],
+.map-chip[data-code="PC"],
+.map-chip[data-code="PS"] { --section-color: var(--prechorus); }
+.section-band[data-code="CH"],
+.map-chip[data-code="CH"] { --section-color: var(--chorus); }
+.section-band[data-code="IS"],
+.map-chip[data-code="IS"] { --section-color: var(--instrumental); }
+.section-band[data-code="BR"],
+.map-chip[data-code="BR"] { --section-color: var(--bridge); }
 
 .section-heading {
   display: flex;
@@ -487,6 +510,7 @@ button {
   justify-content: flex-start;
   padding: 7px 5px;
   border-right: 1px solid var(--grid-line);
+  background: var(--section-color);
   grid-row: 1 / span var(--row-count, 1);
 }
 
@@ -801,6 +825,13 @@ body.layout-columns-1 .sections {
     font-size: 9px;
   }
 
+  .state-toggle {
+    width: auto;
+    min-width: 44px;
+    padding-inline: 7px;
+    font-size: 9px;
+  }
+
   .song-picker {
     width: 100%;
     height: 100%;
@@ -891,8 +922,8 @@ body.layout-columns-1 .sections {
           <button class="control-button layout-button layout-four" type="button" id="layout-four" aria-pressed="false" title="Use four Section columns" aria-label="Use four Section columns" data-columns="4">▦</button>
         </div>
         <button class="control-button melody-toggle" type="button" id="melody-toggle" aria-pressed="true" aria-label="Hide melody" title="Hide melody">♫</button>
-        <button class="control-button palette-toggle" type="button" id="palette-toggle" aria-pressed="false" aria-label="Use pastel Section colors" title="Use pastel Section colors">●</button>
-        <button class="control-button theme-toggle" type="button" id="theme-toggle" aria-pressed="false" aria-label="Use dark mode" title="Use dark mode">☾</button>
+        <button class="control-button state-toggle palette-toggle" type="button" id="palette-toggle" aria-pressed="false" aria-label="Section colors: Strong. Use pastel Section colors" title="Use pastel Section colors">Strong</button>
+        <button class="control-button state-toggle theme-toggle" type="button" id="theme-toggle" aria-pressed="false" aria-label="Theme: Light. Use dark mode" title="Use dark mode">Light</button>
       </div>
     </div>
     <nav class="song-map" id="song-map" aria-label="Song map"></nav>
@@ -3440,10 +3471,11 @@ window.SETLIST_SONGS = [
 
   function applyTheme(theme) {
     const dark = theme === "dark";
+    const themeName = dark ? "Dark" : "Light";
     body.classList.toggle("dark-theme", dark);
-    themeToggle.textContent = dark ? "☀" : "☾";
+    themeToggle.textContent = themeName;
     themeToggle.setAttribute("aria-pressed", String(dark));
-    const label = dark ? "Use light mode" : "Use dark mode";
+    const label = "Theme: " + themeName + ". " + (dark ? "Use light mode" : "Use dark mode");
     themeToggle.setAttribute("aria-label", label);
     themeToggle.setAttribute("title", label);
     savePreference("theme", dark ? "dark" : "light");
@@ -3487,10 +3519,17 @@ window.SETLIST_SONGS = [
   }
 
   function applyPalette(palette) {
+    if (!["strong", "pastel"].includes(palette)) {
+      palette = "strong";
+    }
     const pastel = palette === "pastel";
+    const paletteName = pastel ? "Pastel" : "Strong";
     body.classList.toggle("pastel-palette", pastel);
+    paletteToggle.textContent = paletteName;
     paletteToggle.setAttribute("aria-pressed", String(pastel));
-    const label = pastel ? "Use strong Section colors" : "Use pastel Section colors";
+    const label =
+      "Section colors: " + paletteName + ". " +
+      (pastel ? "Use strong Section colors" : "Use pastel Section colors");
     paletteToggle.setAttribute("aria-label", label);
     paletteToggle.setAttribute("title", label);
     savePreference("palette", pastel ? "pastel" : "strong");
