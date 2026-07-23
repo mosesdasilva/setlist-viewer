@@ -19,6 +19,15 @@ Open `setlist-viewer-portable.html` for the generated portable single-file viewe
 Canonical chart sources and catalog order live under `charts/`. Regenerate browser data with
 `python3 tools/build.py`; verify committed browser data and portable HTML without writing via `python3 tools/build.py --check`.
 
+Occurrence-specific lyrics follow Expanded Arrangement directives and precede Section definitions:
+
+```text
+@lyrics 2 verse | First ordered line | Second ordered line
+```
+
+The number is the one-based Arrangement Occurrence and the Section ID guards against mapping drift.
+Omit the directive for an empty/non-vocal occurrence. Lyrics use the chart's existing free-text escapes.
+
 ## Project Structure
 
 - [setlist-viewer-v1.html](C:/Users/mrd98/OneDrive/Documents/Setlist%20Viewer/setlist-viewer-v1.html): prior portable prototype retained as a fallback through final acceptance

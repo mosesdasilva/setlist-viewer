@@ -739,7 +739,8 @@ window.SETLIST_SONGS = [
               }
             ]
           }
-        ]
+        ],
+        "lyrics": []
       },
       {
         "id": "verse",
@@ -809,6 +810,12 @@ window.SETLIST_SONGS = [
             ],
             "notes": []
           }
+        ],
+        "lyrics": [
+          "Los corazones a Tí vuelven",
+          "Donde Tú estás allí hay libertad",
+          "Ya no podemos resistirnos",
+          "En Tí encontramos toda la verdad"
         ]
       },
       {
@@ -830,7 +837,8 @@ window.SETLIST_SONGS = [
             ],
             "notes": []
           }
-        ]
+        ],
+        "lyrics": []
       },
       {
         "id": "pre-chorus",
@@ -919,6 +927,10 @@ window.SETLIST_SONGS = [
               }
             ]
           }
+        ],
+        "lyrics": [
+          "Un nuevo tiempo un despertar",
+          "Tenemos hambre hambre por más"
         ]
       },
       {
@@ -940,7 +952,8 @@ window.SETLIST_SONGS = [
             ],
             "notes": []
           }
-        ]
+        ],
+        "lyrics": []
       },
       {
         "id": "chorus-1",
@@ -1025,6 +1038,15 @@ window.SETLIST_SONGS = [
               }
             ]
           }
+        ],
+        "lyrics": [
+          "Más de Tu presencia",
+          "Más de Tu poder",
+          "Un avivamiento queremos ver",
+          "Más de Tu presencia",
+          "Más de Tu poder",
+          "Que no se apague el fuego",
+          "En nuestro ser"
         ],
         "ordinal": 1
       },
@@ -1111,6 +1133,12 @@ window.SETLIST_SONGS = [
               }
             ]
           }
+        ],
+        "lyrics": [
+          "Los corazones a Tí vuelven",
+          "Donde Tú estás allí hay libertad",
+          "Ya no podemos resistirnos",
+          "En Tí encontramos toda la verdad"
         ],
         "ordinal": 2
       },
@@ -1201,7 +1229,8 @@ window.SETLIST_SONGS = [
               }
             ]
           }
-        ]
+        ],
+        "lyrics": []
       },
       {
         "id": "verse",
@@ -1271,6 +1300,10 @@ window.SETLIST_SONGS = [
             ],
             "notes": []
           }
+        ],
+        "lyrics": [
+          "Un nuevo tiempo un despertar",
+          "Tenemos hambre hambre por más"
         ]
       },
       {
@@ -1292,7 +1325,8 @@ window.SETLIST_SONGS = [
             ],
             "notes": []
           }
-        ]
+        ],
+        "lyrics": []
       },
       {
         "id": "pre-chorus",
@@ -1381,6 +1415,15 @@ window.SETLIST_SONGS = [
               }
             ]
           }
+        ],
+        "lyrics": [
+          "Más de Tu presencia",
+          "Más de Tu poder",
+          "Un avivamiento queremos ver",
+          "Más de Tu presencia",
+          "Más de Tu poder",
+          "Que no se apague el fuego",
+          "En nuestro ser"
         ]
       },
       {
@@ -1466,6 +1509,11 @@ window.SETLIST_SONGS = [
               }
             ]
           }
+        ],
+        "lyrics": [
+          "Queremos más",
+          "Queremos más",
+          "Queremos más de Tí Señor"
         ],
         "ordinal": 1
       },
@@ -1553,6 +1601,15 @@ window.SETLIST_SONGS = [
             ]
           }
         ],
+        "lyrics": [
+          "Más de Tu presencia",
+          "Más de Tu poder",
+          "Un avivamiento queremos ver",
+          "Más de Tu presencia",
+          "Más de Tu poder",
+          "Que no se apague el fuego",
+          "En nuestro ser"
+        ],
         "ordinal": 2
       },
       {
@@ -1638,6 +1695,78 @@ window.SETLIST_SONGS = [
               }
             ]
           }
+        ],
+        "lyrics": []
+      },
+      {
+        "id": "bridge",
+        "code": "BR",
+        "name": "Bridge",
+        "rows": [
+          {
+            "bars": [
+              [
+                {
+                  "type": "chord",
+                  "chord": "4"
+                }
+              ],
+              [
+                {
+                  "type": "chord",
+                  "chord": "5"
+                }
+              ],
+              [
+                {
+                  "type": "chord",
+                  "chord": "6"
+                }
+              ],
+              [
+                {
+                  "type": "chord",
+                  "chord": "1/3"
+                }
+              ]
+            ],
+            "notes": []
+          },
+          {
+            "bars": [
+              [
+                {
+                  "type": "chord",
+                  "chord": "4"
+                }
+              ],
+              [
+                {
+                  "type": "chord",
+                  "chord": "5"
+                }
+              ],
+              [
+                {
+                  "type": "chord",
+                  "chord": "6"
+                }
+              ],
+              [
+                {
+                  "type": "chord",
+                  "chord": "1/3"
+                }
+              ]
+            ],
+            "notes": []
+          }
+        ],
+        "lyrics": [
+          "Danzando gritando",
+          "El rey está aquí",
+          "Danzando gritando",
+          "El rey está aquí"
         ]
       },
       {
@@ -1703,6 +1832,15 @@ window.SETLIST_SONGS = [
             ],
             "notes": []
           }
+        ],
+        "lyrics": [
+          "Más de Tu presencia",
+          "Más de Tu poder",
+          "Un avivamiento queremos ver",
+          "Más de Tu presencia",
+          "Más de Tu poder",
+          "Que no se apague el fuego",
+          "En nuestro ser"
         ]
       },
       {
@@ -1768,71 +1906,12 @@ window.SETLIST_SONGS = [
             ],
             "notes": []
           }
-        ]
-      },
-      {
-        "id": "bridge",
-        "code": "BR",
-        "name": "Bridge",
-        "rows": [
-          {
-            "bars": [
-              [
-                {
-                  "type": "chord",
-                  "chord": "4"
-                }
-              ],
-              [
-                {
-                  "type": "chord",
-                  "chord": "5"
-                }
-              ],
-              [
-                {
-                  "type": "chord",
-                  "chord": "6"
-                }
-              ],
-              [
-                {
-                  "type": "chord",
-                  "chord": "1/3"
-                }
-              ]
-            ],
-            "notes": []
-          },
-          {
-            "bars": [
-              [
-                {
-                  "type": "chord",
-                  "chord": "4"
-                }
-              ],
-              [
-                {
-                  "type": "chord",
-                  "chord": "5"
-                }
-              ],
-              [
-                {
-                  "type": "chord",
-                  "chord": "6"
-                }
-              ],
-              [
-                {
-                  "type": "chord",
-                  "chord": "1/3"
-                }
-              ]
-            ],
-            "notes": []
-          }
+        ],
+        "lyrics": [
+          "Danzando gritando",
+          "El rey está aquí",
+          "Danzando gritando",
+          "El rey está aquí"
         ]
       },
       {
@@ -1854,7 +1933,8 @@ window.SETLIST_SONGS = [
             ],
             "notes": []
           }
-        ]
+        ],
+        "lyrics": []
       },
       {
         "id": "chorus-1",
@@ -1940,6 +2020,10 @@ window.SETLIST_SONGS = [
             ]
           }
         ],
+        "lyrics": [
+          "Que no se apague el fuego",
+          "Fuego fuego fuego"
+        ],
         "ordinal": 1
       },
       {
@@ -2005,6 +2089,12 @@ window.SETLIST_SONGS = [
             ],
             "notes": []
           }
+        ],
+        "lyrics": [
+          "Queremos más deTi",
+          "Queremos más deTi",
+          "Queremos más deTi",
+          "Queremos más de Ti"
         ]
       },
       {
@@ -2070,6 +2160,11 @@ window.SETLIST_SONGS = [
             ],
             "notes": []
           }
+        ],
+        "lyrics": [
+          "Queremos más",
+          "Queremos más",
+          "Queremos más de Tí Señor"
         ]
       },
       {
@@ -2107,7 +2202,8 @@ window.SETLIST_SONGS = [
             ],
             "notes": []
           }
-        ]
+        ],
+        "lyrics": []
       }
     ]
   }

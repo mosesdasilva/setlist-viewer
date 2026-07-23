@@ -109,10 +109,11 @@ Any future Codex session should read this file first to understand:
 - [#26 Make palette state explicit and color active Section navigation](https://github.com/mosesdasilva/setlist-viewer/issues/26) is implemented: Strong/Pastel and Light/Dark show their current state, invalid palette preferences fall back to Strong, and the active Song Map target shares its Section header color in split and generated portable viewers.
 - [#27 Add exclusive Chart modes, Bar numbering, and symmetrical Section Bands](https://github.com/mosesdasilva/setlist-viewer/issues/27) is implemented: Chords, Melody, and Lyrics are exclusive accessible modes; Per Section and Global Bar numbering persist; and four/eight-Bar occurrences share one footprint in split and portable viewers.
 - [#29 Add persistent Section Band size controls](https://github.com/mosesdasilva/setlist-viewer/issues/29) is implemented on its focused branch: accessible minus/plus controls persist five bounded size steps, safely recover invalid preferences to 100%, and preserve responsive columns in split and generated portable viewers.
+- [#28 Integrate occurrence-specific lyrics and Más Lyrics Mode](https://github.com/mosesdasilva/setlist-viewer/issues/28) is implemented on its focused branch: validated one-based occurrence Lyrics Blocks generate into split/portable data, Lyrics Mode renders ordered lines only, and all 14 supplied blocks are mapped in source order across the 14 eight-Bar vocal occurrences while eight non-vocal occurrences remain empty.
 
 ## Next Recommended Work
 
-- Finish #28, then #30 integrated deployment acceptance, including #24's remaining physical Safari and direct-file human checks.
+- Finish #30 integrated deployment acceptance, including #28 lyric-mapping review and #24's remaining physical Safari and direct-file human checks.
 
 ## Update Rule
 

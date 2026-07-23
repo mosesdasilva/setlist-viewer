@@ -114,6 +114,33 @@ class BuildTest(unittest.TestCase):
         self.assertEqual(["melody", "direction"], [note["type"] for note in mas["sections"][0]["rows"][1]["notes"]])
         self.assertEqual("Rakes", mas["sections"][1]["rows"][0]["notes"][0]["text"])
         self.assertEqual({"type": "chord", "chord": "3", "diamond": True}, mas["sections"][-1]["rows"][0]["bars"][3][0])
+        self.assertEqual(
+            [1, 3, 5, 8, 10, 14, 18, 22],
+            [
+                occurrence
+                for occurrence, section in enumerate(mas["sections"], 1)
+                if not section["lyrics"]
+            ],
+        )
+        self.assertEqual(
+            [
+                ["Los corazones a Tí vuelven", "Donde Tú estás allí hay libertad", "Ya no podemos resistirnos", "En Tí encontramos toda la verdad"],
+                ["Un nuevo tiempo un despertar", "Tenemos hambre hambre por más"],
+                ["Más de Tu presencia", "Más de Tu poder", "Un avivamiento queremos ver", "Más de Tu presencia", "Más de Tu poder", "Que no se apague el fuego", "En nuestro ser"],
+                ["Los corazones a Tí vuelven", "Donde Tú estás allí hay libertad", "Ya no podemos resistirnos", "En Tí encontramos toda la verdad"],
+                ["Un nuevo tiempo un despertar", "Tenemos hambre hambre por más"],
+                ["Más de Tu presencia", "Más de Tu poder", "Un avivamiento queremos ver", "Más de Tu presencia", "Más de Tu poder", "Que no se apague el fuego", "En nuestro ser"],
+                ["Queremos más", "Queremos más", "Queremos más de Tí Señor"],
+                ["Más de Tu presencia", "Más de Tu poder", "Un avivamiento queremos ver", "Más de Tu presencia", "Más de Tu poder", "Que no se apague el fuego", "En nuestro ser"],
+                ["Danzando gritando", "El rey está aquí", "Danzando gritando", "El rey está aquí"],
+                ["Más de Tu presencia", "Más de Tu poder", "Un avivamiento queremos ver", "Más de Tu presencia", "Más de Tu poder", "Que no se apague el fuego", "En nuestro ser"],
+                ["Danzando gritando", "El rey está aquí", "Danzando gritando", "El rey está aquí"],
+                ["Que no se apague el fuego", "Fuego fuego fuego"],
+                ["Queremos más deTi", "Queremos más deTi", "Queremos más deTi", "Queremos más de Ti"],
+                ["Queremos más", "Queremos más", "Queremos más de Tí Señor"],
+            ],
+            [section["lyrics"] for section in mas["sections"] if section["lyrics"]],
+        )
 
     def test_replacement_uses_id_once_and_never_title(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -221,7 +248,10 @@ class BuildTest(unittest.TestCase):
             self.assertEqual("sentinel\n", output.read_text(encoding="utf-8"))
             self.assertIn("[E014]", failed.stdout)
 
-            chart_path.write_text(valid.replace(" bridge", ""), encoding="utf-8")
+            chart_path.write_text(
+                valid + "\n[unused | ZZ | Unused]\n| 1 | 1 | 1 | 1 |\n",
+                encoding="utf-8",
+            )
             succeeded = self.run_build(root)
 
             self.assertEqual(0, succeeded.returncode, succeeded.stdout + succeeded.stderr)
