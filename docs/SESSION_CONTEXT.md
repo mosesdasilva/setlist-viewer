@@ -102,12 +102,14 @@ Any future Codex session should read this file first to understand:
 - [#21 Adopt the Section Bands shell for the canonical catalog](https://github.com/mosesdasilva/setlist-viewer/issues/21) is implemented on its focused branch: canonical Chart and Legacy Song data now share the compact sticky shell, responsive Section Bands, preserved navigation and display preferences, and aligned generated portable output.
 - [#22 Replace the directory with a searchable Song Picker](https://github.com/mosesdasilva/setlist-viewer/issues/22) is implemented on its focused branch: the ordered canonical catalog now opens in an accessible header-triggered picker with title/Artist filtering, visible Legacy and current-Song states, keyboard-safe modal dismissal and focus restoration, a desktop overlay, and a mobile full-screen sheet.
 - [#23 Integrate prototype display controls and Song Map](https://github.com/mosesdasilva/setlist-viewer/issues/23) is implemented on its focused branch: the canonical split and generated portable viewers now provide an accessible active Chart Song Map, readable Legacy summaries, persistent theme/palette/Melody controls, and responsive one/two/four-column preferences with safe narrow-width fallback.
-- [#25 Improve Section Band modes, sizing, colors, numbering, and lyrics](https://github.com/mosesdasilva/setlist-viewer/issues/25) is the approved parent specification; ticket decomposition is pending final graph approval.
+- [#25 Improve Section Band modes, sizing, colors, numbering, and lyrics](https://github.com/mosesdasilva/setlist-viewer/issues/25) is the active successor specification to completed foundation issues #10 and #20.
+- Issue #25 is decomposed into implementation tickets #26–#30. The parallel frontier is [#26 Make palette state explicit and color active Section navigation](https://github.com/mosesdasilva/setlist-viewer/issues/26) and [#27 Add exclusive Chart modes, Bar numbering, and symmetrical Section Bands](https://github.com/mosesdasilva/setlist-viewer/issues/27). Lyrics ticket #28 and Band-size ticket #29 depend on #27; integrated acceptance ticket #30 depends on #26, #28, and #29.
+- Superseded acceptance issues #18, #19, and #24 are closed in favor of #30. Completed foundation issues #10 and #20 are closed; their evidence remains in their issue histories.
 
 ## Next Recommended Work
 
-- Approve and publish the tracer-bullet tickets for #25, then implement its dependency frontier in isolated tasks.
-- Keep #24's remaining physical Safari and direct-file human checks distinct from #25 feature work.
+- Implement #26 and #27 in isolated tasks, then merge each clean verified issue commit to `main`.
+- After #27 merges, implement #28 and #29 in parallel; finish with #30 integrated deployment acceptance, including #24's remaining physical Safari and direct-file human checks.
 
 ## Update Rule
 
