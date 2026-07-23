@@ -113,11 +113,11 @@ Any future Codex session should read this file first to understand:
 - [#27 Add exclusive Chart modes, Bar numbering, and symmetrical Section Bands](https://github.com/mosesdasilva/setlist-viewer/issues/27) is implemented: Chords, Melody, and Lyrics are exclusive accessible modes; Per Section and Global Bar numbering persist; and four/eight-Bar occurrences share one footprint in split and portable viewers.
 - [#29 Add persistent Section Band size controls](https://github.com/mosesdasilva/setlist-viewer/issues/29) is implemented on its focused branch: accessible minus/plus controls persist five bounded size steps, safely recover invalid preferences to 100%, and preserve responsive columns in split and generated portable viewers.
 - [#28 Integrate occurrence-specific lyrics and Más Lyrics Mode](https://github.com/mosesdasilva/setlist-viewer/issues/28) is implemented on its focused branch: validated one-based occurrence Lyrics Blocks generate into split/portable data, Lyrics Mode renders ordered lines only, and all 14 supplied blocks are mapped in source order across the 14 eight-Bar vocal occurrences while eight non-vocal occurrences remain empty.
-- [#30 Complete integrated display, portable, and deployment acceptance](https://github.com/mosesdasilva/setlist-viewer/issues/30) passed all automated and available browser checks on its focused branch. Current-main Pages deployment `d575495` was verified; post-merge deployment plus physical Safari, direct-file interaction, and lyric-mapping confirmation remain for human/orchestrator follow-up.
+- [#30 Complete integrated display, portable, and deployment acceptance](https://github.com/mosesdasilva/setlist-viewer/issues/30) is complete: automated and available browser checks passed, and Pages run `30000534704` deployed final `main` SHA `19bc1ef` successfully. Physical Safari, direct-file interaction, and lyric-mapping confirmation remain optional human follow-up.
 
 ## Next Recommended Work
 
-- Merge the focused #30 branch only after review, then verify the resulting `main` Pages deployment. Complete #28 lyric-mapping confirmation and #24's remaining physical Safari/direct-file human checks.
+- Human-check the best-effort lyric mapping and, when available, physical Safari iPhone/iPad plus direct-`file://` interaction.
 
 ## Update Rule
 

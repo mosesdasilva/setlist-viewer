@@ -105,4 +105,4 @@ Human-only and post-merge checks:
 
 - Visually confirm or correct the best-effort lyric mapping; no mapping was changed during #30.
 - Physical Safari iPhone/iPad and direct-`file://` interaction remain human-only in this environment.
-- This focused branch is not merged by design. After merge, the new `main` Pages run and live SHA/content still require orchestrator verification.
+- Post-merge Pages run [30000534704](https://github.com/mosesdasilva/setlist-viewer/actions/runs/30000534704) completed successfully for final `main` SHA `19bc1efd13c9d948b275568a84574fbe273565eb`. Both `validate` and `deploy` succeeded. The live viewer rendered `Más` with 22 Song Map entries, exactly one active target, 14 populated/eight empty Lyrics Blocks, four desktop columns, no horizontal overflow, and no console warnings/errors.
