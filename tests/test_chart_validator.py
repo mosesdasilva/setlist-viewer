@@ -140,6 +140,57 @@ class ChartValidatorTest(unittest.TestCase):
         )
         self.assertEqual(["E041"], [item.code for item in self.validate(invalid_note).errors])
 
+    def test_lyrics_belong_to_numbered_arrangement_occurrences(self):
+        source = VALID_CHART.replace(
+            "@arrangement intro chorus-1 intro",
+            "@arrangement intro chorus-1 intro\n"
+            "@lyrics 2 chorus-1 | Más de Tu presencia | Más de Tu poder",
+        )
+
+        result = self.validate(source)
+
+        self.assertEqual([], result.errors)
+        self.assertEqual(
+            ((), ("Más de Tu presencia", "Más de Tu poder"), ()),
+            result.chart.lyrics,
+        )
+
+    def test_lyrics_validate_occurrence_identity_content_and_uniqueness(self):
+        source = VALID_CHART.replace(
+            "@arrangement intro chorus-1 intro",
+            "@arrangement intro chorus-1 intro\n"
+            "@lyrics 0 intro | Invalid occurrence\n"
+            "@lyrics 2 intro | Wrong Section\n"
+            "@lyrics 2 chorus-1 | Duplicate\n"
+            "@lyrics 4 intro | Out of range\n"
+            "@lyrics 3 intro |",
+        )
+
+        result = self.validate(source)
+
+        self.assertEqual(
+            [
+                (10, 9, "E061"),
+                (11, 11, "E062"),
+                (12, 9, "E063"),
+                (13, 9, "E061"),
+                (14, 9, "E064"),
+            ],
+            [(item.line, item.column, item.code) for item in result.errors],
+        )
+
+    def test_arrangements_must_precede_lyrics_blocks(self):
+        source = VALID_CHART.replace(
+            "@arrangement intro chorus-1 intro",
+            "@arrangement intro chorus-1 intro\n"
+            "@lyrics 2 chorus-1 | Más de Tu presencia\n"
+            "@arrangement intro",
+        )
+
+        result = self.validate(source)
+
+        self.assertEqual(["E050"], [item.code for item in result.errors])
+
     def test_every_supported_chord_suffix_and_slash_form_is_accepted(self):
         source = VALID_CHART.replace(
             "| 4 | 2 | 6 | 3 |",

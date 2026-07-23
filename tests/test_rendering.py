@@ -125,6 +125,17 @@ class RenderingContractTest(unittest.TestCase):
             r'body\[data-chart-mode="lyrics"\] \.lyrics-block\s*\{[^}]*display:\s*flex;',
         )
 
+    def test_renderer_preserves_ordered_occurrence_lyrics_and_empty_occurrences(self):
+        script = (ROOT / "src" / "script.js").read_text(encoding="utf-8")
+        styles = (ROOT / "src" / "styles.css").read_text(encoding="utf-8")
+
+        self.assertIn('"lyrics-block"', script)
+        self.assertIn('"lyric-line"', script)
+        self.assertIn("section.lyrics.forEach", script)
+        self.assertIn('"Lyrics not available."', script)
+        self.assertIn('"lyrics-block lyrics-empty-state"', script)
+        self.assertRegex(styles, r"\.lyric-line\s*\{[^}]*font-size:\s*clamp\(11px,\s*1vw,\s*13px\);")
+
     def test_bar_numbering_modes_are_persistent_and_invalid_values_fall_back(self):
         html = (ROOT / "src" / "index.html").read_text(encoding="utf-8")
         script = (ROOT / "src" / "script.js").read_text(encoding="utf-8")

@@ -8,6 +8,37 @@
 @arrangement intro verse tag pre-chorus tag chorus-1 chorus-2 intro verse tag pre-chorus
 @arrangement chorus-1 chorus-2 instrumental bridge bridge bridge tag chorus-1 bridge bridge ending
 
+# Best-effort #28 mapping: source blocks remain ordered across the 14 eight-Bar
+# vocal occurrences. Section-name mismatches require human visual correction.
+# Verse
+@lyrics 2 verse | Los corazones a Tí vuelven | Donde Tú estás allí hay libertad | Ya no podemos resistirnos | En Tí encontramos toda la verdad
+# Pre Chorus
+@lyrics 4 pre-chorus | Un nuevo tiempo un despertar | Tenemos hambre hambre por más
+# Chorus 1
+@lyrics 6 chorus-1 | Más de Tu presencia | Más de Tu poder | Un avivamiento queremos ver | Más de Tu presencia | Más de Tu poder | Que no se apague el fuego | En nuestro ser
+# Verse
+@lyrics 7 chorus-2 | Los corazones a Tí vuelven | Donde Tú estás allí hay libertad | Ya no podemos resistirnos | En Tí encontramos toda la verdad
+# Pre Chorus
+@lyrics 9 verse | Un nuevo tiempo un despertar | Tenemos hambre hambre por más
+# Chorus 1
+@lyrics 11 pre-chorus | Más de Tu presencia | Más de Tu poder | Un avivamiento queremos ver | Más de Tu presencia | Más de Tu poder | Que no se apague el fuego | En nuestro ser
+# Bridge
+@lyrics 12 chorus-1 | Queremos más | Queremos más | Queremos más de Tí Señor
+# Chorus 1
+@lyrics 13 chorus-2 | Más de Tu presencia | Más de Tu poder | Un avivamiento queremos ver | Más de Tu presencia | Más de Tu poder | Que no se apague el fuego | En nuestro ser
+# Chorus 2
+@lyrics 15 bridge | Danzando gritando | El rey está aquí | Danzando gritando | El rey está aquí
+# Chorus 1
+@lyrics 16 bridge | Más de Tu presencia | Más de Tu poder | Un avivamiento queremos ver | Más de Tu presencia | Más de Tu poder | Que no se apague el fuego | En nuestro ser
+# Chorus 2
+@lyrics 17 bridge | Danzando gritando | El rey está aquí | Danzando gritando | El rey está aquí
+# Chorus 3
+@lyrics 19 chorus-1 | Que no se apague el fuego | Fuego fuego fuego
+# Refrain 2
+@lyrics 20 bridge | Queremos más deTi | Queremos más deTi | Queremos más deTi | Queremos más de Ti
+# Chorus 4
+@lyrics 21 bridge | Queremos más | Queremos más | Queremos más de Tí Señor
+
 [intro | IN | Intro]
 | 4 | 2 | 6 | 3 | melody: 17 65 ; 32 12 ; 17 65 ; 5156 5
 | 4 | 2 | 6 | 3 | melody: 17 65 ; 32 12 ; 17 65 ; 5156 5 || direction: oct ↑
@@ -41,4 +72,3 @@
 
 [ending | EN | Ending]
 | 2 | 3 | 4 | <3> |
-

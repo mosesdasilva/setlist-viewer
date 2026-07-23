@@ -108,12 +108,13 @@ def row_data(row: ChartRow) -> dict[str, object]:
     }
 
 
-def section_data(section: Section) -> dict[str, object]:
+def section_data(section: Section, lyrics: tuple[str, ...]) -> dict[str, object]:
     data: dict[str, object] = {
         "id": section.id,
         "code": section.code,
         "name": section.name,
         "rows": [row_data(row) for row in section.rows],
+        "lyrics": list(lyrics),
     }
     if section.ordinal is not None:
         data["ordinal"] = section.ordinal
@@ -131,7 +132,10 @@ def chart_data(song_id: str, chart: Chart) -> dict[str, object]:
         "tempo": f'{metadata["tempo"]} BPM',
         "key": metadata["key"],
         "timeSignature": metadata["time"],
-        "sections": [section_data(sections[section_id]) for section_id in chart.arrangement],
+        "sections": [
+            section_data(sections[occurrence.section_id], occurrence.lyrics)
+            for occurrence in chart.occurrences
+        ],
     }
     if "lead-vocal" in metadata:
         data["leadVocal"] = metadata["lead-vocal"]

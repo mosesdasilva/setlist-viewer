@@ -77,10 +77,24 @@ class Section:
 
 
 @dataclass(frozen=True)
+class ArrangementOccurrence:
+    section_id: str
+    lyrics: tuple[str, ...]
+
+
+@dataclass(frozen=True)
 class Chart:
     metadata: dict[str, str]
-    arrangement: tuple[str, ...]
+    occurrences: tuple[ArrangementOccurrence, ...]
     sections: tuple[Section, ...]
+
+    @property
+    def arrangement(self) -> tuple[str, ...]:
+        return tuple(occurrence.section_id for occurrence in self.occurrences)
+
+    @property
+    def lyrics(self) -> tuple[tuple[str, ...], ...]:
+        return tuple(occurrence.lyrics for occurrence in self.occurrences)
 
 
 @dataclass(frozen=True)
@@ -119,6 +133,8 @@ class _Validator:
         self.metadata: dict[str, str] = {}
         self.arrangement: list[str] = []
         self.arrangement_positions: list[tuple[str, int, int, str]] = []
+        self.lyrics: dict[int, tuple[str, ...]] = {}
+        self.lyrics_positions: dict[int, tuple[str, int, int, str]] = {}
         self.sections: list[_SectionBuilder] = []
         self.current_section: _SectionBuilder | None = None
         self.phase = "metadata"
@@ -163,7 +179,10 @@ class _Validator:
         if not any(item.severity == "error" for item in self.diagnostics):
             chart = Chart(
                 dict(self.metadata),
-                tuple(self.arrangement),
+                tuple(
+                    ArrangementOccurrence(section_id, self.lyrics.get(index, ()))
+                    for index, section_id in enumerate(self.arrangement, 1)
+                ),
                 tuple(
                     Section(item.id, item.code, item.name, item.ordinal, tuple(item.rows), item.line)
                     for item in self.sections
@@ -183,6 +202,8 @@ class _Validator:
             self._parse_metadata(line, name_column, value_column, name, value, source)
         elif name == "arrangement":
             self._parse_arrangement(line, column, value_column, value, source)
+        elif name == "lyrics":
+            self._parse_lyrics(line, column, value_column, value, source)
         else:
             self.diagnostic(line, name_column, "E010", f"unknown directive '@{name}'", source, len(name))
 
@@ -227,8 +248,15 @@ class _Validator:
     def _parse_arrangement(
         self, line: int, column: int, value_column: int, value: str, source: str
     ) -> None:
-        if self.phase == "sections":
-            self.diagnostic(line, column, "E050", "arrangements must precede Sections", source, len(source.strip()))
+        if self.phase in ("lyrics", "sections"):
+            self.diagnostic(
+                line,
+                column,
+                "E050",
+                "arrangements must precede Lyrics Blocks and Sections",
+                source,
+                len(source.strip()),
+            )
             return
         self.phase = "arrangement"
         if not value:
@@ -244,6 +272,81 @@ class _Validator:
             else:
                 self.arrangement.append(section_id)
                 self.arrangement_positions.append((section_id, line, item_column, source))
+
+    def _parse_lyrics(
+        self, line: int, column: int, value_column: int, value: str, source: str
+    ) -> None:
+        if self.phase not in ("arrangement", "lyrics"):
+            self.diagnostic(
+                line,
+                column,
+                "E060",
+                "Lyrics Blocks must follow arrangements and precede Sections",
+                source,
+                len(source.strip()),
+            )
+            return
+        self.phase = "lyrics"
+        fields = _split_unescaped_with_offsets(value, "|")
+        header = fields[0][0].strip().split()
+        if (
+            len(header) != 2
+            or not header[0].isdigit()
+            or not ID_PATTERN.fullmatch(header[1])
+        ):
+            self.diagnostic(
+                line,
+                value_column,
+                "E060",
+                "Lyrics Block requires an occurrence number, Section ID, and lyric lines",
+                source,
+                max(len(value), 1),
+            )
+            return
+        occurrence = int(header[0])
+        section_id = header[1]
+        if occurrence < 1:
+            self.diagnostic(
+                line,
+                value_column,
+                "E061",
+                "Lyrics Block occurrence must be a positive integer",
+                source,
+                len(header[0]),
+            )
+            return
+        if occurrence in self.lyrics:
+            self.diagnostic(
+                line,
+                value_column,
+                "E063",
+                f"duplicate Lyrics Block for occurrence {occurrence}",
+                source,
+                len(header[0]),
+            )
+            return
+        lines = tuple(
+            self._decode_free_text(
+                line,
+                value_column + offset + len(raw) - len(raw.lstrip()),
+                raw.strip(),
+                source,
+            )
+            for raw, offset in fields[1:]
+        )
+        if not lines or any(not lyric_line for lyric_line in lines):
+            self.diagnostic(
+                line,
+                value_column,
+                "E064",
+                "Lyrics Block requires one or more nonempty lyric lines",
+                source,
+                max(len(value), 1),
+            )
+            return
+        self.lyrics[occurrence] = lines
+        section_column = source.find(section_id, value_column - 1) + 1
+        self.lyrics_positions[occurrence] = (section_id, line, section_column, source)
 
     def _parse_section(self, line: int, column: int, text: str, source: str) -> None:
         self._finish_section()
@@ -473,6 +576,25 @@ class _Validator:
                     ordinals.add(section.ordinal)
         if not self.arrangement:
             self.diagnostic(len(self.lines) + 1, 1, "E052", "chart requires a nonempty Expanded Arrangement", "")
+        for occurrence, (section_id, line, column, source) in self.lyrics_positions.items():
+            if occurrence > len(self.arrangement):
+                self.diagnostic(
+                    line,
+                    source.find(str(occurrence)) + 1,
+                    "E061",
+                    f"Lyrics Block occurrence {occurrence} exceeds Expanded Arrangement length {len(self.arrangement)}",
+                    source,
+                    len(str(occurrence)),
+                )
+            elif self.arrangement[occurrence - 1] != section_id:
+                self.diagnostic(
+                    line,
+                    column,
+                    "E062",
+                    f"Lyrics Block occurrence {occurrence} is '{self.arrangement[occurrence - 1]}', not '{section_id}'",
+                    source,
+                    len(section_id),
+                )
         referenced = set(self.arrangement)
         for section_id, line, column, source in self.arrangement_positions:
             if section_id not in ids:

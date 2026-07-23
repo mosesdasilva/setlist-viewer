@@ -246,13 +246,19 @@
       section.rows.forEach(function (row) {
         renderChartRow(sectionElement, row, barNumbers);
       });
+      const hasLyrics = section.lyrics && section.lyrics.length;
       const lyrics = appendTextElement(
         sectionElement,
         "div",
-        "lyrics-block lyrics-empty-state",
-        "Lyrics not available."
+        hasLyrics ? "lyrics-block" : "lyrics-block lyrics-empty-state",
+        hasLyrics ? "" : "Lyrics not available."
       );
-      lyrics.setAttribute("aria-label", "Lyrics");
+      lyrics.setAttribute("aria-label", "Lyrics for " + section.name);
+      if (hasLyrics) {
+        section.lyrics.forEach(function (line) {
+          appendTextElement(lyrics, "p", "lyric-line", line);
+        });
+      }
     });
   }
 

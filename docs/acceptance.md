@@ -52,3 +52,19 @@ Limitations before merge acceptance:
 
 - The in-app browser disallows `file://` navigation. Direct-file behavior remains covered by classic-script/no-fetch contracts, self-contained portable generation, and build equivalence.
 - Physical Safari iPhone/iPad checks are human-only and remain pending.
+
+## Issue #28 — Occurrence-Specific Lyrics
+
+Automated and browser checks run 2026-07-23 against canonical split source and the generated portable viewer.
+
+- Automated: all 63 Python 3.9 tests, `python3 tools/build.py --check`, and the Node syntax check pass.
+- Lyrics Mode renders 22 occurrence Lyrics Blocks: 14 populated in authoritative source order and eight empty intro/tag/instrumental/ending occurrences.
+- Lyrics Mode showed zero Chart Rows, Bars, chords, or Melody Fragments. Keyboard Left/Right moved exclusively between Lyrics and Melody and back.
+- Accents/spelling, including `Tí`, `Tú`, and the supplied `deTi`, remained exact in generated data and rendered lines.
+- Split and portable viewers matched at 390×844 (one column), 834×1112 (two columns), and 1440×900 (four columns).
+- Lyrics text measured 11 px at phone/tablet widths and 13 px at desktop. All widths reported zero page or Lyrics Block overflow; the browser console reported no warnings or errors.
+
+Human-only checks:
+
+- Visually confirm or correct the documented best-effort mapping. The accepted arrangement has 14 eight-Bar vocal occurrences, so the 14 supplied blocks were assigned to those occurrences in source order; several supplied headings intentionally differ from the preserved Section names.
+- Physical Safari iPhone/iPad and direct-`file://` interaction remain pending.
