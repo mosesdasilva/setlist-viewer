@@ -51,6 +51,7 @@
 - keep the complete ordered Song catalog hidden until the sticky-header Song Picker opens; empty search browses all Songs and title/Artist search filters live
 - present the Song Picker as an accessible desktop overlay and mobile full-screen sheet, with visible Legacy/current states and reliable close/focus behavior
 - preserve the chosen Section-column preference when responsive constraints temporarily render fewer columns: one on phones, at most two below 1200 CSS pixels, and four only at wider laptop/desktop sizes
+- preserve an independent five-step Section Band size preference (80%, 90%, 100%, 110%, or 120%); scale Bands and their contents without changing page zoom or the selected column preference
 - keep the ordered active Song Map for complete Charts; Legacy Songs show a readable Section summary and never imply Bar-level Chart content
 - stack Sections vertically in a fully Expanded Arrangement
 - preserve four Bars plus a side-by-side Row Note per Chart Row at every supported width

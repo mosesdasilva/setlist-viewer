@@ -40,6 +40,11 @@
           <button class="mode-button bar-numbering-button" type="button" role="radio" aria-checked="true" data-bar-numbering="section">Per Section</button>
           <button class="mode-button bar-numbering-button" type="button" role="radio" aria-checked="false" data-bar-numbering="global">Global</button>
         </div>
+        <div class="band-size-controls" role="group" aria-label="Section Band size">
+          <button class="band-size-button" type="button" id="band-size-decrease" aria-label="Decrease Section Band size" title="Decrease Section Band size">−</button>
+          <output class="band-size-value" id="band-size-value" aria-live="polite">100%</output>
+          <button class="band-size-button" type="button" id="band-size-increase" aria-label="Increase Section Band size" title="Increase Section Band size">+</button>
+        </div>
         <button class="control-button state-toggle palette-toggle" type="button" id="palette-toggle" aria-pressed="false" aria-label="Section colors: Strong. Use pastel Section colors" title="Use pastel Section colors">Strong</button>
         <button class="control-button state-toggle theme-toggle" type="button" id="theme-toggle" aria-pressed="false" aria-label="Theme: Light. Use dark mode" title="Use dark mode">Light</button>
       </div>

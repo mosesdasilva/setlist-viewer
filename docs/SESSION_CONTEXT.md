@@ -35,6 +35,7 @@ Any future Codex session should read this file first to understand:
 - Preserve the grayscale UI direction, with color concentrated in the section blocks.
 - Use the accepted Section Bands prototype as binding visual and interaction prior art for the canonical generated viewer: compact sticky Song header, vertical Section Names, colored bands, four-Bar rows, aligned Row Notes, and responsive one/two/four-column presentation.
 - Persist one-, two-, or four-column preference independently from the responsive rendered layout: phones render one column, tablet widths render at most two, and four columns render only at 1200 CSS pixels or wider.
+- Persist Section Band size independently at exactly 80%, 90%, 100%, 110%, or 120%; scale only Section Bands and their contents while responsive columns remain unchanged.
 - Evolve the viewer through spec #25: use mutually exclusive Chords, Melody, and Lyrics display modes; occurrence-specific non-Bar-aligned Lyrics Blocks; selectable Per Section or Global Bar numbering; equal-footprint four/eight-Bar Section Bands; five persistent Band-size steps; and an explicit Strong/Pastel control without a color legend.
 - Expose the ordered Song Map only for complete Charts, mark exactly one active target with `aria-current="location"`, and keep Legacy Songs as readable Section summaries without Chart Rows.
 - Keep the generated catalog as the only runtime Song source; browse it through the hidden searchable Song Picker opened from the sticky header.
@@ -107,10 +108,11 @@ Any future Codex session should read this file first to understand:
 - Superseded acceptance issues #18, #19, and #24 are closed in favor of #30. Completed foundation issues #10 and #20 are closed; their evidence remains in their issue histories.
 - [#26 Make palette state explicit and color active Section navigation](https://github.com/mosesdasilva/setlist-viewer/issues/26) is implemented: Strong/Pastel and Light/Dark show their current state, invalid palette preferences fall back to Strong, and the active Song Map target shares its Section header color in split and generated portable viewers.
 - [#27 Add exclusive Chart modes, Bar numbering, and symmetrical Section Bands](https://github.com/mosesdasilva/setlist-viewer/issues/27) is implemented: Chords, Melody, and Lyrics are exclusive accessible modes; Per Section and Global Bar numbering persist; and four/eight-Bar occurrences share one footprint in split and portable viewers.
+- [#29 Add persistent Section Band size controls](https://github.com/mosesdasilva/setlist-viewer/issues/29) is implemented on its focused branch: accessible minus/plus controls persist five bounded size steps, safely recover invalid preferences to 100%, and preserve responsive columns in split and generated portable viewers.
 
 ## Next Recommended Work
 
-- Implement #28 and #29 in parallel; finish with #30 integrated deployment acceptance, including #24's remaining physical Safari and direct-file human checks.
+- Finish #28, then #30 integrated deployment acceptance, including #24's remaining physical Safari and direct-file human checks.
 
 ## Update Rule
 

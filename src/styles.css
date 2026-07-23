@@ -58,11 +58,32 @@ html {
 }
 
 body {
+  --section-band-scale: 1;
   margin: 0;
   background: var(--bg);
   color: var(--ink);
   font-family: Arial, Helvetica, sans-serif;
   font-variant-numeric: tabular-nums;
+}
+
+body[data-band-size="80"] {
+  --section-band-scale: .8;
+}
+
+body[data-band-size="90"] {
+  --section-band-scale: .9;
+}
+
+body[data-band-size="100"] {
+  --section-band-scale: 1;
+}
+
+body[data-band-size="110"] {
+  --section-band-scale: 1.1;
+}
+
+body[data-band-size="120"] {
+  --section-band-scale: 1.2;
 }
 
 button {
@@ -255,6 +276,51 @@ button {
   padding: 0 9px;
   font-size: 10px;
   white-space: nowrap;
+}
+
+.band-size-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper);
+}
+
+.band-size-button {
+  display: inline-grid;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: var(--control);
+  color: var(--control-ink);
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1;
+  place-items: center;
+}
+
+.band-size-button:hover,
+.band-size-button:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.band-size-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.38;
+}
+
+.band-size-value {
+  min-width: 34px;
+  color: var(--ink);
+  font-size: 9px;
+  font-weight: 900;
+  text-align: center;
 }
 
 .song-map {
@@ -506,6 +572,7 @@ button {
   grid-template-columns: 42px minmax(0, 1fr);
   scroll-margin-top: 150px;
   vertical-align: top;
+  zoom: var(--section-band-scale);
 }
 
 .section-band[data-bar-count="4"],
@@ -899,7 +966,8 @@ body.layout-columns-1 .sections {
     justify-content: stretch;
     grid-template-areas:
       "previous count next picker palette theme"
-      "display display display numbering numbering numbering";
+      "display display display numbering numbering numbering"
+      "size size size size size size";
     grid-template-columns: 28px minmax(34px, auto) 28px minmax(64px, 1fr) 44px 44px;
   }
 
@@ -909,6 +977,7 @@ body.layout-columns-1 .sections {
   .picker-trigger { grid-area: picker; }
   .display-mode-controls { grid-area: display; }
   .bar-numbering-controls { grid-area: numbering; }
+  .band-size-controls { grid-area: size; justify-self: center; }
   .palette-toggle { grid-area: palette; }
   .theme-toggle { grid-area: theme; }
 

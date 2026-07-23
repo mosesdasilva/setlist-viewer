@@ -52,3 +52,19 @@ Limitations before merge acceptance:
 
 - The in-app browser disallows `file://` navigation. Direct-file behavior remains covered by classic-script/no-fetch contracts, self-contained portable generation, and build equivalence.
 - Physical Safari iPhone/iPad checks are human-only and remain pending.
+
+## Issue #29 — Persistent Section Band Size
+
+Automated and browser checks run 2026-07-23 against canonical split source and the generated portable viewer.
+
+- Automated: all 60 Python 3.9 tests, `python3 tools/build.py --check`, and the Node syntax check pass. Rendering contracts cover the exact five values, 100% invalid-value fallback, persistence key, limit states, scoped Section Band scaling, accessible labels, and generated portable parity.
+- Controls: minus/plus traversed 80%, 90%, 100%, 110%, and 120%; band heights measured 104, 117, 130, 143, and 156 px. Minus disabled only at 80%; plus disabled only at 120%.
+- Persistence/isolation: 120% survived reload while the saved four-column preference remained unchanged. At desktop width, all five steps kept four rendered columns and page width equal to viewport width.
+- Split viewer at 120%: 390×844 rendered one column, 820×1180 rendered two, and 1440×900 rendered four; the complete 22-occurrence `Más` Chart and size control stayed within the viewport.
+- Portable viewer at 120% matched the split viewer at all three widths, with no overlapping Section Bands or horizontal page/control overflow.
+- Browser console reported no warnings or errors.
+
+Limitations before merge acceptance:
+
+- The in-app browser disallows `file://` navigation. Direct-file behavior remains covered by classic-script/no-fetch contracts, self-contained portable generation, and build equivalence.
+- Physical Safari iPhone/iPad checks are human-only and remain pending.
