@@ -15,7 +15,7 @@
 
 ## Sections
 
-### 1. Make the ground solid  [ ] not started
+### 1. Make the ground solid  [x] complete
 
 **Deliverable:** The current viewer runs and tests locally, Git has a verified recovery point, and all `learning/` artifacts are committed—your project can never be lost again.
 
@@ -24,6 +24,14 @@
 **Reclaim:** `.gitignore` — explain why it exists, break one safe ignore rule, predict the Git-status change, then restore it.
 
 **Receipt:** Required first section for adopted projects; current repository health was verified during triage.
+
+#### Tasks
+
+- [x] Locate the repository and read `git status` without changing files.
+- [x] Open both current viewer artifacts and verify core navigation and theme behavior.
+- [x] Run the automated tests and explain what a passing result proves.
+- [x] Run the build drift check and distinguish source files from generated files.
+- [x] Reclaim `.gitignore`, review the final diff, and create a verified Git recovery point.
 
 ### 2. Start the React/TypeScript successor  [ ] not started
 
@@ -94,4 +102,3 @@
 **Reclaim:** `.github/workflows/deploy-pages.yml` — explain its validation gate, break one dependency safely, predict why deployment becomes unsafe, then restore it.
 
 **Receipt:** The user explicitly chose ChatGPT Sites as the internal-tool host; app-owned authentication remains parked.
-

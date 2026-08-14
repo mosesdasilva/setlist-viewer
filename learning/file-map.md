@@ -7,13 +7,13 @@
 
 - `.DS_Store` — generated — macOS folder metadata; never edit
 - `.github/workflows/deploy-pages.yml` — known (2026-08-13) — tests and checks `main`, then publishes `src/` to GitHub Pages → [[continuous-deployment]]
-- `.gitignore` — parked — tells Git which machine-made files to ignore; reclaim with Git foundations → [[git-ignore-rules]]
+- `.gitignore` — known (2026-08-14) — hides machine-made files and disposable `tmp/` output from Git status and commits → [[git-ignore-rules]]
 - `AGENTS.md` — parked — working rules for coding agents; reclaim with AI-assisted project ownership → [[agent-instructions]]
 - `CONTEXT.md` — parked — canonical musician-domain vocabulary; reclaim before modeling React data → [[domain-modeling]]
 - `MISSION.md` — parked — earlier learning-workspace goal; reconcile during planning → [[learning-workflow]]
 - `README.md` — known (2026-08-13) — explains the app, local use, build command, and repository shape → [[project-documentation]]
 - `RESOURCES.md` — parked — earlier learning links; revisit when sections select resources → [[learning-workflow]]
-- `TODO.md` — parked — untracked user-owned idea list; review during forward planning → [[backlog-management]]
+- `TODO.md` — known (2026-08-14) — user-authored backlog of desired features carried forward from the prior development cycle → [[backlog-management]]
 - `setlist-viewer-portable.html` — generated — self-contained viewer produced from canonical source; rebuild with `tools/build.py` → [[generated-artifacts]]
 - `setlist-viewer-v1.html` — parked — previous single-file prototype retained as historical fallback → [[static-web-app]]
 
@@ -32,8 +32,8 @@
 ## `src/`
 
 - `src/index.html` — known (2026-08-13) — page shell that loads generated data before interaction code → [[html-document-structure]]
-- `src/styles.css` — parked — presentation, visibility, responsive layout, and Section Band styling; reclaim with the first React screen → [[css-cascade-and-selectors]]
-- `src/script.js` — parked — renders song data into DOM elements and handles viewer interaction; reclaim during the React behavior comparison → [[dom-rendering]]
+- `src/styles.css` — known (2026-08-13) — separate styling source makes the split viewer easier to maintain; selector internals return in Section 7 → [[css-cascade-and-selectors]]
+- `src/script.js` — known (2026-08-13) — separate behavior source renders song data and controls navigation/theme; DOM calls return in Section 3 → [[dom-rendering]]
 - `src/chart-data.js` — generated — browser-ready catalog produced from legacy data and `.chart` sources; never edit directly → [[generated-artifacts]]
 - `src/song-data.js` — parked — hand-maintained Legacy Song data consumed by the build; reclaim during data-model design → [[legacy-song-model]]
 - `src/.nojekyll` — parked — prevents GitHub Pages from applying Jekyll processing; reclaim during deployment → [[continuous-deployment]]
@@ -47,11 +47,11 @@
 
 ## `tests/`
 
-- `tests/test_chart_validator.py` — parked — examples and edge cases for `.chart` parsing; reclaim with validator TDD → [[unit-testing]]
-- `tests/test_build.py` — parked — protects deterministic generation, drift checking, and atomic writes; reclaim with build-pipeline testing → [[unit-testing]]
-- `tests/test_legacy_songs.py` — parked — prevents accidental changes to retained Legacy Song content → [[regression-testing]]
-- `tests/test_rendering.py` — parked — checks HTML/CSS/JavaScript rendering contracts without a browser framework → [[contract-testing]]
-- `tests/test_pages_workflow.py` — parked — checks deployment workflow safety requirements → [[continuous-deployment]]
+- `tests/test_chart_validator.py` — known (2026-08-14) — examples and edge cases for `.chart` parsing; individual cases return with validator TDD → [[unit-testing]]
+- `tests/test_build.py` — known (2026-08-14) — protects deterministic generation, drift checking, and atomic writes → [[unit-testing]]
+- `tests/test_legacy_songs.py` — known (2026-08-14) — prevents accidental changes to retained Legacy Song content → [[regression-testing]]
+- `tests/test_rendering.py` — known (2026-08-14) — checks source/rendering contracts without opening a real browser → [[contract-testing]]
+- `tests/test_pages_workflow.py` — known (2026-08-14) — checks deployment workflow safety requirements → [[continuous-deployment]]
 - `tests/__pycache__/` — generated — Python bytecode cache; ignored and safely rebuildable
 
 ## Teaching workspace
@@ -59,6 +59,7 @@
 - `assets/lesson.css` — parked — styling shared by the existing visual lesson → [[learning-workflow]]
 - `assets/quiz.js` — parked — behavior used by the existing lesson quiz → [[learning-workflow]]
 - `lessons/0001-setlist-viewer-codebase-tour.html` — parked — prior generated codebase-tour lesson; compare with this evidence-based journey later → [[learning-workflow]]
+- `prototypes/chart-source-format/` — parked — currently empty workspace from earlier chart-format exploration; revisit only if prototyping resumes → [[chart-notation]]
 
 ## `docs/`
 

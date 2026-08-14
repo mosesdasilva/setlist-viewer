@@ -56,22 +56,22 @@
 - status: practicing
 - depends-on: parsing-and-validation, generated-artifacts
 - introduced: 2026-08-13
-- last-reviewed: 2026-08-13
-- evidence: Explained why custom `.chart` text needs the Python build today and why direct in-app authoring removes that need unless import/export remains.
+- last-reviewed: 2026-08-14
+- evidence: Ran `python3 tools/build.py --check`, verified exit status `0`, and explained that changing `charts/mas.chart` requires rebuilding generated browser data and portable HTML.
 
 ## generated-artifacts
-- status: introduced
+- status: practicing
 - depends-on: build-pipeline
 - introduced: 2026-08-13
-- last-reviewed: 2026-08-13
-- evidence: Identified `chart-data.js` as generated output rather than the musician-authored source.
+- last-reviewed: 2026-08-14
+- evidence: Identified `src/chart-data.js` and portable HTML as files not to hand-edit and correctly predicted that `--check` reports generated drift when they disagree with authored chart source.
 
 ## static-web-app
 - status: practicing
 - depends-on: html-document-structure, css-cascade-and-selectors, javascript-functions-and-events
 - introduced: 2026-08-13
 - last-reviewed: 2026-08-13
-- evidence: Explained both same-page dynamic behavior and GitHub Pages' inability to run application database writes; needed correction that Pages serves separate source files unchanged.
+- evidence: Opened both split and portable viewers directly, verified navigation and theme behavior, and explained why a browser renders HTML instead of showing its raw text.
 
 ## browser-local-storage
 - status: introduced
@@ -95,11 +95,11 @@
 - evidence: —
 
 ## unit-testing
-- status: introduced
+- status: practicing
 - depends-on: functions, assertions
 - introduced: 2026-08-13
-- last-reviewed: 2026-08-13
-- evidence: Knew tests compare function input with expected output; needed help designing a validator test for a new chord suffix.
+- last-reviewed: 2026-08-14
+- evidence: Ran all 64 tests, interpreted `OK`, and explained that they verify defined validation, generation, content, rendering-contract, and deployment expectations without proving visual browser behavior.
 
 ## test-driven-development
 - status: introduced
@@ -130,18 +130,39 @@
 - evidence: Explained that GitHub runs automated validation before publishing and why static Pages hosting cannot provide the successor's database server.
 
 ## git-fundamentals
-- status: seed
+- status: practicing
 - depends-on: none
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-13
+- last-reviewed: 2026-08-13
+- evidence: Correctly predicted and ran `pwd` and `git status`, recognized `TODO.md` as untracked, and explained that `git add` starts tracking and stages it; needed correction that `git commit` saves staged content rather than staging it.
+
+## terminal-navigation
+- status: practicing
+- depends-on: none
+- introduced: 2026-08-13
+- last-reviewed: 2026-08-13
+- evidence: Predicted the repository's absolute path, ran `pwd`, and confirmed the terminal was in `/Users/mosesdasilva/Documents/Setlist Viewer`.
+
+## command-line-arguments
+- status: practicing
+- depends-on: terminal-navigation
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: Diagnosed that typing `discover-s` as one word made Python search for that module, then added the missing space and successfully ran the suite.
+
+## process-exit-status
+- status: practicing
+- depends-on: terminal-navigation
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: Ran `echo $?`, observed `0`, and explained that zero indicates the preceding build check succeeded.
 
 ## git-ignore-rules
-- status: seed
+- status: practicing
 - depends-on: git-fundamentals
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: Removed and restored the `.DS_Store` rule, predicted its untracked status, then added `tmp/` and predicted that generated temporary output would disappear from Git status.
 
 ## project-documentation
 - status: seed
@@ -298,11 +319,11 @@
 - evidence: Chose adoption, completed evidence probes, reasoned through successor decisions, and confirmed the eight-section build sequence.
 
 ## backlog-management
-- status: seed
+- status: introduced
 - depends-on: learning-workflow
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: Explained that `TODO.md` preserves desired features from the prior development cycle and chose to include it in the recovery commit.
 
 ## acceptance-testing
 - status: seed
