@@ -227,6 +227,34 @@
 - last-reviewed: —
 - evidence: Prior experience was reported but not probed during adoption.
 
+## dependency-management
+- status: practicing
+- depends-on: structured-data, generated-artifacts
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: Explained that a lockfile fixes dependency versions while installation materializes those dependencies locally, and correctly predicted a repeat install would report `Already up to date`.
+
+## dependency-build-scripts
+- status: introduced
+- depends-on: dependency-management, application-security
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: Initially thought a `false` build policy prevented dependency installation; learned that it installs packages while blocking their automatic lifecycle scripts.
+
+## sites-project-configuration
+- status: practicing
+- depends-on: project-documentation, dependency-management
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: Explained that `.openai/hosting.json` configures OpenAI hosting and inferred from its `null` D1/R2 values that those capabilities are not currently active.
+
+## nested-git-repositories
+- status: practicing
+- depends-on: git-fundamentals
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: Explained that `successor/` should not keep its own `.git` because it belongs inside the parent Setlist Viewer repository, then moved the nested metadata to a recoverable backup.
+
 ## storage-design
 - status: practicing
 - depends-on: structured-data, domain-modeling

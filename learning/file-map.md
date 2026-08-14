@@ -38,6 +38,24 @@
 - `src/song-data.js` — parked — hand-maintained Legacy Song data consumed by the build; reclaim during data-model design → [[legacy-song-model]]
 - `src/.nojekyll` — parked — prevents GitHub Pages from applying Jekyll processing; reclaim during deployment → [[continuous-deployment]]
 
+## `successor/`
+
+- `successor/.gitignore` — known (2026-08-14) — keeps reconstructed dependencies, build output, local environment, and tool state out of Git → [[git-ignore-rules]]
+- `successor/.openai/hosting.json` — known (2026-08-14) — declares Sites-hosted capabilities; D1 and R2 are not requested yet → [[sites-project-configuration]]
+- `successor/package.json` — known (2026-08-14) — names the package manager, project commands, and direct dependencies; the learner aligned its test command with pnpm → [[dependency-management]]
+- `successor/pnpm-lock.yaml` — known (2026-08-14) — machine-managed exact dependency graph used for repeatable installs → [[dependency-management]]
+- `successor/pnpm-workspace.yaml` — known (2026-08-14) — explicitly blocks automatic build scripts for the three dependencies flagged by pnpm → [[dependency-build-scripts]]
+- `successor/node_modules/` — generated — installed dependency tree; ignored, never edit, and rebuild with pnpm
+- `successor/app/page.tsx` — parked — starter page content; reclaim while tracing the React entry path next task → [[react-components]]
+- `successor/app/layout.tsx` — parked — shared HTML wrapper, fonts, and metadata; reclaim with the entry path → [[html-document-structure]]
+- `successor/app/_sites-preview/`, `successor/app/globals.css`, and `successor/app/chatgpt-auth.ts` — parked — temporary preview, global styling, and future Sites authentication support; reclaim only when their tasks arrive
+- `successor/vite.config.ts` and `successor/build/` — parked — Sites/Vite development and build wiring; reclaim during local-run and production-build tasks → [[build-pipeline]]
+- `successor/worker/`, `successor/db/`, `successor/drizzle/`, and `successor/examples/` — parked — server, database, migration, and example capability scaffolding; reclaim in Section 5 → [[client-server-architecture]]
+- `successor/public/` — parked — starter browser assets; revisit when replacing starter metadata and visuals
+- `successor/tests/` — parked — starter rendered-output check; reclaim before successor validation → [[unit-testing]]
+- `successor/README.md` — parked — generic starter instructions; replace with successor-specific guidance after its workflow stabilizes
+- remaining root configuration in `successor/` — parked — TypeScript, lint, PostCSS, vinext, and Drizzle tool settings; each returns when its tool first matters
+
 ## `tools/`
 
 - `tools/chart_validator.py` — known (2026-08-13) — parses `.chart` text and returns normalized chart data plus diagnostics → [[parsing-and-validation]]

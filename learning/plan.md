@@ -7,6 +7,7 @@
 - **Current file-backed data:** inherited and understood as the reason in-app multi-device saves are impossible. Replaced by persistent storage in Section 5.
 - **Current GitHub Pages hosting:** inherited and understood as static hosting without an application server or database. Revisited in Section 8.
 - **Frontend:** React with TypeScript using the Sites-supported project structure — chosen to learn components while keeping familiar TypeScript.
+- **Successor package manager:** pnpm 11.19.0 with a committed `pnpm-lock.yaml` — available in the Codex runtime and configured to reproduce dependency versions without running unapproved dependency scripts.
 - **Application server:** Sites server routes written in TypeScript — one codebase and host; no separate Express service for the MVP.
 - **Database:** Sites D1, a hosted SQLite-style SQL database — shared persistence across devices without an external PostgreSQL service.
 - **Data shape:** searchable song metadata in normal columns; nested Sections, Bars, chords, lyrics, and notes in validated `chart_json`.
@@ -33,7 +34,7 @@
 - [x] Run the build drift check and distinguish source files from generated files.
 - [x] Reclaim `.gitignore`, review the final diff, and create a verified Git recovery point.
 
-### 2. Start the React/TypeScript successor  [ ] not started
+### 2. Start the React/TypeScript successor  [ ] in progress
 
 **Deliverable:** A Sites-compatible React/TypeScript page runs locally beside the unchanged reference viewer and displays one real song title.
 
@@ -46,7 +47,7 @@
 #### Tasks
 
 - [x] Reclaim `src/index.html`: trace script-loading order, break one reference safely, observe the missing behavior, then restore it.
-- [ ] Create the minimal Sites-compatible React/TypeScript project beside the unchanged reference viewer.
+- [x] Create the minimal Sites-compatible React/TypeScript project beside the unchanged reference viewer.
 - [ ] Trace the successor entry point from HTML to React's browser render call.
 - [ ] Build a typed Song Title component with one learner-authored prop.
 - [ ] Run the successor locally and verify it displays one real song title without changing either reference artifact.

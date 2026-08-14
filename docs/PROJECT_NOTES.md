@@ -9,6 +9,7 @@
 - Deployment target is a static GitHub Pages site.
 - The next product direction is a stage-ready Nashville Number Chart viewer backed by manually edited structured chart data.
 - The adopted successor direction is a React/TypeScript internal tool hosted privately with ChatGPT Sites. It will create and edit Charts in-app, use Sites server routes, and persist shared cross-device data in Sites D1.
+- The successor lives under `successor/` and uses pnpm 11.19.0 with a committed lockfile; automatic dependency build scripts remain denied unless deliberately approved.
 - Store searchable Song metadata in D1 columns and nested Chart content as validated JSON. Build the one-user create–save–view loop before app-owned accounts or multi-user ownership.
 - Keep the current static viewer as trusted behavioral prior art. Its `.chart`/Python build remains frozen reference material unless import/export becomes valuable; do not assume it belongs in the successor runtime.
 - Split source and chart data will be canonical; the portable single-file HTML will be generated.
