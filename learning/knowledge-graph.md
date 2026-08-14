@@ -7,8 +7,15 @@
 - status: practicing
 - depends-on: none
 - introduced: before 2026-08-13
-- last-reviewed: 2026-08-13
-- evidence: Explained that HTML holds page content in a tree and identified `src/index.html` loading `chart-data.js` before `script.js`.
+- last-reviewed: 2026-08-14
+- evidence: Explained that HTML holds page content in a tree; after safely breaking `chart-data.js`, identified the surviving shell/default title as HTML and the missing Songs as data-dependent content.
+
+## script-loading-order
+- status: practicing
+- depends-on: html-document-structure, javascript-functions-and-events, structured-data
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: Predicted that renaming the first script reference would prevent catalog data from loading, observed the empty-catalog fallback and exact `ERR_FILE_NOT_FOUND`, then restored the reference and verified Songs returned with a clean console.
 
 ## css-cascade-and-selectors
 - status: introduced

@@ -84,7 +84,7 @@ Any future Codex session should read this file first to understand:
 
 ## Current Status
 
-- Learning Section 1 is complete. The user verified both viewers, passed all 64 tests and the build drift check, practiced Git status and ignore rules, reviewed the learning diff, and prepared a durable recovery-point commit including `TODO.md`. Next task: begin Section 2 with `/next-lesson` and start the React/TypeScript successor.
+- Learning Section 1 is complete. Section 2 task 1 is complete: the user safely broke `src/index.html`'s generated-data reference, predicted and observed the empty-catalog shell plus `ERR_FILE_NOT_FOUND`, restored it, and verified Songs returned with a clean console. Next task: create the minimal Sites-compatible React/TypeScript project beside the unchanged reference viewer with `/next-lesson`.
 - Adoption Phase 3 completed on 2026-08-13. `learning/plan.md` contains eight agreed sections, each with a visible deliverable, source receipt, and exactly one reclaim task. The next command is `/next-lesson`.
 - Adoption Phase 2 completed on 2026-08-13. `learning/file-map.md` accounts for the full repository at an honest grain, and `learning/knowledge-graph.md` records six probe results without promoting self-reported experience.
 - Phase 2 evidence: HTML structure and structured chart data are strongest; current runtime/build/deployment flow is introduced; CSS selector interaction, DOM rendering, concrete TDD, tests, and browser storage need practice. The user explicitly wants DOM creation included in future lessons.

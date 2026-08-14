@@ -31,7 +31,7 @@
 
 ## `src/`
 
-- `src/index.html` — known (2026-08-13) — page shell that loads generated data before interaction code → [[html-document-structure]]
+- `src/index.html` — known (2026-08-14) — page shell that must load generated `chart-data.js` before catalog-reading `script.js` → [[script-loading-order]]
 - `src/styles.css` — known (2026-08-13) — separate styling source makes the split viewer easier to maintain; selector internals return in Section 7 → [[css-cascade-and-selectors]]
 - `src/script.js` — known (2026-08-13) — separate behavior source renders song data and controls navigation/theme; DOM calls return in Section 3 → [[dom-rendering]]
 - `src/chart-data.js` — generated — browser-ready catalog produced from legacy data and `.chart` sources; never edit directly → [[generated-artifacts]]
