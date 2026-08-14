@@ -81,6 +81,8 @@ Any future Codex session should read this file first to understand:
 
 ## Current Status
 
+- Project adoption began on 2026-08-13. Phase 1 triage is recorded in `learning/project.md`: adopt the healthy current viewer as the trusted behavioral reference while progressively building a React/TypeScript successor with in-app chart authoring and a storage design chosen through learning.
+- The current Python `.chart` parser/build path is retained as reference material, not assumed to belong in the successor. Melody representation is frozen pending a musician-useful design.
 - A beginner teaching workspace now exists at root (`MISSION.md`, `RESOURCES.md`, `assets/`, and `lessons/`). `lessons/0001-setlist-viewer-codebase-tour.html` is the visual guide to repository structure, runtime/build control flow, safe editing, testing, and deployment.
 - Repository has been created and pushed to GitHub manually by the user.
 - GitHub Pages workflow exists in `.github/workflows/deploy-pages.yml`.
@@ -118,6 +120,7 @@ Any future Codex session should read this file first to understand:
 
 ## Next Recommended Work
 
+- Resume `/adopt-project` at Phase 2: run the 5–8 understanding probes, then write `learning/file-map.md` and `learning/knowledge-graph.md`.
 - Use lesson 0001 for onboarding; a practical follow-up lesson can guide one small CSS edit through rebuild, tests, and Git diff.
 - Human-check the best-effort lyric mapping and, when available, physical Safari iPhone/iPad plus direct-`file://` interaction.
 
