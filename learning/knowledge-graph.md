@@ -18,18 +18,18 @@
 - evidence: Correctly separated CSS presentation from HTML content, but did not yet trace the `.song` and `.song.active` rule interaction.
 
 ## javascript-functions-and-events
-- status: introduced
+- status: practicing
 - depends-on: html-document-structure
 - introduced: 2026-08-13
 - last-reviewed: 2026-08-13
-- evidence: Explained that a Next Song click triggers JavaScript and changes the existing page without loading another HTML page; exact function chain remains fuzzy.
+- evidence: Explained in detail that JavaScript renders catalog content, creates the temporary page tree, and controls navigation, search, modes, sizing, palette, and theme.
 
 ## dom-rendering
-- status: introduced
+- status: practicing
 - depends-on: html-document-structure, javascript-functions-and-events
 - introduced: 2026-08-13
 - last-reviewed: 2026-08-13
-- evidence: Asked how JavaScript creates DOM elements; learned that the DOM is the browser's live in-memory page tree and that `script.js` builds it from catalog data.
+- evidence: Explained that `script.js` creates the browser's temporary in-memory page elements from `chart-data.js`; exact creation calls remain to be practiced.
 
 ## structured-data
 - status: practicing
@@ -53,11 +53,11 @@
 - evidence: Explained that Python reads and parses `mas.chart` into structured browser data; parser internals remain unknown.
 
 ## build-pipeline
-- status: introduced
+- status: practicing
 - depends-on: parsing-and-validation, generated-artifacts
 - introduced: 2026-08-13
 - last-reviewed: 2026-08-13
-- evidence: Traced `.chart` through the Python builder into `chart-data.js`, but not yet through runtime DOM rendering.
+- evidence: Explained why custom `.chart` text needs the Python build today and why direct in-app authoring removes that need unless import/export remains.
 
 ## generated-artifacts
 - status: introduced
@@ -67,11 +67,11 @@
 - evidence: Identified `chart-data.js` as generated output rather than the musician-authored source.
 
 ## static-web-app
-- status: introduced
+- status: practicing
 - depends-on: html-document-structure, css-cascade-and-selectors, javascript-functions-and-events
 - introduced: 2026-08-13
 - last-reviewed: 2026-08-13
-- evidence: Explained that the viewer changes an already-loaded page without navigating to separate HTML pages.
+- evidence: Explained both same-page dynamic behavior and GitHub Pages' inability to run application database writes; needed correction that Pages serves separate source files unchanged.
 
 ## browser-local-storage
 - status: introduced
@@ -123,11 +123,11 @@
 - evidence: —
 
 ## continuous-deployment
-- status: introduced
+- status: practicing
 - depends-on: git-fundamentals, unit-testing
 - introduced: 2026-08-13
 - last-reviewed: 2026-08-13
-- evidence: Explained that GitHub runs automated validation after a push and publishes the site only through a deployment task.
+- evidence: Explained that GitHub runs automated validation before publishing and why static Pages hosting cannot provide the successor's database server.
 
 ## git-fundamentals
 - status: seed
@@ -158,7 +158,7 @@
 - evidence: —
 
 ## domain-modeling
-- status: introduced
+- status: practicing
 - depends-on: structured-data
 - introduced: 2026-08-13
 - last-reviewed: 2026-08-13
@@ -172,11 +172,11 @@
 - evidence: —
 
 ## react-components
-- status: seed
+- status: introduced
 - depends-on: html-document-structure, javascript-functions-and-events
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-13
+- last-reviewed: 2026-08-13
+- evidence: Chose React to learn component-based dynamic interfaces; components have not yet been written or explained technically.
 
 ## react-state-and-forms
 - status: seed
@@ -193,25 +193,25 @@
 - evidence: Prior experience was reported but not probed during adoption.
 
 ## storage-design
-- status: seed
+- status: practicing
 - depends-on: structured-data, domain-modeling
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-13
+- last-reviewed: 2026-08-13
+- evidence: Compared local SQLite, hosted SQL, and PostgreSQL; chose D1, then explained searchable metadata columns versus deeply nested chart JSON after one correction.
 
 ## sql-and-relational-databases
-- status: seed
+- status: introduced
 - depends-on: storage-design
-- introduced: —
-- last-reviewed: —
-- evidence: Prior CS50 experience was reported but not probed during adoption.
+- introduced: 2026-08-13
+- last-reviewed: 2026-08-13
+- evidence: Explained that relational storage supports manageable relationships and selective loading; prior CS50 experience remains unprobed.
 
 ## client-server-architecture
-- status: seed
+- status: practicing
 - depends-on: dom-rendering, storage-design
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-13
+- last-reviewed: 2026-08-13
+- evidence: Explained that browser and database-writing server code should be separate for smaller payloads and protected database access; HTML-injection claim needed correction.
 
 ## http-apis
 - status: seed
@@ -228,11 +228,32 @@
 - evidence: —
 
 ## application-security
-- status: seed
+- status: introduced
 - depends-on: client-server-architecture, environment-variables
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-13
+- last-reviewed: 2026-08-13
+- evidence: Recognized that database operations should not be exposed directly in browser code; learned that this boundary does not automatically prevent injection.
+
+## d1-hosted-sqlite
+- status: practicing
+- depends-on: sql-and-relational-databases, client-server-architecture
+- introduced: 2026-08-13
+- last-reviewed: 2026-08-13
+- evidence: Explained that a phone save writes to shared hosted D1 before other devices can read it, distinguishing shared persistence from live collaboration and local SQLite.
+
+## server-routes
+- status: introduced
+- depends-on: client-server-architecture, http-apis
+- introduced: 2026-08-13
+- last-reviewed: 2026-08-13
+- evidence: Learned the path browser to Sites server route to D1; implementation and request details remain unpracticed.
+
+## authentication
+- status: practicing
+- depends-on: application-security, client-server-architecture
+- introduced: 2026-08-13
+- last-reviewed: 2026-08-13
+- evidence: Explained why app-owned accounts should wait until the single-user create–save–view loop works.
 
 ## functions
 - status: introduced
@@ -270,11 +291,11 @@
 - evidence: —
 
 ## learning-workflow
-- status: introduced
+- status: practicing
 - depends-on: none
 - introduced: 2026-08-13
 - last-reviewed: 2026-08-13
-- evidence: Chose adoption to gain ownership through evidence-based walkthroughs and progressive React/TypeScript work.
+- evidence: Chose adoption, completed evidence probes, reasoned through successor decisions, and confirmed the eight-section build sequence.
 
 ## backlog-management
 - status: seed

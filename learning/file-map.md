@@ -20,6 +20,7 @@
 ## `learning/`
 
 - `learning/project.md` — known (2026-08-13) — adoption decision, personal context, MVP, frozen scope, and parking lot → [[learning-workflow]]
+- `learning/plan.md` — known (2026-08-13) — agreed sequence from stable reference through a private React/Sites/D1 tool → [[learning-workflow]]
 - `learning/file-map.md` — known (2026-08-13) — this honest ledger of why every repository area exists → [[file-map]]
 - `learning/knowledge-graph.md` — known (2026-08-13) — evidence-based map that chooses future teaching and review → [[knowledge-graph]]
 
@@ -74,4 +75,3 @@
 ## Temporary output
 
 - `tmp/` — generated — untracked PDF/PNG render inspection output; disposable and not application source
-

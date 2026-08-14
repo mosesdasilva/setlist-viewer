@@ -8,6 +8,9 @@
 - The app is also maintained in split source files: `index.html`, `styles.css`, and `script.js`.
 - Deployment target is a static GitHub Pages site.
 - The next product direction is a stage-ready Nashville Number Chart viewer backed by manually edited structured chart data.
+- The adopted successor direction is a React/TypeScript internal tool hosted privately with ChatGPT Sites. It will create and edit Charts in-app, use Sites server routes, and persist shared cross-device data in Sites D1.
+- Store searchable Song metadata in D1 columns and nested Chart content as validated JSON. Build the one-user create–save–view loop before app-owned accounts or multi-user ownership.
+- Keep the current static viewer as trusted behavioral prior art. Its `.chart`/Python build remains frozen reference material unless import/export becomes valuable; do not assume it belongs in the successor runtime.
 - Split source and chart data will be canonical; the portable single-file HTML will be generated.
 - Use a project-owned, musician-readable `.chart` notation as canonical chart source, shaped by the selected small-notation prototype and informed by ChordPro and ChordText vocabulary.
 - Avoid runtime `fetch()` or ES-module loading for essential chart data while direct `file://` use remains required; generate file-safe classic JavaScript for split runtime use and inline data for the portable artifact.
@@ -68,6 +71,7 @@
 
 ## Notes For Future Iteration
 
+- The learning adoption artifacts under `learning/` govern the progressive React/TypeScript successor. Use `/next-lesson`; do not perform a blind rewrite.
 - Keep content edits straightforward while songs are still being revised.
 - Avoid introducing a build step unless the song library or editing workflow clearly requires it.
 - Treat the single-file version as the easiest handoff and prototype path.

@@ -32,6 +32,9 @@ Any future Codex session should read this file first to understand:
 
 ## Current Decisions
 
+- Build the adopted successor progressively in React and TypeScript using the Sites-compatible project structure; preserve the current viewer as behavioral reference rather than rewriting blindly.
+- Host the one-user MVP privately with ChatGPT Sites. Use TypeScript Sites server routes and Sites D1; do not add a separate Express service, PostgreSQL provider, or app-owned authentication yet.
+- Store searchable Song metadata in D1 columns and nested Chart content in a validated `chart_json` value. Prove create–save–view across the user's devices before multi-user expansion.
 - Keep the product named `Setlist Viewer`.
 - Keep a versioned single-file HTML artifact available for prototyping and sharing.
 - Maintain the split-file version in parallel for easier editing.
@@ -81,6 +84,7 @@ Any future Codex session should read this file first to understand:
 
 ## Current Status
 
+- Adoption Phase 3 completed on 2026-08-13. `learning/plan.md` contains eight agreed sections, each with a visible deliverable, source receipt, and exactly one reclaim task. The next command is `/next-lesson`.
 - Adoption Phase 2 completed on 2026-08-13. `learning/file-map.md` accounts for the full repository at an honest grain, and `learning/knowledge-graph.md` records six probe results without promoting self-reported experience.
 - Phase 2 evidence: HTML structure and structured chart data are strongest; current runtime/build/deployment flow is introduced; CSS selector interaction, DOM rendering, concrete TDD, tests, and browser storage need practice. The user explicitly wants DOM creation included in future lessons.
 - Project adoption began on 2026-08-13. Phase 1 triage is recorded in `learning/project.md`: adopt the healthy current viewer as the trusted behavioral reference while progressively building a React/TypeScript successor with in-app chart authoring and a storage design chosen through learning.
@@ -122,7 +126,7 @@ Any future Codex session should read this file first to understand:
 
 ## Next Recommended Work
 
-- Resume `/adopt-project` at Phase 3: walk inherited stack decisions one at a time, decide the successor's remaining storage/backend/hosting choices, then write `learning/plan.md` with one reclaim task per section.
+- Run `/next-lesson` to begin Section 1, make the ground solid, with the learner typing early commands and making predictions.
 - Use lesson 0001 for onboarding; a practical follow-up lesson can guide one small CSS edit through rebuild, tests, and Git diff.
 - Human-check the best-effort lyric mapping and, when available, physical Safari iPhone/iPad plus direct-`file://` interaction.
 
