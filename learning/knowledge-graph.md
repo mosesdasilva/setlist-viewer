@@ -255,6 +255,13 @@
 - last-reviewed: 2026-08-14
 - evidence: Explained that `successor/` should not keep its own `.git` because it belongs inside the parent Setlist Viewer repository, then moved the nested metadata to a recoverable backup.
 
+## git-upstream-tracking
+- status: practicing
+- depends-on: git-fundamentals
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: Correctly predicted the remote branch name and pushed with `-u`; initially attributed later argument-free pushes only to the selected branch, then learned that Git uses its saved upstream relationship.
+
 ## storage-design
 - status: practicing
 - depends-on: structured-data, domain-modeling
