@@ -81,6 +81,8 @@ Any future Codex session should read this file first to understand:
 
 ## Current Status
 
+- Adoption Phase 2 completed on 2026-08-13. `learning/file-map.md` accounts for the full repository at an honest grain, and `learning/knowledge-graph.md` records six probe results without promoting self-reported experience.
+- Phase 2 evidence: HTML structure and structured chart data are strongest; current runtime/build/deployment flow is introduced; CSS selector interaction, DOM rendering, concrete TDD, tests, and browser storage need practice. The user explicitly wants DOM creation included in future lessons.
 - Project adoption began on 2026-08-13. Phase 1 triage is recorded in `learning/project.md`: adopt the healthy current viewer as the trusted behavioral reference while progressively building a React/TypeScript successor with in-app chart authoring and a storage design chosen through learning.
 - The current Python `.chart` parser/build path is retained as reference material, not assumed to belong in the successor. Melody representation is frozen pending a musician-useful design.
 - A beginner teaching workspace now exists at root (`MISSION.md`, `RESOURCES.md`, `assets/`, and `lessons/`). `lessons/0001-setlist-viewer-codebase-tour.html` is the visual guide to repository structure, runtime/build control flow, safe editing, testing, and deployment.
@@ -120,7 +122,7 @@ Any future Codex session should read this file first to understand:
 
 ## Next Recommended Work
 
-- Resume `/adopt-project` at Phase 2: run the 5–8 understanding probes, then write `learning/file-map.md` and `learning/knowledge-graph.md`.
+- Resume `/adopt-project` at Phase 3: walk inherited stack decisions one at a time, decide the successor's remaining storage/backend/hosting choices, then write `learning/plan.md` with one reclaim task per section.
 - Use lesson 0001 for onboarding; a practical follow-up lesson can guide one small CSS edit through rebuild, tests, and Git diff.
 - Human-check the best-effort lyric mapping and, when available, physical Safari iPhone/iPad plus direct-`file://` interaction.
 
