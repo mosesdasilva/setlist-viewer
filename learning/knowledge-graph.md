@@ -140,8 +140,15 @@
 - status: practicing
 - depends-on: none
 - introduced: 2026-08-13
-- last-reviewed: 2026-08-13
-- evidence: Correctly predicted and ran `pwd` and `git status`, recognized `TODO.md` as untracked, and explained that `git add` starts tracking and stages it; needed correction that `git commit` saves staged content rather than staging it.
+- last-reviewed: 2026-08-14
+- evidence: After an unstaged commit failed, independently used `git add .`, committed four learning-document changes, and pushed commit `7538758` to `origin/main`.
+
+## git-staging-pathspecs
+- status: practicing
+- depends-on: git-fundamentals, command-line-arguments, git-ignore-rules
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: Independently used `git add .` to stage and commit the lesson files; initially omitted the required space and needed correction that `.` also includes non-ignored untracked files beneath the current directory.
 
 ## terminal-navigation
 - status: practicing
