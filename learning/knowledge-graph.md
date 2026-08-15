@@ -207,11 +207,46 @@
 - evidence: —
 
 ## react-components
-- status: introduced
+- status: practicing
 - depends-on: html-document-structure, javascript-functions-and-events
 - introduced: 2026-08-13
-- last-reviewed: 2026-08-13
-- evidence: Chose React to learn component-based dynamic interfaces; components have not yet been written or explained technically.
+- last-reviewed: 2026-08-14
+- evidence: Traced `Home` returning the child `<SkeletonPreview />` component and explained that the child function supplies the temporary loading UI.
+
+## jsx
+- status: practicing
+- depends-on: javascript-functions-and-events, html-document-structure
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: Explained that curly braces embed JavaScript values inside HTML-like TSX and traced JSX from `Home` through `RootLayout` into the body; needed correction that React elements are not entire files.
+
+## react-props-and-children
+- status: practicing
+- depends-on: react-components, jsx
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: Initially could not distinguish the `React.ReactNode` type from the value source, then explained that vinext passes `Home`'s `<SkeletonPreview />` result into `RootLayout` as `children`.
+
+## server-rendering-and-hydration
+- status: practicing
+- depends-on: dom-rendering, react-components
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: Explained that hydration lets a server-rendered counter respond to clicks and change from zero to one, then correctly traced server HTML followed by vinext `hydrateRoot`; needed correction that `"use client"` controls browser JavaScript rather than visibility.
+
+## framework-file-routing
+- status: practicing
+- depends-on: html-document-structure, react-components
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: Explained that `/` reaches `worker/index.ts`, vinext selects `RootLayout` and `Home`, `Home` returns `SkeletonPreview`, and the layout places it inside the body.
+
+## vinext-framework
+- status: introduced
+- depends-on: framework-file-routing, server-rendering-and-hydration, build-pipeline
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: Successfully traced vinext's role between the Worker, route files, server HTML, and hydration, while explicitly identifying vinext internals as still unclear.
 
 ## react-state-and-forms
 - status: seed

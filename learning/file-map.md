@@ -46,11 +46,13 @@
 - `successor/pnpm-lock.yaml` — known (2026-08-14) — machine-managed exact dependency graph used for repeatable installs → [[dependency-management]]
 - `successor/pnpm-workspace.yaml` — known (2026-08-14) — explicitly blocks automatic build scripts for the three dependencies flagged by pnpm → [[dependency-build-scripts]]
 - `successor/node_modules/` — generated — installed dependency tree; ignored, never edit, and rebuild with pnpm
-- `successor/app/page.tsx` — parked — starter page content; reclaim while tracing the React entry path next task → [[react-components]]
-- `successor/app/layout.tsx` — parked — shared HTML wrapper, fonts, and metadata; reclaim with the entry path → [[html-document-structure]]
-- `successor/app/_sites-preview/`, `successor/app/globals.css`, and `successor/app/chatgpt-auth.ts` — parked — temporary preview, global styling, and future Sites authentication support; reclaim only when their tasks arrive
+- `successor/app/page.tsx` — known (2026-08-14) — `/` route component whose `Home` function currently returns the temporary `SkeletonPreview` child → [[framework-file-routing]]
+- `successor/app/layout.tsx` — known (2026-08-14) — root wrapper that receives the selected page as `children` and places it inside the HTML body → [[react-props-and-children]]
+- `successor/app/_sites-preview/SkeletonPreview.tsx` — known (2026-08-14) — temporary client component returned by `Home`; its `"use client"` boundary opts it into browser hydration → [[server-rendering-and-hydration]]
+- `successor/app/_sites-preview/preview.css`, `successor/app/globals.css`, and `successor/app/chatgpt-auth.ts` — parked — temporary preview styling, global styling, and future Sites authentication support; reclaim only when their tasks arrive
 - `successor/vite.config.ts` and `successor/build/` — parked — Sites/Vite development and build wiring; reclaim during local-run and production-build tasks → [[build-pipeline]]
-- `successor/worker/`, `successor/db/`, `successor/drizzle/`, and `successor/examples/` — parked — server, database, migration, and example capability scaffolding; reclaim in Section 5 → [[client-server-architecture]]
+- `successor/worker/index.ts` — known (2026-08-14) — Cloudflare Worker entry that hands normal browser requests to vinext's app-router handler → [[framework-file-routing]]
+- `successor/db/`, `successor/drizzle/`, and `successor/examples/` — parked — database, migration, and example capability scaffolding; reclaim in Section 5 → [[client-server-architecture]]
 - `successor/public/` — parked — starter browser assets; revisit when replacing starter metadata and visuals
 - `successor/tests/` — parked — starter rendered-output check; reclaim before successor validation → [[unit-testing]]
 - `successor/README.md` — parked — generic starter instructions; replace with successor-specific guidance after its workflow stabilizes

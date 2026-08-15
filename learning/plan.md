@@ -48,7 +48,7 @@
 
 - [x] Reclaim `src/index.html`: trace script-loading order, break one reference safely, observe the missing behavior, then restore it.
 - [x] Create the minimal Sites-compatible React/TypeScript project beside the unchanged reference viewer.
-- [ ] Trace the successor entry point from HTML to React's browser render call.
+- [x] Trace the successor entry path from a request through vinext server rendering to browser hydration.
 - [ ] Build a typed Song Title component with one learner-authored prop.
 - [ ] Run the successor locally and verify it displays one real song title without changing either reference artifact.
 
