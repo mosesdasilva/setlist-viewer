@@ -84,7 +84,7 @@ Any future Codex session should read this file first to understand:
 
 ## Current Status
 
-- Learning Sections 1 and 2 are complete. Section 3 task 1 is complete: the user traced `document.createElement`, `appendChild`, `forEach`, and the Next Song event handler; safely disabled Next, observed Previous remained functional, restored Next, and verified the reference returned to its original Git state. Next task: define typed sample data for the real Más Chart using `/next-lesson`.
+- Learning Sections 1 and 2 are complete. Section 3 tasks 1–2 are complete. The user authored the typed eight-Bar Bridge in `successor/app/chart-data.ts`, explained why chord tokens are strings and repeated occurrences reference stable Section IDs, separated unrelated Cloudflare diagnostics from the new file, and passed a strict targeted TypeScript check. Next task: render Más Sections and Bars through small React components using `/next-lesson`.
 - Adoption Phase 3 completed on 2026-08-13. `learning/plan.md` contains eight agreed sections, each with a visible deliverable, source receipt, and exactly one reclaim task. The next command is `/next-lesson`.
 - Adoption Phase 2 completed on 2026-08-13. `learning/file-map.md` accounts for the full repository at an honest grain, and `learning/knowledge-graph.md` records six probe results without promoting self-reported experience.
 - Phase 2 evidence: HTML structure and structured chart data are strongest; current runtime/build/deployment flow is introduced; CSS selector interaction, DOM rendering, concrete TDD, tests, and browser storage need practice. The user explicitly wants DOM creation included in future lessons.

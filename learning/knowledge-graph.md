@@ -49,8 +49,8 @@
 - status: practicing
 - depends-on: none
 - introduced: before 2026-08-13
-- last-reviewed: 2026-08-13
-- evidence: Described `chart-data.js` as nested key-value data representing songs, lyrics, and chart structure.
+- last-reviewed: 2026-08-14
+- evidence: Described `chart-data.js` as nested key-value data representing songs, lyrics, and chart structure. Later explained why Más chord tokens require strings and authored the typed eight-Bar Bridge definition.
 
 ## chart-notation
 - status: practicing
@@ -281,7 +281,21 @@
 - depends-on: javascript-functions-and-events
 - introduced: 2026-08-14
 - last-reviewed: 2026-08-14
-- evidence: Authored a string prop that satisfied `SongTitleProps`, explained that `--noEmit` checks types without generating JavaScript, distinguished unrelated file diagnostics, and completed a successful vinext build.
+- evidence: Authored a string prop that satisfied `SongTitleProps`; later distinguished `string` from TypeScript's `number`, authored a `ChartSection` matching its object type, explained `--noEmit`, separated unrelated project diagnostics, and completed a silent strict check of `chart-data.ts`.
+
+## typescript-object-types
+- status: practicing
+- depends-on: typescript, structured-data
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: Authored the Bridge object with the required `id`, `name`, and eight string Bars, and validated it against `ChartSection` with a silent strict type check.
+
+## stable-identifiers
+- status: practicing
+- depends-on: structured-data, domain-modeling
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: Explained that repeated Bridge occurrences can reuse one ID and proposed a distinct `bridge-2` definition plus replacing only the changed arrangement occurrence when its chords differ.
 
 ## dependency-management
 - status: practicing

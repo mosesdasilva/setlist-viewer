@@ -49,6 +49,7 @@
 - `successor/.next/`, `successor/.vinext/`, `successor/.wrangler/`, and `successor/dist/` — generated — local development, framework, deployment-tool, and production-build output; ignored, never edit, and rebuild with successor commands → [[development-server]]
 - `successor/app/page.tsx` — known (2026-08-14) — `/` route component whose `Home` function passes the real title `Más` into `SongTitle` → [[react-props-and-children]]
 - `successor/app/SongTitle.tsx` — known (2026-08-14) — reusable title component whose typed prop requires callers to supply text → [[typescript]]
+- `successor/app/chart-data.ts` — known (2026-08-14) — typed Más metadata, reusable harmonic Section definitions, and whole-song performance order for the React successor → [[typescript-object-types]], [[stable-identifiers]]
 - `successor/app/layout.tsx` — known (2026-08-14) — root wrapper that receives the selected page as `children` and places it inside the HTML body → [[react-props-and-children]]
 - `successor/app/_sites-preview/SkeletonPreview.tsx` — known (2026-08-14) — temporary client component returned by `Home`; its `"use client"` boundary opts it into browser hydration → [[server-rendering-and-hydration]]
 - `successor/app/_sites-preview/preview.css`, `successor/app/globals.css`, and `successor/app/chatgpt-auth.ts` — parked — temporary preview styling, global styling, and future Sites authentication support; reclaim only when their tasks arrive
