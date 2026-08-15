@@ -43,7 +43,7 @@
 - depends-on: structured-data, functions
 - introduced: 2026-08-14
 - last-reviewed: 2026-08-14
-- evidence: Explained that `catalog.forEach(renderSong)` runs `renderSong` 12 times for a 12-Song catalog.
+- evidence: Explained that `catalog.forEach(renderSong)` runs `renderSong` 12 times for a 12-Song catalog. Later predicted eight Bar strings produce eight components, then authored both Bar and Section `.map()` prop connections.
 
 ## structured-data
 - status: practicing
@@ -225,7 +225,14 @@
 - depends-on: html-document-structure, javascript-functions-and-events
 - introduced: 2026-08-13
 - last-reviewed: 2026-08-14
-- evidence: Traced `Home` returning the child `<SkeletonPreview />` component and explained that the child function supplies the temporary loading UI.
+- evidence: Traced `Home` returning a child component; later traced `ChartView` composing `SongTitle` and `ChartSectionView`, which composes `Bar`, and accurately predicted their visible output with minor corrections about React keys and HTML placement.
+
+## component-composition
+- status: practicing
+- depends-on: react-components, react-props-and-children, array-iteration
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: Connected mapped Bar strings to `Bar` props and mapped Sections to `ChartSectionView`, then explained the visible responsibilities of `ChartView` and `ChartSectionView` before verifying the rendered Más output.
 
 ## jsx
 - status: practicing

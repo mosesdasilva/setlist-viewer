@@ -66,7 +66,7 @@
 
 - [x] Reclaim `src/script.js`: trace one Song from catalog data into DOM elements, break Next Song safely, predict the failure, then restore it.
 - [x] Define typed sample data for the real Más Chart.
-- [ ] Render Más Sections and Bars through small React components.
+- [x] Render Más Sections and Bars through small React components.
 - [ ] Add Song and Section views with React state and working navigation controls.
 - [ ] Verify conditional views, stable identifiers, and unchanged reference artifacts.
 

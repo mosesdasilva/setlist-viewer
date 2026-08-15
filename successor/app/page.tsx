@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { SongTitle } from "./SongTitle";
+import { ChartView } from "./ChartView";
+import { masChart } from "./chart-data";
 
 export const metadata: Metadata = {
   title: "Your site is taking shape",
@@ -11,5 +12,5 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  return <SongTitle title="Más" />;
+  return <ChartView chart={masChart} />;
 }
