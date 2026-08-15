@@ -28,8 +28,8 @@
 - status: practicing
 - depends-on: html-document-structure
 - introduced: 2026-08-13
-- last-reviewed: 2026-08-14
-- evidence: Explained in detail that JavaScript renders catalog content, creates the temporary page tree, and controls navigation, search, modes, sizing, palette, and theme. Later disabled the Next Song callback, observed that only Next stopped working, restored it, and explained how it passes `activeIndex + 1` into `setActiveSong`.
+- last-reviewed: 2026-08-15
+- evidence: Explained in detail that JavaScript renders catalog content, creates the temporary page tree, and controls navigation, search, modes, sizing, palette, and theme. Later authored React click handlers that set view and Section-index state, then correctly predicted disabled boundary behavior.
 
 ## dom-rendering
 - status: practicing
@@ -277,18 +277,25 @@
 - evidence: Started the successor at `localhost:3000`, verified it displayed `Más`, predicted that Control-C would terminate the process, then confirmed the page became unavailable afterward.
 
 ## react-state-and-forms
-- status: seed
+- status: practicing
 - depends-on: react-components, dom-rendering
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-15
+- last-reviewed: 2026-08-15
+- evidence: Authored both `view` and `sectionIndex` state, explained the value/setter pair, connected setters to click handlers, and diagnosed that changing state causes no visible change when JSX never reads it.
+
+## conditional-rendering
+- status: practicing
+- depends-on: react-state-and-forms, jsx
+- introduced: 2026-08-15
+- last-reviewed: 2026-08-15
+- evidence: Predicted the Song/Section ternary branches, explained why the missing state-dependent branch caused no visible update, and verified switching between nine Sections and one selected Section.
 
 ## typescript
 - status: practicing
 - depends-on: javascript-functions-and-events
 - introduced: 2026-08-14
-- last-reviewed: 2026-08-14
-- evidence: Authored a string prop that satisfied `SongTitleProps`; later distinguished `string` from TypeScript's `number`, authored a `ChartSection` matching its object type, explained `--noEmit`, separated unrelated project diagnostics, and completed a silent strict check of `chart-data.ts`.
+- last-reviewed: 2026-08-15
+- evidence: Authored a string prop and typed Chart data; later explained that `ViewMode` rejects values outside `"song" | "section"`, distinguished whole-project Cloudflare diagnostics from lesson files, and completed a silent focused type check.
 
 ## typescript-object-types
 - status: practicing

@@ -54,7 +54,7 @@
 
 ### 3. Render and navigate one real chart  [ ] in progress
 
-**Deliverable:** The React viewer renders Más from typed sample data and moves between Song and Section views through working controls.
+**Deliverable:** The React viewer renders Más from typed sample data and navigates its Expanded Arrangement through working controls.
 
 **Concepts:** component composition, arrays and mapping, React state, event handlers, conditional rendering, stable identifiers
 
@@ -67,8 +67,8 @@
 - [x] Reclaim `src/script.js`: trace one Song from catalog data into DOM elements, break Next Song safely, predict the failure, then restore it.
 - [x] Define typed sample data for the real Más Chart.
 - [x] Render Más Sections and Bars through small React components.
-- [ ] Add Song and Section views with React state and working navigation controls.
-- [ ] Verify conditional views, stable identifiers, and unchanged reference artifacts.
+- [x] Practice React state, events, and conditional rendering with temporary Song/Section controls.
+- [ ] Replace the teaching-only isolated Section view with Expanded Arrangement navigation, then verify stable identifiers and unchanged reference artifacts.
 
 ### 4. Create a chart inside the app  [ ] not started
 
