@@ -34,7 +34,7 @@
 - [x] Run the build drift check and distinguish source files from generated files.
 - [x] Reclaim `.gitignore`, review the final diff, and create a verified Git recovery point.
 
-### 2. Start the React/TypeScript successor  [ ] in progress
+### 2. Start the React/TypeScript successor  [x] complete
 
 **Deliverable:** A Sites-compatible React/TypeScript page runs locally beside the unchanged reference viewer and displays one real song title.
 
@@ -50,7 +50,7 @@
 - [x] Create the minimal Sites-compatible React/TypeScript project beside the unchanged reference viewer.
 - [x] Trace the successor entry path from a request through vinext server rendering to browser hydration.
 - [x] Build a typed Song Title component with one learner-authored prop.
-- [ ] Run the successor locally and verify it displays one real song title without changing either reference artifact.
+- [x] Run the successor locally and verify it displays one real song title without changing either reference artifact.
 
 ### 3. Render and navigate one real chart  [ ] not started
 

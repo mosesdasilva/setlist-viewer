@@ -255,6 +255,13 @@
 - last-reviewed: 2026-08-14
 - evidence: Successfully traced vinext's role between the Worker, route files, server HTML, and hydration, while explicitly identifying vinext internals as still unclear.
 
+## development-server
+- status: practicing
+- depends-on: terminal-navigation, vinext-framework
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: Started the successor at `localhost:3000`, verified it displayed `Más`, predicted that Control-C would terminate the process, then confirmed the page became unavailable afterward.
+
 ## react-state-and-forms
 - status: seed
 - depends-on: react-components, dom-rendering

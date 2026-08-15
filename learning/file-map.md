@@ -46,6 +46,7 @@
 - `successor/pnpm-lock.yaml` — known (2026-08-14) — machine-managed exact dependency graph used for repeatable installs → [[dependency-management]]
 - `successor/pnpm-workspace.yaml` — known (2026-08-14) — explicitly blocks automatic build scripts for the three dependencies flagged by pnpm → [[dependency-build-scripts]]
 - `successor/node_modules/` — generated — installed dependency tree; ignored, never edit, and rebuild with pnpm
+- `successor/.next/`, `successor/.vinext/`, `successor/.wrangler/`, and `successor/dist/` — generated — local development, framework, deployment-tool, and production-build output; ignored, never edit, and rebuild with successor commands → [[development-server]]
 - `successor/app/page.tsx` — known (2026-08-14) — `/` route component whose `Home` function passes the real title `Más` into `SongTitle` → [[react-props-and-children]]
 - `successor/app/SongTitle.tsx` — known (2026-08-14) — reusable title component whose typed prop requires callers to supply text → [[typescript]]
 - `successor/app/layout.tsx` — known (2026-08-14) — root wrapper that receives the selected page as `children` and places it inside the HTML body → [[react-props-and-children]]
