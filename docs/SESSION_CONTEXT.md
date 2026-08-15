@@ -84,7 +84,7 @@ Any future Codex session should read this file first to understand:
 
 ## Current Status
 
-- Learning Section 1 is complete. Section 2 tasks 1–3 are complete. The user traced `/` through the Worker and vinext into `RootLayout`, `Home`, and `SkeletonPreview`, then explained server rendering versus browser hydration. The scaffold has no authored `index.html` or `createRoot`; vinext owns HTML generation and `hydrateRoot`. Next task: build a typed Song Title component with one learner-authored prop using `/next-lesson`.
+- Learning Section 1 is complete. Section 2 tasks 1–4 are complete. The user authored `title="Más"` for a typed `SongTitle` component, explained dynamic props and `--noEmit`, read unrelated TypeScript diagnostics accurately, restored bundled Node/pnpm access through the shell `PATH`, and completed a successful vinext build. Next task: run the successor locally and verify it displays the real song title without changing either reference artifact using `/next-lesson`.
 - Adoption Phase 3 completed on 2026-08-13. `learning/plan.md` contains eight agreed sections, each with a visible deliverable, source receipt, and exactly one reclaim task. The next command is `/next-lesson`.
 - Adoption Phase 2 completed on 2026-08-13. `learning/file-map.md` accounts for the full repository at an honest grain, and `learning/knowledge-graph.md` records six probe results without promoting self-reported experience.
 - Phase 2 evidence: HTML structure and structured chart data are strongest; current runtime/build/deployment flow is introduced; CSS selector interaction, DOM rendering, concrete TDD, tests, and browser storage need practice. The user explicitly wants DOM creation included in future lessons.

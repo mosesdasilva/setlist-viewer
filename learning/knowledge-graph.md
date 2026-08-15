@@ -157,6 +157,13 @@
 - last-reviewed: 2026-08-13
 - evidence: Predicted the repository's absolute path, ran `pwd`, and confirmed the terminal was in `/Users/mosesdasilva/Documents/Setlist Viewer`.
 
+## shell-command-path
+- status: practicing
+- depends-on: terminal-navigation
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: Connected Unix `PATH` to prior Windows experience, explained that it lets the terminal locate programs without their full paths, and temporarily added the bundled Node and pnpm folders before running the build.
+
 ## command-line-arguments
 - status: practicing
 - depends-on: terminal-navigation
@@ -225,7 +232,7 @@
 - depends-on: react-components, jsx
 - introduced: 2026-08-14
 - last-reviewed: 2026-08-14
-- evidence: Initially could not distinguish the `React.ReactNode` type from the value source, then explained that vinext passes `Home`'s `<SkeletonPreview />` result into `RootLayout` as `children`.
+- evidence: Initially could not distinguish the `React.ReactNode` type from the value source, then explained that vinext passes `Home`'s `<SkeletonPreview />` result into `RootLayout` as `children`. Later authored `title="Más"` in `page.tsx` and explained that a prop can pass a dynamic value for React to render.
 
 ## server-rendering-and-hydration
 - status: practicing
@@ -256,11 +263,11 @@
 - evidence: —
 
 ## typescript
-- status: seed
+- status: practicing
 - depends-on: javascript-functions-and-events
-- introduced: —
-- last-reviewed: —
-- evidence: Prior experience was reported but not probed during adoption.
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: Authored a string prop that satisfied `SongTitleProps`, explained that `--noEmit` checks types without generating JavaScript, distinguished unrelated file diagnostics, and completed a successful vinext build.
 
 ## dependency-management
 - status: practicing
