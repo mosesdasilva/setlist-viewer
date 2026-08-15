@@ -42,8 +42,8 @@
 - status: practicing
 - depends-on: structured-data, functions
 - introduced: 2026-08-14
-- last-reviewed: 2026-08-14
-- evidence: Explained that `catalog.forEach(renderSong)` runs `renderSong` 12 times for a 12-Song catalog. Later predicted eight Bar strings produce eight components, then authored both Bar and Section `.map()` prop connections.
+- last-reviewed: 2026-08-15
+- evidence: Explained that `catalog.forEach(renderSong)` runs `renderSong` 12 times for a 12-Song catalog. Later predicted eight Bar strings produce eight components, authored both Bar and Section `.map()` prop connections, and filled the arrangement lookup comparison correctly after a syntax-sized hint.
 
 ## structured-data
 - status: practicing
@@ -238,8 +238,8 @@
 - status: practicing
 - depends-on: javascript-functions-and-events, html-document-structure
 - introduced: 2026-08-14
-- last-reviewed: 2026-08-14
-- evidence: Explained that curly braces embed JavaScript values inside HTML-like TSX and traced JSX from `Home` through `RootLayout` into the body; needed correction that React elements are not entire files.
+- last-reviewed: 2026-08-15
+- evidence: Explained that curly braces embed JavaScript values inside HTML-like TSX and traced JSX from `Home` through `RootLayout` into the body; needed correction that React elements are not entire files. Later corrected a quoted literal React key to the `occurrenceId` variable and reused that variable as a component prop.
 
 ## react-props-and-children
 - status: practicing
@@ -308,8 +308,22 @@
 - status: practicing
 - depends-on: structured-data, domain-modeling
 - introduced: 2026-08-14
-- last-reviewed: 2026-08-14
-- evidence: Explained that repeated Bridge occurrences can reuse one ID and proposed a distinct `bridge-2` definition plus replacing only the changed arrangement occurrence when its chords differ.
+- last-reviewed: 2026-08-15
+- evidence: Explained that repeated Bridge occurrences can reuse one ID and proposed a distinct `bridge-2` definition plus replacing only the changed arrangement occurrence when its chords differ. Later explained that an occurrence ID combines the Section ID with the arrangement occurrence index and correctly predicted the second Bridge link would target the second rendered Bridge.
+
+## array-find-and-undefined
+- status: introduced
+- depends-on: array-iteration, structured-data
+- introduced: 2026-08-15
+- last-reviewed: 2026-08-15
+- evidence: Filled the `.find()` comparison after a syntax-sized hint; initially expected a failed lookup to return `false`, then learned that the callback returns booleans while `.find()` returns `undefined` when no item matches.
+
+## fragment-link-navigation
+- status: practicing
+- depends-on: html-document-structure, stable-identifiers, jsx
+- introduced: 2026-08-15
+- last-reviewed: 2026-08-15
+- evidence: Authored matching occurrence-ID props and fragment `href` values, then predicted that the second Bridge link would jump to its distinct rendered occurrence because the link target and element ID match.
 
 ## dependency-management
 - status: practicing

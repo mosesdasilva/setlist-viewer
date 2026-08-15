@@ -52,7 +52,7 @@
 - [x] Build a typed Song Title component with one learner-authored prop.
 - [x] Run the successor locally and verify it displays one real song title without changing either reference artifact.
 
-### 3. Render and navigate one real chart  [ ] in progress
+### 3. Render and navigate one real chart  [x] complete
 
 **Deliverable:** The React viewer renders Más from typed sample data and navigates its Expanded Arrangement through working controls.
 
@@ -68,7 +68,7 @@
 - [x] Define typed sample data for the real Más Chart.
 - [x] Render Más Sections and Bars through small React components.
 - [x] Practice React state, events, and conditional rendering with temporary Song/Section controls.
-- [ ] Replace the teaching-only isolated Section view with Expanded Arrangement navigation, then verify stable identifiers and unchanged reference artifacts.
+- [x] Replace the teaching-only isolated Section view with Expanded Arrangement navigation, then verify stable identifiers and unchanged reference artifacts.
 
 ### 4. Create a chart inside the app  [ ] not started
 
