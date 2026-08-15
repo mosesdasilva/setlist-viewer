@@ -52,7 +52,7 @@
 - [x] Build a typed Song Title component with one learner-authored prop.
 - [x] Run the successor locally and verify it displays one real song title without changing either reference artifact.
 
-### 3. Render and navigate one real chart  [ ] not started
+### 3. Render and navigate one real chart  [ ] in progress
 
 **Deliverable:** The React viewer renders Más from typed sample data and moves between Song and Section views through working controls.
 
@@ -61,6 +61,14 @@
 **Reclaim:** `src/script.js` — explain the current DOM-rendering path, break one navigation handler, predict the failure, then fix it.
 
 **Receipt:** Preserves the working viewer's core behavior while replacing direct DOM construction with React.
+
+#### Tasks
+
+- [x] Reclaim `src/script.js`: trace one Song from catalog data into DOM elements, break Next Song safely, predict the failure, then restore it.
+- [ ] Define typed sample data for the real Más Chart.
+- [ ] Render Más Sections and Bars through small React components.
+- [ ] Add Song and Section views with React state and working navigation controls.
+- [ ] Verify conditional views, stable identifiers, and unchanged reference artifacts.
 
 ### 4. Create a chart inside the app  [ ] not started
 

@@ -28,15 +28,22 @@
 - status: practicing
 - depends-on: html-document-structure
 - introduced: 2026-08-13
-- last-reviewed: 2026-08-13
-- evidence: Explained in detail that JavaScript renders catalog content, creates the temporary page tree, and controls navigation, search, modes, sizing, palette, and theme.
+- last-reviewed: 2026-08-14
+- evidence: Explained in detail that JavaScript renders catalog content, creates the temporary page tree, and controls navigation, search, modes, sizing, palette, and theme. Later disabled the Next Song callback, observed that only Next stopped working, restored it, and explained how it passes `activeIndex + 1` into `setActiveSong`.
 
 ## dom-rendering
 - status: practicing
 - depends-on: html-document-structure, javascript-functions-and-events
 - introduced: 2026-08-13
-- last-reviewed: 2026-08-13
-- evidence: Explained that `script.js` creates the browser's temporary in-memory page elements from `chart-data.js`; exact creation calls remain to be practiced.
+- last-reviewed: 2026-08-14
+- evidence: Identified `document.createElement` as creating a DOM element and `appendChild` as attaching it to the page tree, then traced catalog rendering into navigation-controlled Song elements.
+
+## array-iteration
+- status: practicing
+- depends-on: structured-data, functions
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: Explained that `catalog.forEach(renderSong)` runs `renderSong` 12 times for a 12-Song catalog.
 
 ## structured-data
 - status: practicing

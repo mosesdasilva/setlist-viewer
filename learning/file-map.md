@@ -33,7 +33,7 @@
 
 - `src/index.html` — known (2026-08-14) — page shell that must load generated `chart-data.js` before catalog-reading `script.js` → [[script-loading-order]]
 - `src/styles.css` — known (2026-08-13) — separate styling source makes the split viewer easier to maintain; selector internals return in Section 7 → [[css-cascade-and-selectors]]
-- `src/script.js` — known (2026-08-13) — separate behavior source renders song data and controls navigation/theme; DOM calls return in Section 3 → [[dom-rendering]]
+- `src/script.js` — known (2026-08-14) — creates DOM elements from catalog data, then event handlers change the active Song and other display state → [[dom-rendering]], [[javascript-functions-and-events]]
 - `src/chart-data.js` — generated — browser-ready catalog produced from legacy data and `.chart` sources; never edit directly → [[generated-artifacts]]
 - `src/song-data.js` — parked — hand-maintained Legacy Song data consumed by the build; reclaim during data-model design → [[legacy-song-model]]
 - `src/.nojekyll` — parked — prevents GitHub Pages from applying Jekyll processing; reclaim during deployment → [[continuous-deployment]]
