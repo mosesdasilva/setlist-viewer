@@ -56,15 +56,22 @@
 - status: practicing
 - depends-on: structured-data
 - introduced: before 2026-08-13
-- last-reviewed: 2026-08-13
-- evidence: Explained that `.chart` is the authored entry point and described using four-Bar groups, chords, metadata, melody, and comments.
+- last-reviewed: 2026-08-15
+- evidence: Deliberately added a fifth Bar slot to Más's Tag row, observed the exact four-slot diagnostic, restored the valid row, and predicted the final successful exit status `0`.
 
 ## parsing-and-validation
-- status: introduced
+- status: practicing
 - depends-on: chart-notation, structured-data
 - introduced: 2026-08-13
-- last-reviewed: 2026-08-13
-- evidence: Explained that Python reads and parses `mas.chart` into structured browser data; parser internals remain unknown.
+- last-reviewed: 2026-08-15
+- evidence: Explained that the malformed five-slot row is rejected, which leaves Tag with no valid rows and therefore produces both `E031` and the cascading `E028`; correctly reasoned that another valid Tag row would prevent `E028`.
+
+## validation-boundaries
+- status: practicing
+- depends-on: parsing-and-validation, domain-modeling
+- introduced: 2026-08-15
+- last-reviewed: 2026-08-15
+- evidence: Explained in own words how rejecting one invalid Chart Row changes the Section-level validation result, distinguishing the row rule from the Section rule.
 
 ## build-pipeline
 - status: practicing

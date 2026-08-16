@@ -80,6 +80,14 @@
 
 **Receipt:** In-app authoring is the user's primary requested workflow; four-Bar grouping comes from the 450-song handwritten system.
 
+#### Tasks
+
+- [x] Reclaim the inherited `.chart` model: violate one four-Bar rule, predict the validator diagnostic, then restore the Chart.
+- [ ] Define the successor editor's domain types and a valid empty four-Bar draft.
+- [ ] Build controlled metadata fields and preview their in-memory updates.
+- [ ] Add nested Section and Bar editing with immutable state updates.
+- [ ] Separate editor and viewer components, then validate and preview the completed in-memory Chart.
+
 ### 5. Save and load with Sites D1  [ ] not started
 
 **Deliverable:** Saving a chart writes it through a TypeScript server route to D1; reopening the app loads that same chart from another device session.

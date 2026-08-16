@@ -27,7 +27,7 @@
 ## `charts/`
 
 - `charts/catalog.json` — known (2026-08-13) — orders the song IDs included by the build → [[structured-data]]
-- `charts/mas.chart` — known (2026-08-13) — musician-authored source for the complete Más chart → [[chart-notation]]
+- `charts/mas.chart` — known (2026-08-15) — musician-authored source whose Chart Rows use exactly four Bar slots; validated before generated output changes → [[chart-notation]], [[validation-boundaries]]
 
 ## `src/`
 
