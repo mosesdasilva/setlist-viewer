@@ -83,7 +83,7 @@
 #### Tasks
 
 - [x] Reclaim the inherited `.chart` model: violate one four-Bar rule, predict the validator diagnostic, then restore the Chart.
-- [ ] Define the successor editor's domain types and a valid empty four-Bar draft.
+- [x] Define the successor editor's domain types and a valid empty four-Bar draft.
 - [ ] Build controlled metadata fields and preview their in-memory updates.
 - [ ] Add nested Section and Bar editing with immutable state updates.
 - [ ] Separate editor and viewer components, then validate and preview the completed in-memory Chart.

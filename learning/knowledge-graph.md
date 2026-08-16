@@ -175,8 +175,8 @@
 - status: practicing
 - depends-on: terminal-navigation
 - introduced: 2026-08-14
-- last-reviewed: 2026-08-14
-- evidence: Connected Unix `PATH` to prior Windows experience, explained that it lets the terminal locate programs without their full paths, and temporarily added the bundled Node and pnpm folders before running the build.
+- last-reviewed: 2026-08-15
+- evidence: Predicted Homebrew would change the Mac's available command-line tools rather than repository files, installed Node permanently, and verified `command -v node` resolves `/opt/homebrew/bin/node`.
 
 ## command-line-arguments
 - status: practicing
@@ -217,8 +217,29 @@
 - status: practicing
 - depends-on: structured-data
 - introduced: 2026-08-13
-- last-reviewed: 2026-08-13
-- evidence: Defined the app around the learner's four-Bar Nashville Number System workflow, including chords, lyrics, comments, metadata, and future melody cues.
+- last-reviewed: 2026-08-15
+- evidence: Explained that an unrestricted string array permits too many Bars and connected fixed-size four-slot tuples to the musician's Chart Row rule.
+
+## domain-types
+- status: practicing
+- depends-on: domain-modeling, typescript-object-types
+- introduced: 2026-08-15
+- last-reviewed: 2026-08-15
+- evidence: Authored the fixed-size Chart Row type and explained that an editor Section needs an array of four-slot rows, so an eight-Bar Section contains two rows.
+
+## typescript-tuples
+- status: practicing
+- depends-on: typescript, structured-data
+- introduced: 2026-08-15
+- last-reviewed: 2026-08-15
+- evidence: Authored `[string, string, string, string]`, corrected the draft to a nested tuple value, and explained that the outer array holds any number of rows while each inner tuple always holds four slots.
+
+## types-versus-runtime-values
+- status: practicing
+- depends-on: typescript
+- introduced: 2026-08-15
+- last-reviewed: 2026-08-15
+- evidence: After initially writing `string` values in the draft, replaced them with empty-string runtime values and completed a focused TypeScript check with exit status `0`.
 
 ## legacy-song-model
 - status: seed

@@ -51,6 +51,7 @@
 - `successor/app/SongTitle.tsx` — known (2026-08-14) — reusable title component whose typed prop requires callers to supply text → [[typescript]]
 - `successor/app/ChartView.tsx` — known (2026-08-15) — resolves Más's ordered arrangement into uniquely identified occurrences, renders the full Expanded Arrangement, and provides fragment-link Song Map navigation → [[component-composition]], [[array-iteration]], [[stable-identifiers]], [[fragment-link-navigation]]
 - `successor/app/chart-data.ts` — known (2026-08-14) — typed Más metadata, reusable harmonic Section definitions, and whole-song performance order for the React successor → [[typescript-object-types]], [[stable-identifiers]]
+- `successor/app/chart-editor-model.ts` — known (2026-08-15) — defines draft metadata, Sections, and fixed four-slot Chart Row tuples; starts new charts with one empty row → [[domain-types]], [[typescript-tuples]]
 - `successor/app/layout.tsx` — known (2026-08-14) — root wrapper that receives the selected page as `children` and places it inside the HTML body → [[react-props-and-children]]
 - `successor/app/_sites-preview/SkeletonPreview.tsx` — known (2026-08-14) — temporary client component returned by `Home`; its `"use client"` boundary opts it into browser hydration → [[server-rendering-and-hydration]]
 - `successor/app/_sites-preview/preview.css`, `successor/app/globals.css`, and `successor/app/chatgpt-auth.ts` — parked — temporary preview styling, global styling, and future Sites authentication support; reclaim only when their tasks arrive
